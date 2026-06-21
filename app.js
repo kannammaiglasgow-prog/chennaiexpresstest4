@@ -104,6 +104,12 @@ function escapeHtmlText(v){
     .replaceAll('"',"&quot;");
 }
 
+function cleanPublicDescription(value){
+  return String(value || "")
+    .replace(/\s*Price includes 40% profit from invoice cost\./gi, "")
+    .trim();
+}
+
 function money(v){ return "\u00a3" + Number(v || 0).toFixed(2); }
 function save(){ 
   localStorage.setItem("ce_cart", JSON.stringify(cart)); 
@@ -194,7 +200,11 @@ function loadAdminProductOverrides(){
   try{
     const saved = JSON.parse(localStorage.getItem("ce_admin_products") || "null");
     if(Array.isArray(saved) && saved.length && Array.isArray(PRODUCTS)){
-      PRODUCTS.splice(0, PRODUCTS.length, ...saved);
+      const cleaned = saved.map(p => ({...p, description:cleanPublicDescription(p.description)}));
+      PRODUCTS.splice(0, PRODUCTS.length, ...cleaned);
+      if(JSON.stringify(cleaned) !== JSON.stringify(saved)){
+        localStorage.setItem("ce_admin_products", JSON.stringify(cleaned));
+      }
     }
   }catch(e){
     console.warn("Could not load admin product changes", e);
@@ -240,7 +250,7 @@ function normaliseText(v){
   return String(v || "").toLowerCase().replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
 }
 function productText(p){
-  return normaliseText([p.name,p.category,p.subcategory,p.brand,p.description,p.pack].join(" "));
+  return normaliseText([p.name,p.category,p.subcategory,p.brand,cleanPublicDescription(p.description),p.pack].join(" "));
 }
 function searchTermsFor(q){
   const n = normaliseText(q);
@@ -306,6 +316,7 @@ function card(p){
   const old = p.offer_price ? `<span class="old">${money(p.price)}</span>` : "";
   const disabled = p.stock !== "In Stock";
   const qty = cart[p.id] || 0;
+  const description = cleanPublicDescription(p.description);
   const qtyControl = disabled 
     ? `<button class="add" disabled>${tr("out")}</button>`
     : qty > 0 
@@ -316,7 +327,7 @@ function card(p){
     ${qty>0?`<div class="added-pill">${qty}</div>`:""}
     <img class="product-img clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
     <div class="name clickable" onclick="openProductPage(${p.id})">${p.name}</div>
-    <div class="sub">${p.description || p.subcategory}</div>
+    <div class="sub">${description || p.subcategory}</div>
     <div class="pack">${p.subcategory} - ${p.pack}</div>
     <div class="pack">${stockLabel(p)}</div>
     <div class="price-line"><span class="price">${money(priceOf(p))}</span>${old}</div>
@@ -329,11 +340,12 @@ function renderMostOrdered(){
 }
 
 function offerCard(p){
+  const description = cleanPublicDescription(p.description);
   return `<div class="offer-product-card">
     <img src="${p.image}" alt="${p.name}">
     <div>
       <b>${p.name}</b>
-      <p>${p.description || ""}</p>
+      <p>${description}</p>
       <div><span class="was">Was ${money(p.price)}</span> <span class="now">Now ${money(priceOf(p))}</span></div>
       <button onclick="addToCart(${p.id})">${tr("addOffer")}</button>
     </div>
@@ -1072,7 +1084,7 @@ function removeRequestedItem(index){
 
 
 function relatedProductsFor(p){
-  const words = normaliseText([p.name, p.subcategory, p.description].join(" ")).split(" ").filter(w=>w.length>3);
+  const words = normaliseText([p.name, p.subcategory, cleanPublicDescription(p.description)].join(" ")).split(" ").filter(w=>w.length>3);
   // Do not show items already added to cart in Related Items
   let scored = PRODUCTS.filter(x=>x.id!==p.id && (!cart[x.id] || x.id===window.recentRelatedAddedId)).map(x=>{
     const t = productText(x);
@@ -1099,6 +1111,7 @@ function openProductPage(id){
   const qty = cart[p.id] || 0;
   const old = p.offer_price ? `<span class="detail-old">${money(p.price)}</span>` : "";
   const related = relatedProductsFor(p);
+  const description = cleanPublicDescription(p.description);
   modal.innerHTML = `
     <div class="product-detail" id="productDetailContent">
       <div class="detail-header">
@@ -1111,7 +1124,7 @@ function openProductPage(id){
       <p class="detail-category">${p.category} - ${p.subcategory} - ${p.pack}</p>
       <div class="detail-price">${old}<span>${money(priceOf(p))}</span></div>
       <p class="detail-stock">${stockLabel(p)}</p>
-      <p class="detail-desc">${p.description || ""}</p>
+      <p class="detail-desc">${description}</p>
       <div class="detail-actions">
         ${p.stock !== "In Stock" 
           ? `<button class="disabled-detail" disabled>${tr("outOfStock")}</button>`

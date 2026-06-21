@@ -79,6 +79,12 @@ function cleanText(value){
   return text || null;
 }
 
+function cleanPublicDescription(value){
+  return String(value || "")
+    .replace(/\s*Price includes 40% profit from invoice cost\./gi, "")
+    .trim();
+}
+
 function numberOrNull(value){
   if(value === null || value === undefined) return null;
   const text = String(value).trim();
@@ -94,7 +100,7 @@ function dbProductToAdmin(p){
     name:p.name || "",
     category:p.category || "",
     subcategory:p.subcategory || "",
-    description:p.description || "",
+    description:cleanPublicDescription(p.description),
     price:Number(p.offer_price || p.price || 0),
     normal_price:Number(p.price || 0),
     offer_price:p.offer_price,
@@ -119,7 +125,7 @@ function localProductToAdmin(p){
     name:p.name || "",
     category:p.category || "",
     subcategory:p.subcategory || "",
-    description:p.description || "",
+    description:cleanPublicDescription(p.description),
     price:Number(p.offer_price || p.price || 0),
     normal_price:Number(p.price || 0),
     offer_price:p.offer_price || null,
@@ -155,7 +161,7 @@ function adminProductToFrontend(p, index){
     stock_qty:Number.isFinite(Number(p.stock_qty)) ? Number(p.stock_qty) : 0,
     badge:p.is_special_offer || offerPrice ? "Special Offer" : (p.is_best_seller ? "Best Seller" : ""),
     emoji:"🛒",
-    description:p.description || "",
+    description:cleanPublicDescription(p.description),
     image:p.image || "",
     invoice_amount:p.invoice_amount,
     invoice_qty:p.invoice_qty,
@@ -255,7 +261,7 @@ function adminProductToDb(p){
     name:cleanText(p.name),
     category:cleanText(p.category) || "Grocery",
     subcategory:cleanText(p.subcategory),
-    description:cleanText(p.description),
+    description:cleanText(cleanPublicDescription(p.description)),
     price:normalPrice,
     offer_price:offerPrice,
     pack_size:cleanText(p.pack_size),
@@ -356,7 +362,7 @@ function renderProducts(){
         <div>
           <b>${escapeHtml(p.name)}</b><br>
           <small>${escapeHtml(p.sku || "")} • ${escapeHtml(p.pack_size || "")}</small><br>
-          <small>${escapeHtml(p.description || "")}</small>
+          <small>${escapeHtml(cleanPublicDescription(p.description))}</small>
           ${p.allergy_information ? `<br><small><b>Allergy:</b> ${escapeHtml(p.allergy_information)}</small>` : ""}
         </div>
       </div>
@@ -607,7 +613,7 @@ async function saveProductEdit(index){
   p.is_best_seller = badge === "Best Seller";
   p.is_special_offer = badge === "Special Offer" || !!p.offer_price;
   p.image = document.getElementById("editImageUrl").value.trim();
-  p.description = document.getElementById("editDescription").value.trim();
+  p.description = cleanPublicDescription(document.getElementById("editDescription").value);
   p.ingredients = document.getElementById("editIngredients").value.trim();
   p.allergy_information = document.getElementById("editAllergy").value.trim();
 
