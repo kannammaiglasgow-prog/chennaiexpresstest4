@@ -388,7 +388,7 @@ function renderProducts(){
     <div class="row head product-row"><div>Product</div><div>Category</div><div>Price</div><div>Stock</div><div>Actions</div></div>
     ${products.map((p,i)=>`<div class="row product-row product-click" onclick="openProductEditor(${i})">
       <div class="admin-product-main">
-        ${p.image ? `<img src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}">` : `<div class="no-img">No Image</div>`}
+        ${p.image ? `<img src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<div class="no-img">No Image</div>`}
         <div>
           <b>${escapeHtml(p.name)}</b><br>
           <small>${escapeHtml(p.sku || "")} • ${escapeHtml(p.pack_size || "")}</small><br>
@@ -470,7 +470,7 @@ function openProductEditor(index){
     </div>
 
     <div class="editor-preview">
-      ${p.image ? `<img id="editImagePreview" src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}">` : `<div id="editImagePreview" class="image-placeholder">No Image</div>`}
+      ${p.image ? `<img id="editImagePreview" src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}" referrerpolicy="no-referrer" decoding="async">` : `<div id="editImagePreview" class="image-placeholder">No Image</div>`}
       <div>
         <b>${escapeHtml(p.name)}</b><br>
         <small>Product ID / SKU is locked</small>
@@ -584,7 +584,7 @@ function previewImageUrl(){
     if(preview.tagName.toLowerCase() === "img"){
       preview.src = imageSrc(url);
     }else{
-      preview.outerHTML = `<img id="editImagePreview" src="${imageSrc(url)}" alt="Product preview">`;
+      preview.outerHTML = `<img id="editImagePreview" src="${imageSrc(url)}" alt="Product preview" referrerpolicy="no-referrer" decoding="async">`;
     }
   }
 }
@@ -599,7 +599,7 @@ async function previewUploadedImage(event){
     const preview = document.getElementById("editImagePreview");
     if(preview){
       if(preview.tagName.toLowerCase() === "img") preview.src = dataUrl;
-      else preview.outerHTML = `<img id="editImagePreview" src="${dataUrl}" alt="Uploaded preview">`;
+      else preview.outerHTML = `<img id="editImagePreview" src="${dataUrl}" alt="Uploaded preview" referrerpolicy="no-referrer" decoding="async">`;
     }
   };
   reader.readAsDataURL(file);

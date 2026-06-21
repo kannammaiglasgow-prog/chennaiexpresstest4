@@ -348,7 +348,7 @@ function card(p){
   return `<div class="product-card ${disabled?'out':''} ${qty>0?'selected':''}">
     ${p.badge?`<div class="badge">${p.badge}</div>`:""}
     ${qty>0?`<div class="added-pill">${qty}</div>`:""}
-    <img class="product-img clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
+    <img class="product-img clickable" src="${p.image}" alt="${p.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async" onclick="openProductPage(${p.id})">
     <div class="name clickable" onclick="openProductPage(${p.id})">${p.name}</div>
     <div class="sub">${description || p.subcategory}</div>
     <div class="pack">${p.subcategory} - ${p.pack}</div>
@@ -365,7 +365,7 @@ function renderMostOrdered(){
 function offerCard(p){
   const description = cleanPublicDescription(p.description);
   return `<div class="offer-product-card">
-    <img src="${p.image}" alt="${p.name}">
+    <img src="${p.image}" alt="${p.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
     <div>
       <b>${p.name}</b>
       <p>${description}</p>
@@ -386,7 +386,7 @@ function renderOfferSlider(){
   }
   box.innerHTML = offers.map((p,i)=>`
     <div class="offer-slide ${i===0?'active':''}">
-      <img src="${p.image}" alt="${p.name}">
+      <img src="${p.image}" alt="${p.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
       <div>
         <p class="tag">SPECIAL OFFER</p>
         <h2>${p.name}</h2>
@@ -450,7 +450,7 @@ function renderTopSearchResults(){
 function searchResultRow(p){
   const qty = cart[p.id] || 0;
   return `<div class="search-result-row">
-    <img class="clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
+    <img class="clickable" src="${p.image}" alt="${p.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async" onclick="openProductPage(${p.id})">
     <div><b class="clickable" onclick="openProductPage(${p.id})">${p.name}</b><br><small>${p.subcategory} - ${p.pack}</small><br><span>${money(priceOf(p))}</span></div>
     ${qty>0 ? `<div class="mini-qty"><button onclick="changeQty(${p.id},-1)">-</button><b>${qty}</b><button onclick="addToCart(${p.id})">+</button></div>` : `<button onclick="addToCart(${p.id})">${tr("add")}</button>`}
   </div>`;
@@ -677,7 +677,7 @@ function renderCartRewards(){
     html += `<h4>Claimed Free Gifts</h4>`;
     html += `<div class="claimed-gift-grid">`;
     html += claimedRewards.map(r=>`<div class="claimed-gift-card">
-      <img src="${r.image}" alt="${r.name}">
+      <img src="${r.image}" alt="${r.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
       <div><b>${r.name}</b><br><small>${r.points} points used</small></div>
       <button onclick="removeReward('${r.claimId}')">Remove</button>
     </div>`).join("");
@@ -691,7 +691,7 @@ function renderCartRewards(){
   html += FIXED_REWARDS.map(r=>{
     const can = available >= r.points;
     return `<div class="gift-card ${can?'':'locked'}">
-      <img src="${r.image}" alt="${r.name}">
+      <img src="${r.image}" alt="${r.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
       <b>${r.name}</b>
       <span>${r.points} points</span>
       <button ${can?'':'disabled'} onclick="claimFixedReward('${r.id}')">${can?'Claim Free':'Locked'}</button>
@@ -705,7 +705,7 @@ function renderCartRewards(){
     const spendNeed = Math.ceil(need / 10);
     const progress = Math.max(0, Math.min(100, Math.round((available / next.points) * 100)));
     html += `<div class="next-reward-box">
-      <img src="${next.image}" alt="${next.name}">
+      <img src="${next.image}" alt="${next.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
       <div><b>Next Gift</b><br><span>${next.name}</span><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
     </div>
     <div class="reward-progress"><div style="width:${progress}%"></div></div>
@@ -730,7 +730,7 @@ function renderCartRewards(){
 function renderCart(){
   const lines = cartLines();
   const productHtml = lines.map(x=>`<div class="cart-item">
-    <img class="mini-img" src="${x.p.image}" alt="${x.p.name}">
+    <img class="mini-img" src="${x.p.image}" alt="${x.p.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
     <div><b>${x.p.name}</b><br><small>${money(priceOf(x.p))}</small><br><span class="qty"><button onclick="changeQty(${x.p.id},-1)">-</button> ${x.qty} <button onclick="changeQty(${x.p.id},1)">+</button></span></div>
     <b>${money(priceOf(x.p)*x.qty)}</b>
   </div>`).join("");
@@ -742,7 +742,7 @@ function renderCart(){
   </div>`).join("");
 
   const rewardHtml = claimedRewards.map(r=>`<div class="cart-item reward-cart-item">
-    <img class="mini-img" src="${r.image}" alt="${r.name}">
+    <img class="mini-img" src="${r.image}" alt="${r.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
     <div><b>${r.name}</b><br><small>Free gift - ${r.points} points used</small></div>
     <b>FREE</b>
   </div>`).join("");
@@ -1141,7 +1141,7 @@ function openProductPage(id){
         <button onclick="closeProductPage()">Back</button>
         <button onclick="closeProductPage()">X</button>
       </div>
-      <img class="detail-img" src="${p.image}" alt="${p.name}">
+      <img class="detail-img" src="${p.image}" alt="${p.name}" referrerpolicy="no-referrer" decoding="async">
       ${p.badge ? `<div class="detail-badge">${p.badge}</div>` : ""}
       <h1>${p.name}</h1>
       <p class="detail-category">${p.category} - ${p.subcategory} - ${p.pack}</p>
@@ -1176,7 +1176,7 @@ function relatedCard(r){
   return `
     <div class="related-card ${qty>0?'selected-related':''}">
       ${qty>0?`<div class="related-added">${qty}</div>`:""}
-      <img src="${r.image}" onclick="openProductPageFromRelated(${r.id})">
+      <img src="${r.image}" referrerpolicy="no-referrer" loading="lazy" decoding="async" onclick="openProductPageFromRelated(${r.id})">
       <b onclick="openProductPageFromRelated(${r.id})">${r.name}</b>
       <span>${money(priceOf(r))}</span>
       ${qty>0 
