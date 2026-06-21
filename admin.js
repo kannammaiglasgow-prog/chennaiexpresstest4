@@ -173,31 +173,7 @@ function adminProductToDb(p){
 }
 
 async function loadProductsFromSupabase(){
-  const productList = document.getElementById("productList");
-  if(loadLocalProductsFallback("Showing local invoice products from products.js.")) return;
-  if(productList) productList.innerHTML = "<p>Loading products from Supabase...</p>";
-
-  if(typeof ceSupabase === "undefined" || !ceSupabase){
-    loadLocalProductsFallback("Showing local invoice products from products.js.");
-    return;
-  }
-
-  const {data, error} = await ceSupabase
-    .from("products")
-    .select("*")
-    .order("created_at", {ascending:false});
-
-  if(error){
-    console.error(error);
-    if(loadLocalProductsFallback("Supabase unavailable. Showing local invoice products from products.js.")) return;
-    if(productList) productList.innerHTML = `<div class="card"><b>Supabase Error</b><p>${error.message}</p><p>Run supabase/schema.sql first.</p></div>`;
-    return;
-  }
-
-  products = (data || []).map(dbProductToAdmin);
-  if(!products.length && loadLocalProductsFallback("Supabase products table is empty. Showing local invoice products from products.js.")) return;
-  renderProducts();
-  renderDashboard();
+  loadLocalProductsFallback("Showing local invoice products from products.js.");
 }
 
 async function saveProductToSupabase(index){
@@ -207,24 +183,8 @@ async function saveProductToSupabase(index){
     alert("Product name is required.");
     return false;
   }
-  const payload = adminProductToDb(p);
-
-  let result;
-  if(p.db_id){
-    result = await ceSupabase.from("products").update(payload).eq("id", p.db_id).select().single();
-  }else{
-    payload.created_at = new Date().toISOString();
-    result = await ceSupabase.from("products").insert(payload).select().single();
-  }
-
-  if(result.error){
-    console.error(result.error);
-    alert("Save failed: " + result.error.message);
-    return false;
-  }
-
-  products[index] = dbProductToAdmin(result.data);
-  alert("Product saved permanently to Supabase.");
+  products[index] = p;
+  alert("Product saved in this admin page session. For permanent website changes, update products.js and upload to GitHub.");
   renderProducts();
   closeProductEditor();
   return true;
@@ -235,13 +195,6 @@ async function deleteProductFromSupabase(index){
   if(!p) return;
   if(!confirm(`Delete product: ${p.name}?`)) return;
 
-  if(p.db_id){
-    const {error} = await ceSupabase.from("products").delete().eq("id", p.db_id);
-    if(error){
-      alert("Delete failed: " + error.message);
-      return;
-    }
-  }
   products.splice(index,1);
   renderProducts();
   renderDashboard();
