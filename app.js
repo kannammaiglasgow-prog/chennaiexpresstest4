@@ -134,6 +134,29 @@ function refreshProductsFromAdminStore(){
   loadAdminProductOverrides();
 }
 
+function productKey(p){
+  return String((p && (p.sku || p.id || p.name)) || "").toLowerCase().trim();
+}
+
+function mergeLatestFileProductData(savedProducts){
+  if(!Array.isArray(PRODUCTS) || !Array.isArray(savedProducts)) return savedProducts;
+  const fileByKey = new Map(PRODUCTS.map(p => [productKey(p), p]).filter(([key]) => key));
+  return savedProducts.map(saved => {
+    const fileProduct = fileByKey.get(productKey(saved));
+    if(!fileProduct) return saved;
+    return {
+      ...saved,
+      image:fileProduct.image || saved.image || "",
+      description:cleanPublicDescription(fileProduct.description || saved.description),
+      pack:fileProduct.pack || saved.pack || "",
+      subcategory:fileProduct.subcategory || saved.subcategory || "",
+      units_per_case:fileProduct.units_per_case ?? saved.units_per_case,
+      invoice_amount:fileProduct.invoice_amount ?? saved.invoice_amount,
+      invoice_qty:fileProduct.invoice_qty ?? saved.invoice_qty
+    };
+  });
+}
+
 function validateCartStock(showAlert = true){
   refreshProductsFromAdminStore();
   const problems = [];
@@ -200,7 +223,7 @@ function loadAdminProductOverrides(){
   try{
     const saved = JSON.parse(localStorage.getItem("ce_admin_products") || "null");
     if(Array.isArray(saved) && saved.length && Array.isArray(PRODUCTS)){
-      const cleaned = saved.map(p => ({...p, description:cleanPublicDescription(p.description)}));
+      const cleaned = mergeLatestFileProductData(saved).map(p => ({...p, description:cleanPublicDescription(p.description)}));
       PRODUCTS.splice(0, PRODUCTS.length, ...cleaned);
       if(JSON.stringify(cleaned) !== JSON.stringify(saved)){
         localStorage.setItem("ce_admin_products", JSON.stringify(cleaned));

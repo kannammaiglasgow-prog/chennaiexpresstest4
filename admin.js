@@ -169,6 +169,31 @@ function adminProductToFrontend(p, index){
   };
 }
 
+function productKey(p){
+  return String((p && (p.sku || p.id || p.frontend_id || p.name)) || "").toLowerCase().trim();
+}
+
+function mergeLatestFileProductData(savedProducts){
+  const fileProducts = typeof PRODUCTS !== "undefined" ? PRODUCTS : window.PRODUCTS;
+  if(!Array.isArray(fileProducts) || !Array.isArray(savedProducts)) return savedProducts;
+  const fileByKey = new Map(fileProducts.map(p => [productKey(p), p]).filter(([key]) => key));
+  return savedProducts.map(saved => {
+    const fileProduct = fileByKey.get(productKey(saved));
+    if(!fileProduct) return saved;
+    return {
+      ...saved,
+      image:fileProduct.image || saved.image || "",
+      description:cleanPublicDescription(fileProduct.description || saved.description),
+      pack:fileProduct.pack || saved.pack || "",
+      pack_size:fileProduct.pack || saved.pack_size || "",
+      subcategory:fileProduct.subcategory || saved.subcategory || "",
+      units_per_case:fileProduct.units_per_case ?? saved.units_per_case,
+      invoice_amount:fileProduct.invoice_amount ?? saved.invoice_amount,
+      invoice_qty:fileProduct.invoice_qty ?? saved.invoice_qty
+    };
+  });
+}
+
 function saveProductsToLocalStore(){
   const frontendProducts = products.map(adminProductToFrontend);
   localStorage.setItem(ADMIN_PRODUCTS_STORAGE_KEY, JSON.stringify(frontendProducts));
@@ -177,7 +202,12 @@ function saveProductsToLocalStore(){
 function loadSavedFrontendProducts(){
   try{
     const saved = JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_STORAGE_KEY) || "null");
-    return Array.isArray(saved) && saved.length ? saved : null;
+    if(!Array.isArray(saved) || !saved.length) return null;
+    const merged = mergeLatestFileProductData(saved);
+    if(JSON.stringify(merged) !== JSON.stringify(saved)){
+      localStorage.setItem(ADMIN_PRODUCTS_STORAGE_KEY, JSON.stringify(merged));
+    }
+    return merged;
   }catch(e){
     console.warn("Could not load saved admin products", e);
     return null;
