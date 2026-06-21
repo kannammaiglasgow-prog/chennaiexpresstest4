@@ -40,6 +40,12 @@
 
     <h3>Quick Product Editor</h3>
     <div class="form-grid">
+      <button onclick="exportLocalProducts()">Export Local Product Data</button>
+      <label class="file-action">Import Local Product Data
+        <input type="file" accept=".json" onchange="importLocalProducts(event)">
+      </label>
+    </div>
+    <div class="form-grid">
       <input id="pName" placeholder="Product name">
       <input id="pCategory" placeholder="Category">
       <input id="pPrice" placeholder="Price">

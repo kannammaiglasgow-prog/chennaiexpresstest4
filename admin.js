@@ -152,6 +152,7 @@ function adminProductToFrontend(p, index){
     offer_price:offerPrice,
     pack:p.pack_size || p.pack || "",
     stock:p.stock_status === "out_of_stock" ? "Out of Stock" : "In Stock",
+    stock_qty:Number.isFinite(Number(p.stock_qty)) ? Number(p.stock_qty) : 0,
     badge:p.is_special_offer || offerPrice ? "Special Offer" : (p.is_best_seller ? "Best Seller" : ""),
     emoji:"🛒",
     description:p.description || "",
@@ -175,6 +176,61 @@ function loadSavedFrontendProducts(){
     console.warn("Could not load saved admin products", e);
     return null;
   }
+}
+
+function exportLocalProducts(){
+  saveProductsToLocalStore();
+  const data = localStorage.getItem(ADMIN_PRODUCTS_STORAGE_KEY) || "[]";
+  const blob = new Blob([data], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "chennai-express-local-products.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  let box = document.getElementById("localExportBox");
+  if(!box){
+    box = document.createElement("div");
+    box.id = "localExportBox";
+    box.className = "card";
+    const productList = document.getElementById("productList");
+    if(productList && productList.parentElement){
+      productList.parentElement.insertBefore(box, productList);
+    }else{
+      document.body.appendChild(box);
+    }
+  }
+  box.innerHTML = `
+    <b>Local product data is ready.</b>
+    <p>If the download did not start, use this backup link or copy the text below.</p>
+    <p><a href="${url}" download="chennai-express-local-products.json">Download product data JSON</a></p>
+    <textarea readonly style="width:100%;height:120px">${escapeHtml(data)}</textarea>`;
+  alert("Export ready. If download did not start, use the download link shown on the Products page.");
+}
+
+function importLocalProducts(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const imported = JSON.parse(reader.result);
+      if(!Array.isArray(imported) || !imported.length){
+        alert("Import file does not contain products.");
+        return;
+      }
+      localStorage.setItem(ADMIN_PRODUCTS_STORAGE_KEY, JSON.stringify(imported));
+      products = imported.map(localProductToAdmin);
+      renderProducts();
+      renderDashboard();
+      alert("Imported. Open or refresh the shop page in this browser.");
+    }catch(e){
+      alert("Import failed. Please choose the exported product JSON file.");
+    }
+  };
+  reader.readAsText(file);
 }
 
 function loadLocalProductsFallback(message){
