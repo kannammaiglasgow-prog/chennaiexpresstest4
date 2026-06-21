@@ -1,8 +1,8 @@
-const WHATSAPP_NUMBER = "447309736428";
+﻿const WHATSAPP_NUMBER = "447309736428";
 
 const STORE_COLLECTION_INFO = {
   collectionPoint: "203 Willows Lane, Bolton, BL3 4AZ",
-  collectionHours: "Tuesday – Sunday: 11:00 AM – 9:00 PM",
+  collectionHours: "Tuesday â€“ Sunday: 11:00 AM â€“ 9:00 PM",
   closedDay: "Monday Closed",
   timingNote: "After placing your order, we will confirm your collection or delivery time via WhatsApp."
 };
@@ -16,10 +16,10 @@ const BANK_TRANSFER_DETAILS = {
 };
 
 const FIXED_REWARDS = [
-  {id:"chicken_roll", points:500, name:"Free Chicken Roll", emoji:"🌯", image:"assets/chicken-biryani-500x500.png"},
-  {id:"puttu_1kg", points:1000, name:"Free 1kg Puttu", emoji:"🥥", image:"assets/1kg-puttu-with-sambal-500x500.png"},
-  {id:"chicken_biryani", points:2000, name:"Free Chicken Biryani", emoji:"🍛", image:"assets/chicken-biryani-500x500.png"},
-  {id:"gingelly_oil", points:3000, name:"Free Gingelly Oil", emoji:"🛢️", image:"assets/gingelly-oil-1l-500x500.png"}
+  {id:"chicken_roll", points:500, name:"Free Chicken Roll", emoji:"ðŸŒ¯", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"},
+  {id:"puttu_1kg", points:1000, name:"Free 1kg Puttu", emoji:"ðŸ¥¥", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"},
+  {id:"chicken_biryani", points:2000, name:"Free Chicken Biryani", emoji:"ðŸ›", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"},
+  {id:"gingelly_oil", points:3000, name:"Free Gingelly Oil", emoji:"ðŸ›¢ï¸", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"}
 ];
 let cart = JSON.parse(localStorage.getItem("ce_cart") || "{}");
 let checkedDistanceMiles = null;
@@ -32,7 +32,7 @@ const I18N = {
   en: {
     restaurant:"Restaurant", grocery:"Grocery", search:"Search pannunga", searchPlaceholder:"Product name type pannunga...",
     mostOrdered:"Popular Items", specialOffers:"Special Offers", offersNote:"Discount irukkura items mattum inge varum.",
-    allProducts:"All Products", allCategories:"All Categories", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free items claim pannalam.",
+    allProducts:"All Products", allCategories:"All Categories", rewardsShop:"Rewards", rewardsText:"Â£1 spend = 10 points. Free items claim pannalam.",
     cantFind:"Item kidaikkalaya?", requestText:"Item name type panni cart-la add pannunga. Price WhatsApp-la confirm pannuvom.",
     requestPlaceholder:"Example: MTR Rava Idli Mix", addRequest:"Request Cart-la Add pannunga", yourCart:"Ungal Cart", subtotal:"Subtotal",
     checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery Information",
@@ -43,76 +43,76 @@ const I18N = {
     address:"Full delivery address with postcode", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
     notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp-ku Send pannunga", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
     add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart-la Add", outOfStock:"Stock illa", inStock:"Stock irukku",
-    rewardPoints:"Reward Points", emptyCart:"Cart empty-a irukku.", requestedItem:"Requested item • Price confirm pannuvom",
+    rewardPoints:"Reward Points", emptyCart:"Cart empty-a irukku.", requestedItem:"Requested item â€¢ Price confirm pannuvom",
     mayApply:"Confirm pannuvom", deliverySelected:"Delivery selected. Full address and postcode enter pannunga. Delivery charge WhatsApp-la confirm pannuvom."
   },
   ta: {
-    restaurant:"உணவகம்", grocery:"கிராசரி", search:"தேடு", searchPlaceholder:"பொருட்கள், பிராண்டுகள் தேடுங்கள்...",
-    mostOrdered:"இந்த வாரம் அதிகம் ஆர்டர் செய்தவை", specialOffers:"சிறப்பு சலுகைகள்", offersNote:"தள்ளுபடி பொருட்கள் மட்டும் இங்கே வரும்.",
-    allProducts:"அனைத்து பொருட்கள்", allCategories:"அனைத்து வகைகள்", rewardsShop:"ரிவார்ட்ஸ்", rewardsText:"£1 செலவு = 10 புள்ளிகள். இலவச பொருட்கள் பெறலாம்.",
-    cantFind:"தேவையான பொருள் கிடைக்கவில்லையா?", requestText:"பொருள் பெயரை type செய்து cart-ல் சேர்க்கவும். விலை WhatsApp-ல் உறுதி செய்யப்படும்.",
-    requestPlaceholder:"உதா: MTR Rava Idli Mix", addRequest:"Request-ஐ Cart-ல் சேர்க்க", yourCart:"உங்கள் Cart", subtotal:"Subtotal",
-    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery தகவல்",
-    deliveryNotice:"Delivery charge இருக்கலாம். உங்கள் order பார்த்த பிறகு WhatsApp-ல் charge/time confirm செய்வோம்.",
-    collectionInfo:"Collection தகவல்", collectionPoint:"Collection இடம்:", collectionHours:"Collection நேரம்:",
-    timingNote:"Order செய்த பிறகு collection அல்லது delivery time-ஐ WhatsApp-ல் confirm செய்வோம்.",
-    customerName:"Customer பெயர்", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
-    address:"Postcode உடன் முழு delivery address", paymentMethod:"Payment முறை", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
-    notes:"Customer notes optional", total:"Total", sendWhatsapp:"WhatsApp-க்கு Order அனுப்பு", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
-    add:"சேர்", out:"இல்லை", addOffer:"சலுகையை சேர்", addToCart:"Cart-ல் சேர்", outOfStock:"Stock இல்லை", inStock:"Stock உள்ளது",
-    rewardPoints:"Reward Points", emptyCart:"உங்கள் cart காலியாக உள்ளது.", requestedItem:"Requested item • விலை உறுதி செய்யப்படும்",
-    mayApply:"இருக்கலாம்", deliverySelected:"Delivery தேர்வு செய்துள்ளீர்கள். முழு address மற்றும் postcode இடுங்கள். Delivery charge இருக்கலாம்; WhatsApp-ல் confirm செய்வோம்."
+    restaurant:"à®‰à®£à®µà®•à®®à¯", grocery:"à®•à®¿à®°à®¾à®šà®°à®¿", search:"à®¤à¯‡à®Ÿà¯", searchPlaceholder:"à®ªà¯Šà®°à¯à®Ÿà¯à®•à®³à¯, à®ªà®¿à®°à®¾à®£à¯à®Ÿà¯à®•à®³à¯ à®¤à¯‡à®Ÿà¯à®™à¯à®•à®³à¯...",
+    mostOrdered:"à®‡à®¨à¯à®¤ à®µà®¾à®°à®®à¯ à®…à®¤à®¿à®•à®®à¯ à®†à®°à¯à®Ÿà®°à¯ à®šà¯†à®¯à¯à®¤à®µà¯ˆ", specialOffers:"à®šà®¿à®±à®ªà¯à®ªà¯ à®šà®²à¯à®•à¯ˆà®•à®³à¯", offersNote:"à®¤à®³à¯à®³à¯à®ªà®Ÿà®¿ à®ªà¯Šà®°à¯à®Ÿà¯à®•à®³à¯ à®®à®Ÿà¯à®Ÿà¯à®®à¯ à®‡à®™à¯à®•à¯‡ à®µà®°à¯à®®à¯.",
+    allProducts:"à®…à®©à¯ˆà®¤à¯à®¤à¯ à®ªà¯Šà®°à¯à®Ÿà¯à®•à®³à¯", allCategories:"à®…à®©à¯ˆà®¤à¯à®¤à¯ à®µà®•à¯ˆà®•à®³à¯", rewardsShop:"à®°à®¿à®µà®¾à®°à¯à®Ÿà¯à®¸à¯", rewardsText:"Â£1 à®šà¯†à®²à®µà¯ = 10 à®ªà¯à®³à¯à®³à®¿à®•à®³à¯. à®‡à®²à®µà®š à®ªà¯Šà®°à¯à®Ÿà¯à®•à®³à¯ à®ªà¯†à®±à®²à®¾à®®à¯.",
+    cantFind:"à®¤à¯‡à®µà¯ˆà®¯à®¾à®© à®ªà¯Šà®°à¯à®³à¯ à®•à®¿à®Ÿà¯ˆà®•à¯à®•à®µà®¿à®²à¯à®²à¯ˆà®¯à®¾?", requestText:"à®ªà¯Šà®°à¯à®³à¯ à®ªà¯†à®¯à®°à¯ˆ type à®šà¯†à®¯à¯à®¤à¯ cart-à®²à¯ à®šà¯‡à®°à¯à®•à¯à®•à®µà¯à®®à¯. à®µà®¿à®²à¯ˆ WhatsApp-à®²à¯ à®‰à®±à¯à®¤à®¿ à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯.",
+    requestPlaceholder:"à®‰à®¤à®¾: MTR Rava Idli Mix", addRequest:"Request-à® Cart-à®²à¯ à®šà¯‡à®°à¯à®•à¯à®•", yourCart:"à®‰à®™à¯à®•à®³à¯ Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery à®¤à®•à®µà®²à¯",
+    deliveryNotice:"Delivery charge à®‡à®°à¯à®•à¯à®•à®²à®¾à®®à¯. à®‰à®™à¯à®•à®³à¯ order à®ªà®¾à®°à¯à®¤à¯à®¤ à®ªà®¿à®±à®•à¯ WhatsApp-à®²à¯ charge/time confirm à®šà¯†à®¯à¯à®µà¯‹à®®à¯.",
+    collectionInfo:"Collection à®¤à®•à®µà®²à¯", collectionPoint:"Collection à®‡à®Ÿà®®à¯:", collectionHours:"Collection à®¨à¯‡à®°à®®à¯:",
+    timingNote:"Order à®šà¯†à®¯à¯à®¤ à®ªà®¿à®±à®•à¯ collection à®…à®²à¯à®²à®¤à¯ delivery time-à® WhatsApp-à®²à¯ confirm à®šà¯†à®¯à¯à®µà¯‹à®®à¯.",
+    customerName:"Customer à®ªà¯†à®¯à®°à¯", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Postcode à®‰à®Ÿà®©à¯ à®®à¯à®´à¯ delivery address", paymentMethod:"Payment à®®à¯à®±à¯ˆ", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"WhatsApp-à®•à¯à®•à¯ Order à®…à®©à¯à®ªà¯à®ªà¯", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"à®šà¯‡à®°à¯", out:"à®‡à®²à¯à®²à¯ˆ", addOffer:"à®šà®²à¯à®•à¯ˆà®¯à¯ˆ à®šà¯‡à®°à¯", addToCart:"Cart-à®²à¯ à®šà¯‡à®°à¯", outOfStock:"Stock à®‡à®²à¯à®²à¯ˆ", inStock:"Stock à®‰à®³à¯à®³à®¤à¯",
+    rewardPoints:"Reward Points", emptyCart:"à®‰à®™à¯à®•à®³à¯ cart à®•à®¾à®²à®¿à®¯à®¾à®• à®‰à®³à¯à®³à®¤à¯.", requestedItem:"Requested item â€¢ à®µà®¿à®²à¯ˆ à®‰à®±à¯à®¤à®¿ à®šà¯†à®¯à¯à®¯à®ªà¯à®ªà®Ÿà¯à®®à¯",
+    mayApply:"à®‡à®°à¯à®•à¯à®•à®²à®¾à®®à¯", deliverySelected:"Delivery à®¤à¯‡à®°à¯à®µà¯ à®šà¯†à®¯à¯à®¤à¯à®³à¯à®³à¯€à®°à¯à®•à®³à¯. à®®à¯à®´à¯ address à®®à®±à¯à®±à¯à®®à¯ postcode à®‡à®Ÿà¯à®™à¯à®•à®³à¯. Delivery charge à®‡à®°à¯à®•à¯à®•à®²à®¾à®®à¯; WhatsApp-à®²à¯ confirm à®šà¯†à®¯à¯à®µà¯‹à®®à¯."
   },
   si: {
-    restaurant:"ආහාර", grocery:"සිල්ලර", search:"සොයන්න", searchPlaceholder:"නිෂ්පාදන සහ brands සොයන්න...",
-    mostOrdered:"මෙම සතියේ වැඩිම ඇණවුම්", specialOffers:"විශේෂ offers", offersNote:"Discount products පමණක් මෙහි පෙන්වයි.",
-    allProducts:"සියලු නිෂ්පාදන", allCategories:"සියලු වර්ග", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem කරන්න.",
-    cantFind:"ඔබට අවශ්‍ය item එක නැද්ද?", requestText:"Item name type කර cart එකට add කරන්න. Price WhatsApp හරහා confirm වේ.",
-    requestPlaceholder:"උදා: MTR Rava Idli Mix", addRequest:"Request Cart එකට add කරන්න", yourCart:"ඔබගේ Cart", subtotal:"Subtotal",
-    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery තොරතුරු",
-    deliveryNotice:"Delivery charge apply විය හැක. Order review කර WhatsApp හරහා charge/time confirm කරමු.",
-    collectionInfo:"Collection තොරතුරු", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
-    timingNote:"Order කිරීමෙන් පසු collection/delivery time WhatsApp හරහා confirm කරමු.",
+    restaurant:"à¶†à·„à·à¶»", grocery:"à·ƒà·’à¶½à·Šà¶½à¶»", search:"à·ƒà·œà¶ºà¶±à·Šà¶±", searchPlaceholder:"à¶±à·’à·‚à·Šà¶´à·à¶¯à¶± à·ƒà·„ brands à·ƒà·œà¶ºà¶±à·Šà¶±...",
+    mostOrdered:"à¶¸à·™à¶¸ à·ƒà¶­à·’à¶ºà·š à·€à·à¶©à·’à¶¸ à¶‡à¶«à·€à·”à¶¸à·Š", specialOffers:"à·€à·’à·à·šà·‚ offers", offersNote:"Discount products à¶´à¶¸à¶«à¶šà·Š à¶¸à·™à·„à·’ à¶´à·™à¶±à·Šà·€à¶ºà·’.",
+    allProducts:"à·ƒà·’à¶ºà¶½à·” à¶±à·’à·‚à·Šà¶´à·à¶¯à¶±", allCategories:"à·ƒà·’à¶ºà¶½à·” à·€à¶»à·Šà¶œ", rewardsShop:"Rewards", rewardsText:"Â£1 spend = 10 points. Free products redeem à¶šà¶»à¶±à·Šà¶±.",
+    cantFind:"à¶”à¶¶à¶§ à¶…à·€à·à·Šâ€à¶º item à¶‘à¶š à¶±à·à¶¯à·Šà¶¯?", requestText:"Item name type à¶šà¶» cart à¶‘à¶šà¶§ add à¶šà¶»à¶±à·Šà¶±. Price WhatsApp à·„à¶»à·„à· confirm à·€à·š.",
+    requestPlaceholder:"à¶‹à¶¯à·: MTR Rava Idli Mix", addRequest:"Request Cart à¶‘à¶šà¶§ add à¶šà¶»à¶±à·Šà¶±", yourCart:"à¶”à¶¶à¶œà·š Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery à¶­à·œà¶»à¶­à·”à¶»à·”",
+    deliveryNotice:"Delivery charge apply à·€à·’à¶º à·„à·à¶š. Order review à¶šà¶» WhatsApp à·„à¶»à·„à· charge/time confirm à¶šà¶»à¶¸à·”.",
+    collectionInfo:"Collection à¶­à·œà¶»à¶­à·”à¶»à·”", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order à¶šà·’à¶»à·“à¶¸à·™à¶±à·Š à¶´à·ƒà·” collection/delivery time WhatsApp à·„à¶»à·„à· confirm à¶šà¶»à¶¸à·”.",
     customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
-    address:"Postcode සමග full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
-    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp කරන්න", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
-    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart එකට Add", outOfStock:"Out of Stock", inStock:"In Stock",
-    rewardPoints:"Reward Points", emptyCart:"Cart එක හිස්.", requestedItem:"Requested item • Price confirm වේ",
-    mayApply:"Apply විය හැක", deliverySelected:"Delivery selected. Full address සහ postcode ඇතුලත් කරන්න. Delivery charge WhatsApp හරහා confirm වේ."
+    address:"Postcode à·ƒà¶¸à¶œ full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp à¶šà¶»à¶±à·Šà¶±", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart à¶‘à¶šà¶§ Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"Cart à¶‘à¶š à·„à·’à·ƒà·Š.", requestedItem:"Requested item â€¢ Price confirm à·€à·š",
+    mayApply:"Apply à·€à·’à¶º à·„à·à¶š", deliverySelected:"Delivery selected. Full address à·ƒà·„ postcode à¶‡à¶­à·”à¶½à¶­à·Š à¶šà¶»à¶±à·Šà¶±. Delivery charge WhatsApp à·„à¶»à·„à· confirm à·€à·š."
   },
   ml: {
-    restaurant:"റെസ്റ്റോറന്റ്", grocery:"ഗ്രോസറി", search:"തിരയുക", searchPlaceholder:"ഉൽപ്പന്നങ്ങൾ, ബ്രാൻഡുകൾ തിരയുക...",
-    mostOrdered:"ഈ ആഴ്ച കൂടുതൽ ഓർഡർ ചെയ്തത്", specialOffers:"സ്പെഷ്യൽ ഓഫറുകൾ", offersNote:"Discount products മാത്രം ഇവിടെ കാണിക്കും.",
-    allProducts:"എല്ലാ ഉൽപ്പന്നങ്ങളും", allCategories:"എല്ലാ വിഭാഗങ്ങളും", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem ചെയ്യാം.",
-    cantFind:"ആവശ്യമായ item കിട്ടിയില്ലേ?", requestText:"Item name type ചെയ്ത് cart-ൽ add ചെയ്യുക. Price WhatsApp-ൽ confirm ചെയ്യും.",
-    requestPlaceholder:"ഉദാ: MTR Rava Idli Mix", addRequest:"Request Cart-ൽ Add ചെയ്യുക", yourCart:"നിങ്ങളുടെ Cart", subtotal:"Subtotal",
-    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery വിവരം",
-    deliveryNotice:"Delivery charge apply ആകാം. Order review ചെയ്ത ശേഷം WhatsApp-ൽ charge/time confirm ചെയ്യും.",
-    collectionInfo:"Collection വിവരം", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
-    timingNote:"Order ചെയ്ത ശേഷം collection/delivery time WhatsApp-ൽ confirm ചെയ്യും.",
+    restaurant:"à´±àµ†à´¸àµà´±àµà´±àµ‹à´±à´¨àµà´±àµ", grocery:"à´—àµà´°àµ‹à´¸à´±à´¿", search:"à´¤à´¿à´°à´¯àµà´•", searchPlaceholder:"à´‰àµ½à´ªàµà´ªà´¨àµà´¨à´™àµà´™àµ¾, à´¬àµà´°à´¾àµ»à´¡àµà´•àµ¾ à´¤à´¿à´°à´¯àµà´•...",
+    mostOrdered:"à´ˆ à´†à´´àµà´š à´•àµ‚à´Ÿàµà´¤àµ½ à´“àµ¼à´¡àµ¼ à´šàµ†à´¯àµà´¤à´¤àµ", specialOffers:"à´¸àµà´ªàµ†à´·àµà´¯àµ½ à´“à´«à´±àµà´•àµ¾", offersNote:"Discount products à´®à´¾à´¤àµà´°à´‚ à´‡à´µà´¿à´Ÿàµ† à´•à´¾à´£à´¿à´•àµà´•àµà´‚.",
+    allProducts:"à´Žà´²àµà´²à´¾ à´‰àµ½à´ªàµà´ªà´¨àµà´¨à´™àµà´™à´³àµà´‚", allCategories:"à´Žà´²àµà´²à´¾ à´µà´¿à´­à´¾à´—à´™àµà´™à´³àµà´‚", rewardsShop:"Rewards", rewardsText:"Â£1 spend = 10 points. Free products redeem à´šàµ†à´¯àµà´¯à´¾à´‚.",
+    cantFind:"à´†à´µà´¶àµà´¯à´®à´¾à´¯ item à´•à´¿à´Ÿàµà´Ÿà´¿à´¯à´¿à´²àµà´²àµ‡?", requestText:"Item name type à´šàµ†à´¯àµà´¤àµ cart-àµ½ add à´šàµ†à´¯àµà´¯àµà´•. Price WhatsApp-àµ½ confirm à´šàµ†à´¯àµà´¯àµà´‚.",
+    requestPlaceholder:"à´‰à´¦à´¾: MTR Rava Idli Mix", addRequest:"Request Cart-àµ½ Add à´šàµ†à´¯àµà´¯àµà´•", yourCart:"à´¨à´¿à´™àµà´™à´³àµà´Ÿàµ† Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery à´µà´¿à´µà´°à´‚",
+    deliveryNotice:"Delivery charge apply à´†à´•à´¾à´‚. Order review à´šàµ†à´¯àµà´¤ à´¶àµ‡à´·à´‚ WhatsApp-àµ½ charge/time confirm à´šàµ†à´¯àµà´¯àµà´‚.",
+    collectionInfo:"Collection à´µà´¿à´µà´°à´‚", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order à´šàµ†à´¯àµà´¤ à´¶àµ‡à´·à´‚ collection/delivery time WhatsApp-àµ½ confirm à´šàµ†à´¯àµà´¯àµà´‚.",
     customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
-    address:"Postcode ഉൾപ്പെടെ full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
-    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp-ലേക്ക് അയയ്ക്കുക", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
-    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart-ൽ Add", outOfStock:"Out of Stock", inStock:"In Stock",
-    rewardPoints:"Reward Points", emptyCart:"Cart കാലിയാണ്.", requestedItem:"Requested item • Price confirm ചെയ്യും",
-    mayApply:"Apply ആകാം", deliverySelected:"Delivery selected. Full address and postcode enter ചെയ്യുക. Delivery charge WhatsApp-ൽ confirm ചെയ്യും."
+    address:"Postcode à´‰àµ¾à´ªàµà´ªàµ†à´Ÿàµ† full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp-à´²àµ‡à´•àµà´•àµ à´…à´¯à´¯àµà´•àµà´•àµà´•", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart-àµ½ Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"Cart à´•à´¾à´²à´¿à´¯à´¾à´£àµ.", requestedItem:"Requested item â€¢ Price confirm à´šàµ†à´¯àµà´¯àµà´‚",
+    mayApply:"Apply à´†à´•à´¾à´‚", deliverySelected:"Delivery selected. Full address and postcode enter à´šàµ†à´¯àµà´¯àµà´•. Delivery charge WhatsApp-àµ½ confirm à´šàµ†à´¯àµà´¯àµà´‚."
   },
   te: {
-    restaurant:"రెస్టారెంట్", grocery:"గ్రోసరీ", search:"వెతకండి", searchPlaceholder:"ప్రొడక్ట్స్, బ్రాండ్స్ వెతకండి...",
-    mostOrdered:"ఈ వారం ఎక్కువగా ఆర్డర్ చేసినవి", specialOffers:"స్పెషల్ ఆఫర్స్", offersNote:"Discount products మాత్రమే ఇక్కడ కనిపిస్తాయి.",
-    allProducts:"అన్ని ప్రొడక్ట్స్", allCategories:"అన్ని కేటగిరీలు", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem చేయండి.",
-    cantFind:"మీకు కావాల్సిన item దొరకలేదా?", requestText:"Item name type చేసి cart లో add చేయండి. Price WhatsApp లో confirm చేస్తాము.",
-    requestPlaceholder:"ఉదా: MTR Rava Idli Mix", addRequest:"Request Cart లో Add చేయండి", yourCart:"మీ Cart", subtotal:"Subtotal",
-    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery సమాచారం",
-    deliveryNotice:"Delivery charge apply కావచ్చు. Order review తర్వాత WhatsApp లో charge/time confirm చేస్తాము.",
-    collectionInfo:"Collection సమాచారం", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
-    timingNote:"Order చేసిన తర్వాత collection/delivery time WhatsApp లో confirm చేస్తాము.",
+    restaurant:"à°°à±†à°¸à±à°Ÿà°¾à°°à±†à°‚à°Ÿà±", grocery:"à°—à±à°°à±‹à°¸à°°à±€", search:"à°µà±†à°¤à°•à°‚à°¡à°¿", searchPlaceholder:"à°ªà±à°°à±Šà°¡à°•à±à°Ÿà±à°¸à±, à°¬à±à°°à°¾à°‚à°¡à±à°¸à± à°µà±†à°¤à°•à°‚à°¡à°¿...",
+    mostOrdered:"à°ˆ à°µà°¾à°°à°‚ à°Žà°•à±à°•à±à°µà°—à°¾ à°†à°°à±à°¡à°°à± à°šà±‡à°¸à°¿à°¨à°µà°¿", specialOffers:"à°¸à±à°ªà±†à°·à°²à± à°†à°«à°°à±à°¸à±", offersNote:"Discount products à°®à°¾à°¤à±à°°à°®à±‡ à°‡à°•à±à°•à°¡ à°•à°¨à°¿à°ªà°¿à°¸à±à°¤à°¾à°¯à°¿.",
+    allProducts:"à°…à°¨à±à°¨à°¿ à°ªà±à°°à±Šà°¡à°•à±à°Ÿà±à°¸à±", allCategories:"à°…à°¨à±à°¨à°¿ à°•à±‡à°Ÿà°—à°¿à°°à±€à°²à±", rewardsShop:"Rewards", rewardsText:"Â£1 spend = 10 points. Free products redeem à°šà±‡à°¯à°‚à°¡à°¿.",
+    cantFind:"à°®à±€à°•à± à°•à°¾à°µà°¾à°²à±à°¸à°¿à°¨ item à°¦à±Šà°°à°•à°²à±‡à°¦à°¾?", requestText:"Item name type à°šà±‡à°¸à°¿ cart à°²à±‹ add à°šà±‡à°¯à°‚à°¡à°¿. Price WhatsApp à°²à±‹ confirm à°šà±‡à°¸à±à°¤à°¾à°®à±.",
+    requestPlaceholder:"à°‰à°¦à°¾: MTR Rava Idli Mix", addRequest:"Request Cart à°²à±‹ Add à°šà±‡à°¯à°‚à°¡à°¿", yourCart:"à°®à±€ Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery à°¸à°®à°¾à°šà°¾à°°à°‚",
+    deliveryNotice:"Delivery charge apply à°•à°¾à°µà°šà±à°šà±. Order review à°¤à°°à±à°µà°¾à°¤ WhatsApp à°²à±‹ charge/time confirm à°šà±‡à°¸à±à°¤à°¾à°®à±.",
+    collectionInfo:"Collection à°¸à°®à°¾à°šà°¾à°°à°‚", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order à°šà±‡à°¸à°¿à°¨ à°¤à°°à±à°µà°¾à°¤ collection/delivery time WhatsApp à°²à±‹ confirm à°šà±‡à°¸à±à°¤à°¾à°®à±.",
     customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
-    address:"Postcode తో full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
-    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp కి పంపండి", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
-    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart లో Add", outOfStock:"Out of Stock", inStock:"In Stock",
-    rewardPoints:"Reward Points", emptyCart:"మీ cart ఖాళీగా ఉంది.", requestedItem:"Requested item • Price confirm చేస్తాము",
-    mayApply:"Apply కావచ్చు", deliverySelected:"Delivery selected. Full address and postcode enter చేయండి. Delivery charge WhatsApp లో confirm చేస్తాము."
+    address:"Postcode à°¤à±‹ full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp à°•à°¿ à°ªà°‚à°ªà°‚à°¡à°¿", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart à°²à±‹ Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"à°®à±€ cart à°–à°¾à°³à±€à°—à°¾ à°‰à°‚à°¦à°¿.", requestedItem:"Requested item â€¢ Price confirm à°šà±‡à°¸à±à°¤à°¾à°®à±",
+    mayApply:"Apply à°•à°¾à°µà°šà±à°šà±", deliverySelected:"Delivery selected. Full address and postcode enter à°šà±‡à°¯à°‚à°¡à°¿. Delivery charge WhatsApp à°²à±‹ confirm à°šà±‡à°¸à±à°¤à°¾à°®à±."
   }
 };
 
@@ -140,15 +140,15 @@ function applyLanguage(){
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = tr(el.dataset.i18nPlaceholder); });
 
   const catButtons = document.querySelectorAll(".category-strip button");
-  if(catButtons[0]) catButtons[0].innerHTML = `ðŸ› ${tr("restaurant")}`;
-  if(catButtons[1]) catButtons[1].innerHTML = `ðŸ›’ ${tr("grocery")}`;
+  if(catButtons[0]) catButtons[0].innerHTML = `Ã°Å¸Ââ€º ${tr("restaurant")}`;
+  if(catButtons[1]) catButtons[1].innerHTML = `Ã°Å¸â€ºâ€™ ${tr("grocery")}`;
 
   const sectionTitles = document.querySelectorAll(".section-title h2");
-  if(sectionTitles[0]) sectionTitles[0].innerHTML = `ðŸ”¥ ${tr("mostOrdered")}`;
+  if(sectionTitles[0]) sectionTitles[0].innerHTML = `Ã°Å¸â€Â¥ ${tr("mostOrdered")}`;
   const offerTitle = document.querySelector(".offers-section h2");
-  if(offerTitle) offerTitle.innerHTML = `ðŸ·ï¸ ${tr("specialOffers")}`;
+  if(offerTitle) offerTitle.innerHTML = `Ã°Å¸ÂÂ·Ã¯Â¸Â ${tr("specialOffers")}`;
   const rewardsTitle = document.querySelector(".rewards h2");
-  if(rewardsTitle) rewardsTitle.innerHTML = `ðŸŽ ${tr("rewardsShop")}`;
+  if(rewardsTitle) rewardsTitle.innerHTML = `Ã°Å¸Å½Â ${tr("rewardsShop")}`;
 
   const requestTitle = document.querySelector(".request-box h2");
   if(requestTitle) requestTitle.textContent = tr("cantFind");
@@ -166,12 +166,12 @@ function applyLanguage(){
   if(checkoutLabels[1]) checkoutLabels[1].lastChild.textContent = ` ${tr("delivery")}`;
 
   const deliveryInfo = document.querySelector("#deliveryNoticeBox");
-  if(deliveryInfo) deliveryInfo.innerHTML = `<b>ðŸšš ${tr("deliveryInfo")}</b><br>${tr("deliveryNotice")}`;
+  if(deliveryInfo) deliveryInfo.innerHTML = `<b>Ã°Å¸Å¡Å¡ ${tr("deliveryInfo")}</b><br>${tr("deliveryNotice")}`;
   const collectionBox = document.querySelector(".collection-info-box");
   if(collectionBox){
-    collectionBox.innerHTML = `<h4>ðŸ“¦ ${tr("collectionInfo")}</h4>
+    collectionBox.innerHTML = `<h4>Ã°Å¸â€œÂ¦ ${tr("collectionInfo")}</h4>
       <p><b>${tr("collectionPoint")}</b><br>203 Willows Lane, Bolton, BL3 4AZ</p>
-      <p><b>${tr("collectionHours")}</b><br>Tuesday â€“ Sunday: 11:00 AM â€“ 9:00 PM<br>Monday: Closed</p>
+      <p><b>${tr("collectionHours")}</b><br>Tuesday Ã¢â‚¬â€œ Sunday: 11:00 AM Ã¢â‚¬â€œ 9:00 PM<br>Monday: Closed</p>
       <p>${tr("timingNote")}</p>`;
   }
   const paymentTitle = document.querySelector(".payment-box h4");
@@ -207,10 +207,10 @@ function applyLanguage(){
   if(whatsappBtn) whatsappBtn.textContent = tr("sendWhatsapp");
 
   const navLabels = document.querySelectorAll(".bottom-nav button");
-  if(navLabels[0]) navLabels[0].innerHTML = `ðŸ <br>${tr("home")}`;
-  if(navLabels[1]) navLabels[1].innerHTML = `â–¦<br>${tr("products")}`;
-  if(navLabels[2]) navLabels[2].innerHTML = `ðŸŽ<br>${tr("rewards")}`;
-  if(navLabels[3]) navLabels[3].innerHTML = `ðŸ›’<br>${tr("cart")}`;
+  if(navLabels[0]) navLabels[0].innerHTML = `Ã°Å¸ÂÂ <br>${tr("home")}`;
+  if(navLabels[1]) navLabels[1].innerHTML = `Ã¢â€“Â¦<br>${tr("products")}`;
+  if(navLabels[2]) navLabels[2].innerHTML = `Ã°Å¸Å½Â<br>${tr("rewards")}`;
+  if(navLabels[3]) navLabels[3].innerHTML = `Ã°Å¸â€ºâ€™<br>${tr("cart")}`;
 }
 
 document.addEventListener("error", function(event){
@@ -233,7 +233,7 @@ function escapeHtmlText(v){
     .replaceAll('"',"&quot;");
 }
 
-function money(v){ return "£" + Number(v || 0).toFixed(2); }
+function money(v){ return "Â£" + Number(v || 0).toFixed(2); }
 function save(){ 
   localStorage.setItem("ce_cart", JSON.stringify(cart)); 
   localStorage.setItem("ce_requested_cart", JSON.stringify(requestedCart));
@@ -258,11 +258,11 @@ function init(){
   applyLanguage();
 }
 function iconFor(c){
-  if(c.includes("Restaurant")) return "🍛";
-  if(c.includes("Grocery")) return "🛒";
-  if(c.includes("Household")) return "🏠";
-  if(c.includes("Pooja")) return "🕉️";
-  return "🛍️";
+  if(c.includes("Restaurant")) return "ðŸ›";
+  if(c.includes("Grocery")) return "ðŸ›’";
+  if(c.includes("Household")) return "ðŸ ";
+  if(c.includes("Pooja")) return "ðŸ•‰ï¸";
+  return "ðŸ›ï¸";
 }
 
 const SEARCH_RELATIONS = {
@@ -350,15 +350,15 @@ function card(p){
   const qtyControl = disabled 
     ? `<button class="add" disabled>${tr("out")}</button>`
     : qty > 0 
-      ? `<div class="inline-qty"><button onclick="event.stopPropagation(); changeQty(${p.id},-1)">−</button><b>${qty}</b><button onclick="event.stopPropagation(); addToCart(${p.id})">+</button></div>`
+      ? `<div class="inline-qty"><button onclick="event.stopPropagation(); changeQty(${p.id},-1)">âˆ’</button><b>${qty}</b><button onclick="event.stopPropagation(); addToCart(${p.id})">+</button></div>`
       : `<button class="add" onclick="event.stopPropagation(); addToCart(${p.id})">${tr("add")}</button>`;
   return `<div class="product-card ${disabled?'out':''} ${qty>0?'selected':''}">
     ${p.badge?`<div class="badge">${p.badge}</div>`:""}
-    ${qty>0?`<div class="added-pill">✓ ${qty}</div>`:""}
+    ${qty>0?`<div class="added-pill">âœ“ ${qty}</div>`:""}
     <img class="product-img clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
     <div class="name clickable" onclick="openProductPage(${p.id})">${p.name}</div>
     <div class="sub">${p.description || p.subcategory}</div>
-    <div class="pack">${p.subcategory} • ${p.pack}</div>
+    <div class="pack">${p.subcategory} â€¢ ${p.pack}</div>
     <div class="price-line"><span class="price">${money(priceOf(p))}</span>${old}</div>
     ${qtyControl}
   </div>`;
@@ -386,7 +386,7 @@ function renderOfferSlider(){
   if(!box) return;
   const offers = PRODUCTS.filter(p => p.offer_price && p.stock === "In Stock");
   if(!offers.length){
-    box.innerHTML = `<div class="slide active"><h2>🏷️ Special Offer</h2><p>New offers coming soon.</p></div>`;
+    box.innerHTML = `<div class="slide active"><h2>ðŸ·ï¸ Special Offer</h2><p>New offers coming soon.</p></div>`;
     return;
   }
   box.innerHTML = offers.map((p,i)=>`
@@ -436,7 +436,7 @@ function renderTopSearchResults(){
   const items = smartSearchProducts(rawQ, "All").slice(0,10);
   if(!items.length){
     box.innerHTML = `<div class="top-no-result">
-      <b>No item found for “${rawQ}”</b>
+      <b>No item found for â€œ${rawQ}â€</b>
       <p>You can add this as a requested item to your cart.</p>
       <button onclick="addSearchTextToRequestedCart()">${tr("addToCart")}</button>
     </div>`;
@@ -456,8 +456,8 @@ function searchResultRow(p){
   const qty = cart[p.id] || 0;
   return `<div class="search-result-row">
     <img class="clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
-    <div><b class="clickable" onclick="openProductPage(${p.id})">${p.name}</b><br><small>${p.subcategory} • ${p.pack}</small><br><span>${money(priceOf(p))}</span></div>
-    ${qty>0 ? `<div class="mini-qty"><button onclick="changeQty(${p.id},-1)">−</button><b>${qty}</b><button onclick="addToCart(${p.id})">+</button></div>` : `<button onclick="addToCart(${p.id})">${tr("add")}</button>`}
+    <div><b class="clickable" onclick="openProductPage(${p.id})">${p.name}</b><br><small>${p.subcategory} â€¢ ${p.pack}</small><br><span>${money(priceOf(p))}</span></div>
+    ${qty>0 ? `<div class="mini-qty"><button onclick="changeQty(${p.id},-1)">âˆ’</button><b>${qty}</b><button onclick="addToCart(${p.id})">+</button></div>` : `<button onclick="addToCart(${p.id})">${tr("add")}</button>`}
   </div>`;
 }
 
@@ -494,7 +494,7 @@ function addSearchTextToRequestedCart(){
   const box = document.getElementById("searchResultsTop");
   if(box){
     box.innerHTML = `<div class="top-no-result success">
-      ✅ <b>${q}</b> has been added to your cart as a requested item.<br>
+      âœ… <b>${q}</b> has been added to your cart as a requested item.<br>
       Need another product? Type it in the search bar and add again.
       <br><br><button onclick="openCart()">View Cart</button>
     </div>`;
@@ -564,21 +564,21 @@ function renderCartRewards(){
   const nextRewards = locked.slice(0,3);
 
   let html = `<div class="reward-balance">
-    <b>🎁 Your Reward Points</b>
+    <b>ðŸŽ Your Reward Points</b>
     <div>Points from this order: <b>${earned}</b></div>
     <div>Already used: <b>${used}</b></div>
     <div>Available to claim now: <b>${available}</b></div>
   </div>`;
 
   if(claimedRewards.length){
-    html += `<h4>✅ Claimed Free Items</h4>`;
+    html += `<h4>âœ… Claimed Free Items</h4>`;
     html += claimedRewards.map(r=>`<div class="claimed-reward">
       <span>${r.emoji} ${r.name}<br><small>${r.points} points used</small></span>
       <button onclick="removeReward('${r.id}')">Remove</button>
     </div>`).join("");
   }
 
-  html += `<h4>🎁 You Can Claim Now</h4>`;
+  html += `<h4>ðŸŽ You Can Claim Now</h4>`;
   if(claimable.length){
     html += claimable.map(r=>`<div class="reward-option">
       <div><b>${r.emoji} ${r.name}</b><br><small>${r.points} points required</small></div>
@@ -588,13 +588,13 @@ function renderCartRewards(){
     html += `<div class="reward-info">No free item available yet. Keep adding products to unlock rewards.</div>`;
   }
 
-  html += `<h4>🔓 Next Rewards</h4>`;
+  html += `<h4>ðŸ”“ Next Rewards</h4>`;
   if(nextRewards.length){
     html += nextRewards.map(r=>{
       const need = Math.max(0, r.points - available);
       const spendNeed = Math.ceil(need / 10);
       return `<div class="reward-option locked">
-        <div><b>${r.emoji} ${r.name}</b><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
+        <div><b>${r.emoji} ${r.name}</b><br><small>Need ${need} more points / approx Â£${spendNeed} more spend</small></div>
         <button disabled>${r.points} pts</button>
       </div>`;
     }).join("");
@@ -657,14 +657,14 @@ function renderCartRewards(){
   const next = nextUnlockReward();
 
   let html = `<div class="reward-summary-card">
-    <div class="reward-summary-title">🎁 Free Gift Rewards</div>
+    <div class="reward-summary-title">ðŸŽ Free Gift Rewards</div>
     <div class="reward-line"><span>Total points from this order</span><b>${earned}</b></div>
     <div class="reward-line"><span>Points used for gifts</span><b>${used}</b></div>
     <div class="reward-line strong"><span>Points remaining</span><b>${available}</b></div>
   `;
 
   if(claimedRewards.length){
-    html += `<h4>✅ Claimed Free Gifts</h4>`;
+    html += `<h4>âœ… Claimed Free Gifts</h4>`;
     html += `<div class="claimed-gift-grid">`;
     html += claimedRewards.map(r=>`<div class="claimed-gift-card">
       <img src="${r.image}" alt="${r.name}">
@@ -674,7 +674,7 @@ function renderCartRewards(){
     html += `</div>`;
   }
 
-  html += `<h4>🎁 Choose Free Gifts</h4>
+  html += `<h4>ðŸŽ Choose Free Gifts</h4>
   <p class="reward-help">You can claim again and again while you have enough points.</p>
   <div class="gift-grid">`;
 
@@ -696,7 +696,7 @@ function renderCartRewards(){
     const progress = Math.max(0, Math.min(100, Math.round((available / next.points) * 100)));
     html += `<div class="next-reward-box">
       <img src="${next.image}" alt="${next.name}">
-      <div><b>Next Gift</b><br><span>${next.name}</span><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
+      <div><b>Next Gift</b><br><span>${next.name}</span><br><small>Need ${need} more points / approx Â£${spendNeed} more spend</small></div>
     </div>
     <div class="reward-progress"><div style="width:${progress}%"></div></div>
     <div class="reward-progress-label">${available} / ${next.points} remaining points</div>`;
@@ -709,7 +709,7 @@ function renderCartRewards(){
   html += `<div class="reward-ladder">
     <b>Reward List</b>
     ${FIXED_REWARDS.map(r => `<div class="${available >= r.points ? 'unlocked' : 'locked'}">
-      <span>${available >= r.points ? '✅' : '🔒'} ${r.points} pts</span><span>${r.emoji} ${r.name}</span>
+      <span>${available >= r.points ? 'âœ…' : 'ðŸ”’'} ${r.points} pts</span><span>${r.emoji} ${r.name}</span>
     </div>`).join("")}
   </div>`;
 
@@ -727,13 +727,13 @@ function renderCart(){
 
   const requestedHtml = requestedCart.map((r,i)=>`<div class="cart-item requested-item">
     <div class="request-icon">?</div>
-    <div><b>${r.name}</b><br><small>Requested item • Price to be confirmed</small></div>
+    <div><b>${r.name}</b><br><small>Requested item â€¢ Price to be confirmed</small></div>
     <button class="remove-request" onclick="removeRequestedItem(${i})">Remove</button>
   </div>`).join("");
 
   const rewardHtml = claimedRewards.map(r=>`<div class="cart-item reward-cart-item">
     <img class="mini-img" src="${r.image}" alt="${r.name}">
-    <div><b>${r.name}</b><br><small>Free gift • ${r.points} points used</small></div>
+    <div><b>${r.name}</b><br><small>Free gift â€¢ ${r.points} points used</small></div>
     <b>FREE</b>
   </div>`).join("");
 
@@ -772,26 +772,26 @@ function deliveryChargeByRules(distance, orderValue){
 
   if(distance <= 3){
     if(orderValue >= 50){
-      return {allowed:true, charge:0, message:"✅ Delivery available. Within 3 miles and order is £50+, so delivery is FREE."};
+      return {allowed:true, charge:0, message:"âœ… Delivery available. Within 3 miles and order is Â£50+, so delivery is FREE."};
     }
-    return {allowed:true, charge:3, message:"✅ Delivery available. Within 3 miles. Delivery charge is £3. Spend £50+ for free delivery."};
+    return {allowed:true, charge:3, message:"âœ… Delivery available. Within 3 miles. Delivery charge is Â£3. Spend Â£50+ for free delivery."};
   }
 
   if(distance <= 10){
     if(orderValue >= 200){
-      return {allowed:true, charge:0, message:"✅ Delivery available. Within 10 miles and order is £200+, so delivery is FREE."};
+      return {allowed:true, charge:0, message:"âœ… Delivery available. Within 10 miles and order is Â£200+, so delivery is FREE."};
     }
-    return {allowed:true, charge:10, message:"✅ Delivery available. 3–10 miles. Delivery charge is £10. Spend £200+ for free delivery."};
+    return {allowed:true, charge:10, message:"âœ… Delivery available. 3â€“10 miles. Delivery charge is Â£10. Spend Â£200+ for free delivery."};
   }
 
   if(distance <= 20){
     if(orderValue >= 200){
-      return {allowed:true, charge:10, message:"✅ Delivery available. 10–20 miles and order is £200+, delivery charge is £10."};
+      return {allowed:true, charge:10, message:"âœ… Delivery available. 10â€“20 miles and order is Â£200+, delivery charge is Â£10."};
     }
-    return {allowed:false, charge:0, message:"❌ Delivery is not available for this postcode unless order is £200+. Collection only for this order."};
+    return {allowed:false, charge:0, message:"âŒ Delivery is not available for this postcode unless order is Â£200+. Collection only for this order."};
   }
 
-  return {allowed:false, charge:0, message:"❌ This postcode is outside our delivery area. Collection only from 203 Willows Lane, Bolton, BL3 4AZ."};
+  return {allowed:false, charge:0, message:"âŒ This postcode is outside our delivery area. Collection only from 203 Willows Lane, Bolton, BL3 4AZ."};
 }
 
 function checkPostcodeDistance(){
@@ -847,7 +847,7 @@ function updateDelivery(){
       postcodeBox.value = "";
       postcodeBox.required = false;
     }
-    msg = "📦 Collection selected. Name and WhatsApp number only. Collection point: 203 Willows Lane, Bolton, BL3 4AZ. Collection time will be confirmed via WhatsApp.";
+    msg = "ðŸ“¦ Collection selected. Name and WhatsApp number only. Collection point: 203 Willows Lane, Bolton, BL3 4AZ. Collection time will be confirmed via WhatsApp.";
     document.getElementById("deliveryCharge").innerText = money(0);
   }else{
     if(deliveryNotice) deliveryNotice.style.display = "block";
@@ -859,7 +859,7 @@ function updateDelivery(){
       postcodeBox.style.display = "block";
       postcodeBox.required = true;
     }
-    msg = "🚚 " + tr("deliverySelected");
+    msg = "ðŸšš " + tr("deliverySelected");
     document.getElementById("deliveryCharge").innerText = tr("mayApply");
   }
 
@@ -962,7 +962,7 @@ function sendWhatsAppOrder(){
       rewards: claimedRewards.map(x => ({
         name: x.name,
         points: x.points,
-        emoji: x.emoji || "🎁",
+        emoji: x.emoji || "ðŸŽ",
         image: x.image || ""
       })),
       rewardPointsUsed: rewardPointsUsed,
@@ -985,22 +985,22 @@ function sendWhatsAppOrder(){
     const basePath = location.href.split("#")[0].replace(/index\.html.*$/,"");
     const orderPageLink = `${basePath}order.html#data=${encoded}`;
 
-    let msg = `🛒 CHENNAI EXPRESS ORDER\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `👤 Customer: ${name}\n`;
-    msg += `📱 WhatsApp: ${phone}\n`;
-    if(postcode) msg += `📍 Postcode: ${postcode}\n`;
-    msg += `🚚 Order Type: ${type}\n`;
+    let msg = `ðŸ›’ CHENNAI EXPRESS ORDER\n`;
+    msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n\n`;
+    msg += `ðŸ‘¤ Customer: ${name}\n`;
+    msg += `ðŸ“± WhatsApp: ${phone}\n`;
+    if(postcode) msg += `ðŸ“ Postcode: ${postcode}\n`;
+    msg += `ðŸšš Order Type: ${type}\n`;
     if(type === "Delivery"){
-      msg += `ℹ️ Delivery charge may apply. We will confirm delivery charge and delivery time via WhatsApp.\n`;
+      msg += `â„¹ï¸ Delivery charge may apply. We will confirm delivery charge and delivery time via WhatsApp.\n`;
     }else{
-      msg += `📦 Collection point: 203 Willows Lane, Bolton, BL3 4AZ\n`;
-      msg += `🕒 Collection hours: Tuesday – Sunday 11:00 AM – 9:00 PM. Monday Closed.\n`;
+      msg += `ðŸ“¦ Collection point: 203 Willows Lane, Bolton, BL3 4AZ\n`;
+      msg += `ðŸ•’ Collection hours: Tuesday â€“ Sunday 11:00 AM â€“ 9:00 PM. Monday Closed.\n`;
     }
-    if(address) msg += `🏠 Address: ${address}\n`;
+    if(address) msg += `ðŸ  Address: ${address}\n`;
 
-    msg += `\n🕒 COLLECTION / DELIVERY TIME\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `\nðŸ•’ COLLECTION / DELIVERY TIME\n`;
+    msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n`;
     if(type === "Collection"){
       msg += `Collection Point: ${STORE_COLLECTION_INFO.collectionPoint}\n`;
       msg += `Collection Hours: ${STORE_COLLECTION_INFO.collectionHours}\n`;
@@ -1012,8 +1012,8 @@ function sendWhatsAppOrder(){
     }
 
     if(lines.length){
-      msg += `\n🧾 PAID ITEMS\n`;
-      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `\nðŸ§¾ PAID ITEMS\n`;
+      msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n`;
       lines.forEach((x,i)=> {
         msg += `${i+1}. ${x.qty} x ${x.p.name}\n`;
         msg += `   ${money(priceOf(x.p))} each = ${money(priceOf(x.p)*x.qty)}\n`;
@@ -1021,16 +1021,16 @@ function sendWhatsAppOrder(){
     }
 
     if(requestedCart.length){
-      msg += `\n🔎 CUSTOMER REQUESTED ITEMS\n`;
-      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `\nðŸ”Ž CUSTOMER REQUESTED ITEMS\n`;
+      msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n`;
       requestedCart.forEach((r,i)=> {
         msg += `${i+1}. ${r.name} - Price to be confirmed\n`;
       });
     }
 
     if(claimedRewards.length){
-      msg += `\n🎁 FREE GIFTS CLAIMED\n`;
-      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      msg += `\nðŸŽ FREE GIFTS CLAIMED\n`;
+      msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n`;
       claimedRewards.forEach((r,i)=> {
         msg += `${i+1}. ${r.name} - FREE (${r.points} points used)\n`;
       });
@@ -1038,23 +1038,23 @@ function sendWhatsAppOrder(){
       msg += `Reward Points Remaining: ${rewardPointsRemaining}\n`;
     }
 
-    msg += `\n💷 SUMMARY\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `\nðŸ’· SUMMARY\n`;
+    msg += `â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\n`;
     msg += `Subtotal: ${money(subtotal())}\n`;
     msg += `Delivery: ${type === "Delivery" ? "May apply - to be confirmed" : money(0)}\n`;
     msg += `TOTAL: ${money((d.total || subtotal()))}\n`;
     if(requestedCart.length) msg += `Requested items are not included in total.\n`;
-    msg += `\n💳 Payment Method: ${paymentMethod}\n`;
+    msg += `\nðŸ’³ Payment Method: ${paymentMethod}\n`;
     if(paymentMethod === "Bank Transfer"){
-      msg += `\n🏦 BANK TRANSFER DETAILS\n`;
+      msg += `\nðŸ¦ BANK TRANSFER DETAILS\n`;
       msg += `Bank Name: ${BANK_TRANSFER_DETAILS.bankName}\n`;
       msg += `Account Name: ${BANK_TRANSFER_DETAILS.accountName}\n`;
       msg += `Sort Code: ${BANK_TRANSFER_DETAILS.sortCode}\n`;
       msg += `Account Number: ${BANK_TRANSFER_DETAILS.accountNumber}\n`;
       msg += `Reference: ${BANK_TRANSFER_DETAILS.reference}\n`;
     }
-    if(notes) msg += `📝 Notes: ${notes}\n`;
-    msg += `\n🔗 Order Preview Page:\n${orderPageLink}\n`;
+    if(notes) msg += `ðŸ“ Notes: ${notes}\n`;
+    msg += `\nðŸ”— Order Preview Page:\n${orderPageLink}\n`;
     msg += `\nThank you.`;
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
@@ -1080,7 +1080,7 @@ function addRequestedItemToCart(){
   renderCart();
   const msgBox = document.getElementById("requestAddedMsg");
   if(msgBox){
-    msgBox.innerHTML = `✅ <b>${item}</b> has been added to your cart as a requested item.<br>Need another product? Type it above and add again.`;
+    msgBox.innerHTML = `âœ… <b>${item}</b> has been added to your cart as a requested item.<br>Need another product? Type it above and add again.`;
     msgBox.classList.add("show");
   }
   showToast(`${item} added to cart as requested item`);
@@ -1125,21 +1125,21 @@ function openProductPage(id){
   modal.innerHTML = `
     <div class="product-detail" id="productDetailContent">
       <div class="detail-header">
-        <button onclick="closeProductPage()">← Back</button>
-        <button onclick="closeProductPage()">✕</button>
+        <button onclick="closeProductPage()">â† Back</button>
+        <button onclick="closeProductPage()">âœ•</button>
       </div>
       <img class="detail-img" src="${p.image}" alt="${p.name}">
       ${p.badge ? `<div class="detail-badge">${p.badge}</div>` : ""}
       <h1>${p.name}</h1>
-      <p class="detail-category">${p.category} • ${p.subcategory} • ${p.pack}</p>
+      <p class="detail-category">${p.category} â€¢ ${p.subcategory} â€¢ ${p.pack}</p>
       <div class="detail-price">${old}<span>${money(priceOf(p))}</span></div>
-      <p class="detail-stock">${p.stock === "In Stock" ? "✅ In Stock" : "❌ Out of Stock"}</p>
+      <p class="detail-stock">${p.stock === "In Stock" ? "âœ… In Stock" : "âŒ Out of Stock"}</p>
       <p class="detail-desc">${p.description || ""}</p>
       <div class="detail-actions">
         ${p.stock !== "In Stock" 
           ? `<button class="disabled-detail" disabled>${tr("outOfStock")}</button>`
           : qty > 0
-            ? `<div class="detail-qty"><button onclick="changeQty(${p.id},-1); refreshProductPageTop(${p.id})">−</button><b>${qty}</b><button onclick="addToCart(${p.id}); refreshProductPageTop(${p.id})">+</button></div>`
+            ? `<div class="detail-qty"><button onclick="changeQty(${p.id},-1); refreshProductPageTop(${p.id})">âˆ’</button><b>${qty}</b><button onclick="addToCart(${p.id}); refreshProductPageTop(${p.id})">+</button></div>`
             : `<button class="detail-add" onclick="addToCart(${p.id}); refreshProductPageTop(${p.id})">${tr("addToCart")}</button>`
         }
         <div class="detail-added-note">Cart updates automatically</div>
@@ -1162,13 +1162,13 @@ function relatedCard(r){
   const qty = cart[r.id] || 0;
   return `
     <div class="related-card ${qty>0?'selected-related':''}">
-      ${qty>0?`<div class="related-added">✓ ${qty}</div>`:""}
+      ${qty>0?`<div class="related-added">âœ“ ${qty}</div>`:""}
       <img src="${r.image}" onclick="openProductPageFromRelated(${r.id})">
       <b onclick="openProductPageFromRelated(${r.id})">${r.name}</b>
       <span>${money(priceOf(r))}</span>
       ${qty>0 
         ? `<div class="related-qty">
-            <button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; changeQty(${r.id},-1); refreshProductPageKeepRelated(window.currentProductDetailId)">−</button>
+            <button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; changeQty(${r.id},-1); refreshProductPageKeepRelated(window.currentProductDetailId)">âˆ’</button>
             <b>${qty}</b>
             <button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; addToCart(${r.id}); refreshProductPageKeepRelated(window.currentProductDetailId)">+</button>
           </div>`
@@ -1239,11 +1239,11 @@ function toggleMenu(){
   m.id = "quickMenu";
   m.className = "quick-menu";
   m.innerHTML = `
-    <button onclick="setCategory('Restaurant Food'); toggleMenu()">🍛 Restaurant Food</button>
-    <button onclick="setCategory('Grocery'); toggleMenu()">🛒 Grocery</button>
-    <button onclick="scrollToOffers(); toggleMenu()">🏷️ Offers</button>
-    <button onclick="scrollToRewards(); toggleMenu()">🎁 Rewards</button>
-    <button onclick="document.querySelector('.request-box').scrollIntoView({behavior:'smooth'}); toggleMenu()">🔎 Request Item</button>
+    <button onclick="setCategory('Restaurant Food'); toggleMenu()">ðŸ› Restaurant Food</button>
+    <button onclick="setCategory('Grocery'); toggleMenu()">ðŸ›’ Grocery</button>
+    <button onclick="scrollToOffers(); toggleMenu()">ðŸ·ï¸ Offers</button>
+    <button onclick="scrollToRewards(); toggleMenu()">ðŸŽ Rewards</button>
+    <button onclick="document.querySelector('.request-box').scrollIntoView({behavior:'smooth'}); toggleMenu()">ðŸ”Ž Request Item</button>
   `;
   document.body.appendChild(m);
 }
@@ -1262,3 +1262,4 @@ function showToast(text){
 }
 
 init();
+

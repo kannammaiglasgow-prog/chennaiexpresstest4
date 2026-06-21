@@ -1,5 +1,5 @@
-const PROFIT_MARKUP = 1.40;
-const PRODUCT_PLACEHOLDER_IMAGE = "assets/product-placeholder.svg";
+﻿const PROFIT_MARKUP = 1.40;
+const PRODUCT_PLACEHOLDER_IMAGE = "data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A";
 
 function retailPrice(amount, invoiceQty, unitsPerCase){
   const totalUnits = Number(invoiceQty || 1) * Number(unitsPerCase || 1);
@@ -112,7 +112,7 @@ const PRODUCTS = INVOICE_PRODUCTS.map((row, index) => {
     pack,
     stock: "In Stock",
     badge: "",
-    emoji: "🛒",
+    emoji: "ðŸ›’",
     description: `${pack} pack. Price includes 40% profit from invoice cost.`,
     image: PRODUCT_PLACEHOLDER_IMAGE,
     invoice_amount: amount,
@@ -120,3 +120,4 @@ const PRODUCTS = INVOICE_PRODUCTS.map((row, index) => {
     units_per_case: unitsPerCase
   };
 });
+
