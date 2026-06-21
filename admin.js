@@ -110,6 +110,42 @@ function dbProductToAdmin(p){
   };
 }
 
+function localProductToAdmin(p){
+  return {
+    db_id:null,
+    sku:p.sku || `LOCAL-${p.id || ""}`,
+    name:p.name || "",
+    category:p.category || "",
+    subcategory:p.subcategory || "",
+    description:p.description || "",
+    price:Number(p.offer_price || p.price || 0),
+    normal_price:Number(p.price || 0),
+    offer_price:p.offer_price || null,
+    pack_size:p.pack || p.pack_size || "",
+    image:p.image || "",
+    stock_qty:Number(p.stock_qty || p.units_per_case || 1),
+    stock_status:p.stock === "Out of Stock" ? "out_of_stock" : "in_stock",
+    is_best_seller:false,
+    is_special_offer:!!p.offer_price,
+    allergy_information:"",
+    ingredients:"",
+    is_vegetarian:"",
+    is_halal:""
+  };
+}
+
+function loadLocalProductsFallback(message){
+  if(Array.isArray(window.PRODUCTS) && window.PRODUCTS.length){
+    products = window.PRODUCTS.map(localProductToAdmin);
+    renderProducts();
+    renderDashboard();
+    return true;
+  }
+  const productList = document.getElementById("productList");
+  if(productList && message) productList.innerHTML = `<div class="card"><b>Products not loaded</b><p>${message}</p></div>`;
+  return false;
+}
+
 function adminProductToDb(p){
   const normalPrice = numberOrNull(p.normal_price) ?? numberOrNull(p.price) ?? 0;
   const offerPrice = numberOrNull(p.offer_price);
@@ -138,7 +174,13 @@ function adminProductToDb(p){
 
 async function loadProductsFromSupabase(){
   const productList = document.getElementById("productList");
+  if(loadLocalProductsFallback("Showing local invoice products from products.js.")) return;
   if(productList) productList.innerHTML = "<p>Loading products from Supabase...</p>";
+
+  if(typeof ceSupabase === "undefined" || !ceSupabase){
+    loadLocalProductsFallback("Showing local invoice products from products.js.");
+    return;
+  }
 
   const {data, error} = await ceSupabase
     .from("products")
@@ -147,13 +189,13 @@ async function loadProductsFromSupabase(){
 
   if(error){
     console.error(error);
-    if(productList){
-      productList.innerHTML = `<div class="card"><b>Supabase Error</b><p>${error.message}</p><p>Run supabase/schema.sql first.</p></div>`;
-    }
+    if(loadLocalProductsFallback("Supabase unavailable. Showing local invoice products from products.js.")) return;
+    if(productList) productList.innerHTML = `<div class="card"><b>Supabase Error</b><p>${error.message}</p><p>Run supabase/schema.sql first.</p></div>`;
     return;
   }
 
   products = (data || []).map(dbProductToAdmin);
+  if(!products.length && loadLocalProductsFallback("Supabase products table is empty. Showing local invoice products from products.js.")) return;
   renderProducts();
   renderDashboard();
 }
