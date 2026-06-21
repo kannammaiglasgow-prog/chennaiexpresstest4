@@ -242,7 +242,38 @@ function save(){
 function priceOf(p){ return p.offer_price || p.price; }
 function categories(){ return ["All", ...new Set(PRODUCTS.map(p=>p.category))]; }
 
+function updatePaymentBox(){
+  const box = document.getElementById("bankDetailsBox");
+  if(!box) return;
+  const selected = document.querySelector("input[name='paymentMethod']:checked");
+  const method = selected ? selected.value : "Cash";
+  if(method !== "Bank Transfer"){
+    box.innerHTML = "";
+    box.style.display = "none";
+    return;
+  }
+  box.style.display = "block";
+  box.innerHTML = `
+    <p><b>Bank:</b> ${escapeHtmlText(BANK_TRANSFER_DETAILS.bankName)}</p>
+    <p><b>Name:</b> ${escapeHtmlText(BANK_TRANSFER_DETAILS.accountName)}</p>
+    <p><b>Sort Code:</b> ${escapeHtmlText(BANK_TRANSFER_DETAILS.sortCode)}</p>
+    <p><b>Account:</b> ${escapeHtmlText(BANK_TRANSFER_DETAILS.accountNumber)}</p>
+    <p><b>Reference:</b> ${escapeHtmlText(BANK_TRANSFER_DETAILS.reference)}</p>`;
+}
+
+function loadAdminProductOverrides(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("ce_admin_products") || "null");
+    if(Array.isArray(saved) && saved.length && Array.isArray(PRODUCTS)){
+      PRODUCTS.splice(0, PRODUCTS.length, ...saved);
+    }
+  }catch(e){
+    console.warn("Could not load admin product changes", e);
+  }
+}
+
 function init(){
+  loadAdminProductOverrides();
   const catBox = document.getElementById("categoryButtons");
   if(catBox){
     catBox.innerHTML = "";

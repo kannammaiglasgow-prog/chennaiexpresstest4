@@ -1,6 +1,7 @@
 
 let products = [];
 let pendingImageUpload = null;
+const ADMIN_PRODUCTS_STORAGE_KEY = "ce_admin_products";
 let orders = [
   {
     order_id:"CE-DEMO-0001",
@@ -113,6 +114,7 @@ function dbProductToAdmin(p){
 function localProductToAdmin(p){
   return {
     db_id:null,
+    frontend_id:p.id || null,
     sku:p.sku || `LOCAL-${p.id || ""}`,
     name:p.name || "",
     category:p.category || "",
@@ -127,6 +129,9 @@ function localProductToAdmin(p){
     stock_status:p.stock === "Out of Stock" ? "out_of_stock" : "in_stock",
     is_best_seller:false,
     is_special_offer:!!p.offer_price,
+    invoice_amount:p.invoice_amount,
+    invoice_qty:p.invoice_qty,
+    units_per_case:p.units_per_case,
     allergy_information:"",
     ingredients:"",
     is_vegetarian:"",
@@ -134,9 +139,49 @@ function localProductToAdmin(p){
   };
 }
 
+function adminProductToFrontend(p, index){
+  const normalPrice = numberOrNull(p.normal_price) ?? numberOrNull(p.price) ?? 0;
+  const offerPrice = numberOrNull(p.offer_price);
+  return {
+    id:p.frontend_id || p.id || index + 1,
+    sku:p.sku || `CE-${String(index + 1).padStart(3,"0")}`,
+    name:p.name || "",
+    category:p.category || "Grocery",
+    subcategory:p.subcategory || "",
+    price:normalPrice,
+    offer_price:offerPrice,
+    pack:p.pack_size || p.pack || "",
+    stock:p.stock_status === "out_of_stock" ? "Out of Stock" : "In Stock",
+    badge:p.is_special_offer || offerPrice ? "Special Offer" : (p.is_best_seller ? "Best Seller" : ""),
+    emoji:"🛒",
+    description:p.description || "",
+    image:p.image || "",
+    invoice_amount:p.invoice_amount,
+    invoice_qty:p.invoice_qty,
+    units_per_case:p.units_per_case
+  };
+}
+
+function saveProductsToLocalStore(){
+  const frontendProducts = products.map(adminProductToFrontend);
+  localStorage.setItem(ADMIN_PRODUCTS_STORAGE_KEY, JSON.stringify(frontendProducts));
+}
+
+function loadSavedFrontendProducts(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(ADMIN_PRODUCTS_STORAGE_KEY) || "null");
+    return Array.isArray(saved) && saved.length ? saved : null;
+  }catch(e){
+    console.warn("Could not load saved admin products", e);
+    return null;
+  }
+}
+
 function loadLocalProductsFallback(message){
-  if(Array.isArray(window.PRODUCTS) && window.PRODUCTS.length){
-    products = window.PRODUCTS.map(localProductToAdmin);
+  const fileProducts = typeof PRODUCTS !== "undefined" ? PRODUCTS : window.PRODUCTS;
+  const sourceProducts = loadSavedFrontendProducts() || fileProducts;
+  if(Array.isArray(sourceProducts) && sourceProducts.length){
+    products = sourceProducts.map(localProductToAdmin);
     renderProducts();
     renderDashboard();
     return true;
@@ -184,7 +229,8 @@ async function saveProductToSupabase(index){
     return false;
   }
   products[index] = p;
-  alert("Product saved in this admin page session. For permanent website changes, update products.js and upload to GitHub.");
+  saveProductsToLocalStore();
+  alert("Product saved. Shop page refresh pannina same browser-la reflect aagum.");
   renderProducts();
   closeProductEditor();
   return true;
@@ -196,12 +242,21 @@ async function deleteProductFromSupabase(index){
   if(!confirm(`Delete product: ${p.name}?`)) return;
 
   products.splice(index,1);
+  saveProductsToLocalStore();
   renderProducts();
   renderDashboard();
 }
 
 async function uploadProductImage(file){
   if(!file) return null;
+  if(!window.ceSupabase || !ceSupabase.storage){
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => resolve(null);
+      reader.readAsDataURL(file);
+    });
+  }
   const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
   const path = `products/${Date.now()}_${Math.random().toString(36).slice(2)}_${safeName}`;
 
@@ -214,8 +269,15 @@ async function uploadProductImage(file){
     });
 
   if(error){
-    alert("Image upload failed. Make sure Supabase Storage bucket 'product-images' exists and is public. Error: " + error.message);
-    return null;
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => {
+        alert("Image upload failed: " + error.message);
+        resolve(null);
+      };
+      reader.readAsDataURL(file);
+    });
   }
 
   const {data} = ceSupabase.storage.from("product-images").getPublicUrl(path);
@@ -290,6 +352,7 @@ function addLocalProduct(){
     is_best_seller:false,
     is_special_offer:false
   });
+  saveProductsToLocalStore();
   renderProducts();
   openProductEditor(0);
 }
