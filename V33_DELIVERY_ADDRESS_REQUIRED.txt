@@ -1,0 +1,14 @@
+V33 Delivery Address Required
+
+Collection:
+- Name
+- WhatsApp number
+- No postcode
+- No address
+
+Delivery:
+- Name
+- WhatsApp number
+- Postcode required
+- Full delivery address required
+- Delivery charge may apply, confirmed via WhatsApp.

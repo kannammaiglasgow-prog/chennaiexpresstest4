@@ -1,0 +1,1264 @@
+const WHATSAPP_NUMBER = "447309736428";
+
+const STORE_COLLECTION_INFO = {
+  collectionPoint: "203 Willows Lane, Bolton, BL3 4AZ",
+  collectionHours: "Tuesday – Sunday: 11:00 AM – 9:00 PM",
+  closedDay: "Monday Closed",
+  timingNote: "After placing your order, we will confirm your collection or delivery time via WhatsApp."
+};
+
+const BANK_TRANSFER_DETAILS = {
+  bankName: "000",
+  accountName: "000",
+  sortCode: "00-00-00",
+  accountNumber: "00000000",
+  reference: "Use your name as reference"
+};
+
+const FIXED_REWARDS = [
+  {id:"chicken_roll", points:500, name:"Free Chicken Roll", emoji:"🌯", image:"assets/chicken-biryani-500x500.png"},
+  {id:"puttu_1kg", points:1000, name:"Free 1kg Puttu", emoji:"🥥", image:"assets/1kg-puttu-with-sambal-500x500.png"},
+  {id:"chicken_biryani", points:2000, name:"Free Chicken Biryani", emoji:"🍛", image:"assets/chicken-biryani-500x500.png"},
+  {id:"gingelly_oil", points:3000, name:"Free Gingelly Oil", emoji:"🛢️", image:"assets/gingelly-oil-1l-500x500.png"}
+];
+let cart = JSON.parse(localStorage.getItem("ce_cart") || "{}");
+let checkedDistanceMiles = null;
+let checkedPostcode = "";
+let requestedCart = JSON.parse(localStorage.getItem("ce_requested_cart") || "[]");
+let claimedRewards = JSON.parse(localStorage.getItem("ce_claimed_rewards") || "[]");
+let currentLanguage = "en";
+
+const I18N = {
+  en: {
+    restaurant:"Restaurant", grocery:"Grocery", search:"Search pannunga", searchPlaceholder:"Product name type pannunga...",
+    mostOrdered:"Popular Items", specialOffers:"Special Offers", offersNote:"Discount irukkura items mattum inge varum.",
+    allProducts:"All Products", allCategories:"All Categories", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free items claim pannalam.",
+    cantFind:"Item kidaikkalaya?", requestText:"Item name type panni cart-la add pannunga. Price WhatsApp-la confirm pannuvom.",
+    requestPlaceholder:"Example: MTR Rava Idli Mix", addRequest:"Request Cart-la Add pannunga", yourCart:"Ungal Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery Information",
+    deliveryNotice:"Delivery charge varalam. Order check pannitu WhatsApp-la charge/time confirm pannuvom.",
+    collectionInfo:"Collection Information", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order potta piragu collection or delivery time WhatsApp-la confirm pannuvom.",
+    customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Full delivery address with postcode", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp-ku Send pannunga", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart-la Add", outOfStock:"Stock illa", inStock:"Stock irukku",
+    rewardPoints:"Reward Points", emptyCart:"Cart empty-a irukku.", requestedItem:"Requested item • Price confirm pannuvom",
+    mayApply:"Confirm pannuvom", deliverySelected:"Delivery selected. Full address and postcode enter pannunga. Delivery charge WhatsApp-la confirm pannuvom."
+  },
+  ta: {
+    restaurant:"உணவகம்", grocery:"கிராசரி", search:"தேடு", searchPlaceholder:"பொருட்கள், பிராண்டுகள் தேடுங்கள்...",
+    mostOrdered:"இந்த வாரம் அதிகம் ஆர்டர் செய்தவை", specialOffers:"சிறப்பு சலுகைகள்", offersNote:"தள்ளுபடி பொருட்கள் மட்டும் இங்கே வரும்.",
+    allProducts:"அனைத்து பொருட்கள்", allCategories:"அனைத்து வகைகள்", rewardsShop:"ரிவார்ட்ஸ்", rewardsText:"£1 செலவு = 10 புள்ளிகள். இலவச பொருட்கள் பெறலாம்.",
+    cantFind:"தேவையான பொருள் கிடைக்கவில்லையா?", requestText:"பொருள் பெயரை type செய்து cart-ல் சேர்க்கவும். விலை WhatsApp-ல் உறுதி செய்யப்படும்.",
+    requestPlaceholder:"உதா: MTR Rava Idli Mix", addRequest:"Request-ஐ Cart-ல் சேர்க்க", yourCart:"உங்கள் Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery தகவல்",
+    deliveryNotice:"Delivery charge இருக்கலாம். உங்கள் order பார்த்த பிறகு WhatsApp-ல் charge/time confirm செய்வோம்.",
+    collectionInfo:"Collection தகவல்", collectionPoint:"Collection இடம்:", collectionHours:"Collection நேரம்:",
+    timingNote:"Order செய்த பிறகு collection அல்லது delivery time-ஐ WhatsApp-ல் confirm செய்வோம்.",
+    customerName:"Customer பெயர்", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Postcode உடன் முழு delivery address", paymentMethod:"Payment முறை", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"WhatsApp-க்கு Order அனுப்பு", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"சேர்", out:"இல்லை", addOffer:"சலுகையை சேர்", addToCart:"Cart-ல் சேர்", outOfStock:"Stock இல்லை", inStock:"Stock உள்ளது",
+    rewardPoints:"Reward Points", emptyCart:"உங்கள் cart காலியாக உள்ளது.", requestedItem:"Requested item • விலை உறுதி செய்யப்படும்",
+    mayApply:"இருக்கலாம்", deliverySelected:"Delivery தேர்வு செய்துள்ளீர்கள். முழு address மற்றும் postcode இடுங்கள். Delivery charge இருக்கலாம்; WhatsApp-ல் confirm செய்வோம்."
+  },
+  si: {
+    restaurant:"ආහාර", grocery:"සිල්ලර", search:"සොයන්න", searchPlaceholder:"නිෂ්පාදන සහ brands සොයන්න...",
+    mostOrdered:"මෙම සතියේ වැඩිම ඇණවුම්", specialOffers:"විශේෂ offers", offersNote:"Discount products පමණක් මෙහි පෙන්වයි.",
+    allProducts:"සියලු නිෂ්පාදන", allCategories:"සියලු වර්ග", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem කරන්න.",
+    cantFind:"ඔබට අවශ්‍ය item එක නැද්ද?", requestText:"Item name type කර cart එකට add කරන්න. Price WhatsApp හරහා confirm වේ.",
+    requestPlaceholder:"උදා: MTR Rava Idli Mix", addRequest:"Request Cart එකට add කරන්න", yourCart:"ඔබගේ Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery තොරතුරු",
+    deliveryNotice:"Delivery charge apply විය හැක. Order review කර WhatsApp හරහා charge/time confirm කරමු.",
+    collectionInfo:"Collection තොරතුරු", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order කිරීමෙන් පසු collection/delivery time WhatsApp හරහා confirm කරමු.",
+    customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Postcode සමග full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp කරන්න", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart එකට Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"Cart එක හිස්.", requestedItem:"Requested item • Price confirm වේ",
+    mayApply:"Apply විය හැක", deliverySelected:"Delivery selected. Full address සහ postcode ඇතුලත් කරන්න. Delivery charge WhatsApp හරහා confirm වේ."
+  },
+  ml: {
+    restaurant:"റെസ്റ്റോറന്റ്", grocery:"ഗ്രോസറി", search:"തിരയുക", searchPlaceholder:"ഉൽപ്പന്നങ്ങൾ, ബ്രാൻഡുകൾ തിരയുക...",
+    mostOrdered:"ഈ ആഴ്ച കൂടുതൽ ഓർഡർ ചെയ്തത്", specialOffers:"സ്പെഷ്യൽ ഓഫറുകൾ", offersNote:"Discount products മാത്രം ഇവിടെ കാണിക്കും.",
+    allProducts:"എല്ലാ ഉൽപ്പന്നങ്ങളും", allCategories:"എല്ലാ വിഭാഗങ്ങളും", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem ചെയ്യാം.",
+    cantFind:"ആവശ്യമായ item കിട്ടിയില്ലേ?", requestText:"Item name type ചെയ്ത് cart-ൽ add ചെയ്യുക. Price WhatsApp-ൽ confirm ചെയ്യും.",
+    requestPlaceholder:"ഉദാ: MTR Rava Idli Mix", addRequest:"Request Cart-ൽ Add ചെയ്യുക", yourCart:"നിങ്ങളുടെ Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery വിവരം",
+    deliveryNotice:"Delivery charge apply ആകാം. Order review ചെയ്ത ശേഷം WhatsApp-ൽ charge/time confirm ചെയ്യും.",
+    collectionInfo:"Collection വിവരം", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order ചെയ്ത ശേഷം collection/delivery time WhatsApp-ൽ confirm ചെയ്യും.",
+    customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Postcode ഉൾപ്പെടെ full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp-ലേക്ക് അയയ്ക്കുക", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart-ൽ Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"Cart കാലിയാണ്.", requestedItem:"Requested item • Price confirm ചെയ്യും",
+    mayApply:"Apply ആകാം", deliverySelected:"Delivery selected. Full address and postcode enter ചെയ്യുക. Delivery charge WhatsApp-ൽ confirm ചെയ്യും."
+  },
+  te: {
+    restaurant:"రెస్టారెంట్", grocery:"గ్రోసరీ", search:"వెతకండి", searchPlaceholder:"ప్రొడక్ట్స్, బ్రాండ్స్ వెతకండి...",
+    mostOrdered:"ఈ వారం ఎక్కువగా ఆర్డర్ చేసినవి", specialOffers:"స్పెషల్ ఆఫర్స్", offersNote:"Discount products మాత్రమే ఇక్కడ కనిపిస్తాయి.",
+    allProducts:"అన్ని ప్రొడక్ట్స్", allCategories:"అన్ని కేటగిరీలు", rewardsShop:"Rewards", rewardsText:"£1 spend = 10 points. Free products redeem చేయండి.",
+    cantFind:"మీకు కావాల్సిన item దొరకలేదా?", requestText:"Item name type చేసి cart లో add చేయండి. Price WhatsApp లో confirm చేస్తాము.",
+    requestPlaceholder:"ఉదా: MTR Rava Idli Mix", addRequest:"Request Cart లో Add చేయండి", yourCart:"మీ Cart", subtotal:"Subtotal",
+    checkout:"Checkout", collection:"Collection", delivery:"Delivery", deliveryInfo:"Delivery సమాచారం",
+    deliveryNotice:"Delivery charge apply కావచ్చు. Order review తర్వాత WhatsApp లో charge/time confirm చేస్తాము.",
+    collectionInfo:"Collection సమాచారం", collectionPoint:"Collection Point:", collectionHours:"Collection Hours:",
+    timingNote:"Order చేసిన తర్వాత collection/delivery time WhatsApp లో confirm చేస్తాము.",
+    customerName:"Customer name", postcode:"Delivery postcode e.g. BL3 4AZ", whatsappNumber:"Customer WhatsApp number",
+    address:"Postcode తో full delivery address", paymentMethod:"Payment Method", cash:"Cash", card:"Card", bankTransfer:"Bank Transfer",
+    notes:"Customer notes optional", total:"Total", sendWhatsapp:"Order WhatsApp కి పంపండి", home:"Home", products:"Products", rewards:"Rewards", cart:"Cart",
+    add:"Add", out:"Out", addOffer:"Offer Add", addToCart:"Cart లో Add", outOfStock:"Out of Stock", inStock:"In Stock",
+    rewardPoints:"Reward Points", emptyCart:"మీ cart ఖాళీగా ఉంది.", requestedItem:"Requested item • Price confirm చేస్తాము",
+    mayApply:"Apply కావచ్చు", deliverySelected:"Delivery selected. Full address and postcode enter చేయండి. Delivery charge WhatsApp లో confirm చేస్తాము."
+  }
+};
+
+function tr(key){
+  return (I18N[currentLanguage] && I18N[currentLanguage][key]) || I18N.en[key] || key;
+}
+
+function setLanguage(lang){
+  currentLanguage = I18N[lang] ? lang : "en";
+  localStorage.setItem("ce_language", currentLanguage);
+  applyLanguage();
+  renderMostOrdered();
+  renderSpecialOffers();
+  renderOfferSlider();
+  renderProducts();
+  renderTopSearchResults();
+  if(document.getElementById("cartDrawer").classList.contains("open")) renderCart();
+}
+
+function applyLanguage(){
+  const select = document.getElementById("languageSelect");
+  if(select) select.value = currentLanguage;
+  document.documentElement.lang = currentLanguage;
+  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = tr(el.dataset.i18n); });
+  document.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = tr(el.dataset.i18nPlaceholder); });
+
+  const catButtons = document.querySelectorAll(".category-strip button");
+  if(catButtons[0]) catButtons[0].innerHTML = `ðŸ› ${tr("restaurant")}`;
+  if(catButtons[1]) catButtons[1].innerHTML = `ðŸ›’ ${tr("grocery")}`;
+
+  const sectionTitles = document.querySelectorAll(".section-title h2");
+  if(sectionTitles[0]) sectionTitles[0].innerHTML = `ðŸ”¥ ${tr("mostOrdered")}`;
+  const offerTitle = document.querySelector(".offers-section h2");
+  if(offerTitle) offerTitle.innerHTML = `ðŸ·ï¸ ${tr("specialOffers")}`;
+  const rewardsTitle = document.querySelector(".rewards h2");
+  if(rewardsTitle) rewardsTitle.innerHTML = `ðŸŽ ${tr("rewardsShop")}`;
+
+  const requestTitle = document.querySelector(".request-box h2");
+  if(requestTitle) requestTitle.textContent = tr("cantFind");
+  const requestText = document.querySelector(".request-box p");
+  if(requestText) requestText.textContent = tr("requestText");
+  const requestButton = document.querySelector(".request-box button");
+  if(requestButton) requestButton.textContent = tr("addRequest");
+
+  const cartTitle = document.querySelector(".cart-header h2");
+  if(cartTitle) cartTitle.textContent = tr("yourCart");
+  const checkoutTitle = document.querySelector(".checkout h3");
+  if(checkoutTitle) checkoutTitle.textContent = tr("checkout");
+  const checkoutLabels = document.querySelectorAll(".checkout label");
+  if(checkoutLabels[0]) checkoutLabels[0].lastChild.textContent = ` ${tr("collection")}`;
+  if(checkoutLabels[1]) checkoutLabels[1].lastChild.textContent = ` ${tr("delivery")}`;
+
+  const deliveryInfo = document.querySelector("#deliveryNoticeBox");
+  if(deliveryInfo) deliveryInfo.innerHTML = `<b>ðŸšš ${tr("deliveryInfo")}</b><br>${tr("deliveryNotice")}`;
+  const collectionBox = document.querySelector(".collection-info-box");
+  if(collectionBox){
+    collectionBox.innerHTML = `<h4>ðŸ“¦ ${tr("collectionInfo")}</h4>
+      <p><b>${tr("collectionPoint")}</b><br>203 Willows Lane, Bolton, BL3 4AZ</p>
+      <p><b>${tr("collectionHours")}</b><br>Tuesday â€“ Sunday: 11:00 AM â€“ 9:00 PM<br>Monday: Closed</p>
+      <p>${tr("timingNote")}</p>`;
+  }
+  const paymentTitle = document.querySelector(".payment-box h4");
+  if(paymentTitle) paymentTitle.textContent = tr("paymentMethod");
+  const paymentLabels = document.querySelectorAll(".payment-box label");
+  if(paymentLabels[0]) paymentLabels[0].lastChild.textContent = ` ${tr("cash")}`;
+  if(paymentLabels[1]) paymentLabels[1].lastChild.textContent = ` ${tr("card")}`;
+  if(paymentLabels[2]) paymentLabels[2].lastChild.textContent = ` ${tr("bankTransfer")}`;
+  const categoryFilter = document.getElementById("categoryFilter");
+  if(categoryFilter && categoryFilter.options[0]) categoryFilter.options[0].textContent = tr("allCategories");
+
+  const subtotalValue = document.getElementById("subtotal");
+  const subtotalWrap = subtotalValue && subtotalValue.parentElement;
+  if(subtotalWrap) subtotalWrap.innerHTML = `${tr("subtotal")}: <b id="subtotal">${subtotalValue.textContent}</b>`;
+  const deliveryCharge = document.getElementById("deliveryCharge");
+  const deliveryWrap = deliveryCharge && deliveryCharge.parentElement;
+  if(deliveryWrap) deliveryWrap.innerHTML = `${tr("delivery")}: <b id="deliveryCharge">${deliveryCharge.textContent}</b>`;
+  const totalValue = document.getElementById("total");
+  const totalWrap = totalValue && totalValue.parentElement;
+  if(totalWrap) totalWrap.innerHTML = `${tr("total")}: <b id="total">${totalValue.textContent}</b>`;
+
+  const customerName = document.getElementById("customerName");
+  if(customerName) customerName.placeholder = tr("customerName");
+  const postcode = document.getElementById("postcode");
+  if(postcode) postcode.placeholder = tr("postcode");
+  const whatsappNumber = document.getElementById("whatsappNumber");
+  if(whatsappNumber) whatsappNumber.placeholder = tr("whatsappNumber");
+  const address = document.getElementById("address");
+  if(address) address.placeholder = tr("address");
+  const notes = document.getElementById("notes");
+  if(notes) notes.placeholder = tr("notes");
+  const whatsappBtn = document.querySelector(".whatsapp-btn");
+  if(whatsappBtn) whatsappBtn.textContent = tr("sendWhatsapp");
+
+  const navLabels = document.querySelectorAll(".bottom-nav button");
+  if(navLabels[0]) navLabels[0].innerHTML = `ðŸ <br>${tr("home")}`;
+  if(navLabels[1]) navLabels[1].innerHTML = `â–¦<br>${tr("products")}`;
+  if(navLabels[2]) navLabels[2].innerHTML = `ðŸŽ<br>${tr("rewards")}`;
+  if(navLabels[3]) navLabels[3].innerHTML = `ðŸ›’<br>${tr("cart")}`;
+}
+
+document.addEventListener("error", function(event){
+  const img = event.target;
+  if(!img || img.tagName !== "IMG" || img.dataset.fallbackApplied) return;
+  img.dataset.fallbackApplied = "true";
+  const fallback = document.createElement("div");
+  fallback.className = `${img.className || ""} img-fallback`.trim();
+  fallback.setAttribute("role", "img");
+  fallback.setAttribute("aria-label", img.alt || "Product image");
+  fallback.innerHTML = `<span>${escapeHtmlText(img.alt || "Chennai Express")}</span>`;
+  img.replaceWith(fallback);
+}, true);
+
+function escapeHtmlText(v){
+  return String(v || "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+
+function money(v){ return "£" + Number(v || 0).toFixed(2); }
+function save(){ 
+  localStorage.setItem("ce_cart", JSON.stringify(cart)); 
+  localStorage.setItem("ce_requested_cart", JSON.stringify(requestedCart));
+  updateCartCount(); 
+}
+function priceOf(p){ return p.offer_price || p.price; }
+function categories(){ return ["All", ...new Set(PRODUCTS.map(p=>p.category))]; }
+
+function init(){
+  const catBox = document.getElementById("categoryButtons");
+  if(catBox){
+    catBox.innerHTML = "";
+  }
+  const sel = document.getElementById("categoryFilter");
+  sel.innerHTML = categories().map(c=>`<option value="${c}">${c}</option>`).join("");
+  renderMostOrdered();
+  renderSpecialOffers();
+  renderOfferSlider();
+  renderProducts();
+  updateCartCount();
+  updatePaymentBox();
+  applyLanguage();
+}
+function iconFor(c){
+  if(c.includes("Restaurant")) return "🍛";
+  if(c.includes("Grocery")) return "🛒";
+  if(c.includes("Household")) return "🏠";
+  if(c.includes("Pooja")) return "🕉️";
+  return "🛍️";
+}
+
+const SEARCH_RELATIONS = {
+  puttu: ["puttu","sambal","coconut","idiyappam","ready to eat","rice flour"],
+  pittu: ["puttu","sambal","coconut","idiyappam","ready to eat","rice flour"],
+  pepper: ["pepper","black pepper","crushed pepper","pepper powder","cumin","mustard","rasam","masala"],
+  milagu: ["pepper","black pepper","crushed pepper","pepper powder","cumin","mustard","rasam","masala"],
+  fish: ["fish","fish fry","fish curry","seafood","gingelly oil"],
+  chicken: ["chicken","chicken curry","chicken 65","biryani","necto"],
+  biryani: ["biryani","necto","pickle","chicken","mutton"],
+  lemon: ["lemon","lemon rice","pickle","rice mix"],
+  coffee: ["coffee","kappi","chukku","malli","tea"]
+};
+
+function normaliseText(v){
+  return String(v || "").toLowerCase().replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
+}
+function productText(p){
+  return normaliseText([p.name,p.category,p.subcategory,p.brand,p.description,p.pack].join(" "));
+}
+function searchTermsFor(q){
+  const n = normaliseText(q);
+  if(!n) return [];
+  let terms = [n, ...n.split(" ").filter(Boolean)];
+  Object.keys(SEARCH_RELATIONS).forEach(k=>{
+    if(n.includes(k)) terms.push(...SEARCH_RELATIONS[k]);
+  });
+  return [...new Set(terms.map(normaliseText).filter(Boolean))];
+}
+function smartSearchProducts(query, category){
+  const q = normaliseText(query);
+  const terms = searchTermsFor(q);
+  let rows = PRODUCTS.map(p=>{
+    const text = productText(p);
+    let score = 0;
+    let exact = false;
+    if(!q) score = 1;
+    if(category !== "All" && p.category === category) score += 2;
+    if(q && normaliseText(p.name).includes(q)){ score += 100; exact = true; }
+    terms.forEach(t=>{
+      if(normaliseText(p.name).includes(t)) score += 40;
+      else if(text.includes(t)) score += 14;
+    });
+    // related boost by category/subcategory
+    if(q.includes("puttu") && (p.subcategory.toLowerCase().includes("side") || p.name.toLowerCase().includes("sambal") || p.name.toLowerCase().includes("idiyappam"))) score += 22;
+    if(q.includes("pepper") && p.subcategory.toLowerCase().includes("masala")) score += 15;
+    return {...p, _score: score, _exact: exact};
+  }).filter(p => (category==="All" || p.category===category || q) && p._score > 0);
+  rows.sort((a,b)=> b._score - a._score || a.name.localeCompare(b.name));
+  return rows;
+}
+
+
+function showRestaurantFood(){
+  const sel = document.getElementById("categoryFilter");
+  if(sel) sel.value = "Restaurant Food";
+  document.getElementById("searchInput").value = "";
+  scrollToProducts();
+  renderProducts();
+}
+
+function showGrocery(){
+  const sel = document.getElementById("categoryFilter");
+  if(sel) sel.value = "Grocery";
+  document.getElementById("searchInput").value = "";
+  scrollToProducts();
+  renderProducts();
+}
+
+function setCategory(c){ 
+  const sel = document.getElementById("categoryFilter");
+  const values = [...sel.options].map(o=>o.value);
+  sel.value = values.includes(c) ? c : "All";
+  scrollToProducts(); 
+  renderProducts(); 
+}
+function scrollToProducts(){ document.querySelector(".products-anchor").scrollIntoView({behavior:"smooth"}); }
+function scrollToOffers(){ document.getElementById("offersSection").scrollIntoView({behavior:"smooth"}); }
+function scrollToRewards(){ document.querySelector(".rewards").scrollIntoView({behavior:"smooth"}); }
+
+function card(p){
+  const old = p.offer_price ? `<span class="old">${money(p.price)}</span>` : "";
+  const disabled = p.stock !== "In Stock";
+  const qty = cart[p.id] || 0;
+  const qtyControl = disabled 
+    ? `<button class="add" disabled>${tr("out")}</button>`
+    : qty > 0 
+      ? `<div class="inline-qty"><button onclick="event.stopPropagation(); changeQty(${p.id},-1)">−</button><b>${qty}</b><button onclick="event.stopPropagation(); addToCart(${p.id})">+</button></div>`
+      : `<button class="add" onclick="event.stopPropagation(); addToCart(${p.id})">${tr("add")}</button>`;
+  return `<div class="product-card ${disabled?'out':''} ${qty>0?'selected':''}">
+    ${p.badge?`<div class="badge">${p.badge}</div>`:""}
+    ${qty>0?`<div class="added-pill">✓ ${qty}</div>`:""}
+    <img class="product-img clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
+    <div class="name clickable" onclick="openProductPage(${p.id})">${p.name}</div>
+    <div class="sub">${p.description || p.subcategory}</div>
+    <div class="pack">${p.subcategory} • ${p.pack}</div>
+    <div class="price-line"><span class="price">${money(priceOf(p))}</span>${old}</div>
+    ${qtyControl}
+  </div>`;
+}
+
+function renderMostOrdered(){
+  document.getElementById("mostOrdered").innerHTML = PRODUCTS.slice(0,6).map(card).join("");
+}
+
+function offerCard(p){
+  return `<div class="offer-product-card">
+    <img src="${p.image}" alt="${p.name}">
+    <div>
+      <b>${p.name}</b>
+      <p>${p.description || ""}</p>
+      <div><span class="was">Was ${money(p.price)}</span> <span class="now">Now ${money(priceOf(p))}</span></div>
+      <button onclick="addToCart(${p.id})">${tr("addOffer")}</button>
+    </div>
+  </div>`;
+}
+
+
+function renderOfferSlider(){
+  const box = document.getElementById("offerSlider");
+  if(!box) return;
+  const offers = PRODUCTS.filter(p => p.offer_price && p.stock === "In Stock");
+  if(!offers.length){
+    box.innerHTML = `<div class="slide active"><h2>🏷️ Special Offer</h2><p>New offers coming soon.</p></div>`;
+    return;
+  }
+  box.innerHTML = offers.map((p,i)=>`
+    <div class="offer-slide ${i===0?'active':''}">
+      <img src="${p.image}" alt="${p.name}">
+      <div>
+        <p class="tag">SPECIAL OFFER</p>
+        <h2>${p.name}</h2>
+        <div class="offer-price"><span class="was">Was ${money(p.price)}</span> <span class="now">Now ${money(priceOf(p))}</span></div>
+        <button onclick="addToCart(${p.id})">${tr("addOffer")}</button>
+      </div>
+    </div>
+  `).join("");
+  let idx = 0;
+  clearInterval(window.offerSliderTimer);
+  window.offerSliderTimer = setInterval(()=>{
+    const slides = document.querySelectorAll(".offer-slide");
+    if(!slides.length) return;
+    slides[idx].classList.remove("active");
+    idx = (idx + 1) % slides.length;
+    slides[idx].classList.add("active");
+  }, 3000);
+}
+
+
+function renderSpecialOffers(){
+  const offers = PRODUCTS.filter(p => p.offer_price && p.stock === "In Stock");
+  const box = document.getElementById("specialOffersGrid");
+  if(!box) return;
+  box.innerHTML = offers.length ? offers.map(offerCard).join("") : "<p>No special product offers today.</p>";
+}
+
+function handleSearchInput(){
+  renderTopSearchResults();
+  renderProducts();
+}
+
+function renderTopSearchResults(){
+  const rawQ = document.getElementById("searchInput").value.trim();
+  const box = document.getElementById("searchResultsTop");
+  if(!box) return;
+  if(!rawQ){
+    box.innerHTML = "";
+    box.classList.remove("show");
+    return;
+  }
+  const items = smartSearchProducts(rawQ, "All").slice(0,10);
+  if(!items.length){
+    box.innerHTML = `<div class="top-no-result">
+      <b>No item found for “${rawQ}”</b>
+      <p>You can add this as a requested item to your cart.</p>
+      <button onclick="addSearchTextToRequestedCart()">${tr("addToCart")}</button>
+    </div>`;
+    box.classList.add("show");
+    return;
+  }
+  const exact = items.filter(p=>p._exact);
+  const related = items.filter(p=>!p._exact && !cart[p.id]);
+  box.innerHTML = `
+    ${exact.length ? `<h3>Search result</h3>${exact.map(searchResultRow).join("")}` : ""}
+    ${related.length ? `<h3>Related items</h3>${related.slice(0,6).map(searchResultRow).join("")}` : ""}
+  `;
+  box.classList.add("show");
+}
+
+function searchResultRow(p){
+  const qty = cart[p.id] || 0;
+  return `<div class="search-result-row">
+    <img class="clickable" src="${p.image}" alt="${p.name}" onclick="openProductPage(${p.id})">
+    <div><b class="clickable" onclick="openProductPage(${p.id})">${p.name}</b><br><small>${p.subcategory} • ${p.pack}</small><br><span>${money(priceOf(p))}</span></div>
+    ${qty>0 ? `<div class="mini-qty"><button onclick="changeQty(${p.id},-1)">−</button><b>${qty}</b><button onclick="addToCart(${p.id})">+</button></div>` : `<button onclick="addToCart(${p.id})">${tr("add")}</button>`}
+  </div>`;
+}
+
+function renderProducts(){
+  const rawQ = document.getElementById("searchInput").value;
+  const q = normaliseText(rawQ);
+  const c = document.getElementById("categoryFilter").value;
+
+  if(q){
+    document.getElementById("productGrid").innerHTML = `<div class="search-group"><h3>${tr("search")}</h3><p>${tr("offersNote")}</p></div>`;
+    return;
+  }
+
+  const items = smartSearchProducts(rawQ, c);
+  document.getElementById("productGrid").innerHTML = items.map(card).join("") || `<p>${tr("cantFind")}</p>`;
+}
+
+
+function addSearchTextToRequestedCart(){
+  const q = document.getElementById("searchInput").value.trim();
+  if(!q){
+    alert("Please type the item name.");
+    return;
+  }
+  requestedCart.push({
+    name: q,
+    createdAt: new Date().toISOString()
+  });
+  save();
+  renderCart();
+  renderTopSearchResults();
+  showToast(`${q} added to cart as requested item`);
+
+  const box = document.getElementById("searchResultsTop");
+  if(box){
+    box.innerHTML = `<div class="top-no-result success">
+      ✅ <b>${q}</b> has been added to your cart as a requested item.<br>
+      Need another product? Type it in the search bar and add again.
+      <br><br><button onclick="openCart()">View Cart</button>
+    </div>`;
+    box.classList.add("show");
+  }
+}
+
+function fillRequestFromSearch(){
+  const q = document.getElementById("searchInput").value.trim();
+  document.querySelector(".request-box").scrollIntoView({behavior:"smooth"});
+  setTimeout(()=>{
+    const input = document.getElementById("requestName");
+    if(input){ input.value = q; input.focus(); }
+  },400);
+}
+
+function addToCart(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p || p.stock !== "In Stock") return;
+  cart[id] = (cart[id] || 0) + 1;
+  save();
+  renderCart();
+  renderMostOrdered();
+  renderSpecialOffers();
+  renderOfferSlider();
+  renderProducts();
+  renderTopSearchResults();
+  showToast(`${p.name} added to cart`);
+}
+function changeQty(id, delta){
+  const p = PRODUCTS.find(x=>x.id===id);
+  cart[id] = (cart[id] || 0) + delta;
+  if(cart[id] <= 0) {
+    delete cart[id];
+    if(window.recentRelatedAddedId === id) window.recentRelatedAddedId = null;
+  }
+  save();
+  renderCart();
+  renderMostOrdered();
+  renderSpecialOffers();
+  renderOfferSlider();
+  renderProducts();
+  renderTopSearchResults();
+  if(p) showToast(cart[id] ? `${p.name}: ${cart[id]} in cart` : `${p.name} removed`);
+}
+function updateCartCount(){
+  const count = Object.values(cart).reduce((a,b)=>a+b,0) + requestedCart.length + claimedRewards.length;
+  document.getElementById("cartCount").innerText = count;
+}
+function openCart(){ document.getElementById("cartDrawer").classList.add("open"); renderCart(); }
+function closeCart(){ document.getElementById("cartDrawer").classList.remove("open"); }
+function cartLines(){
+  return Object.entries(cart).map(([id,qty])=>({p:PRODUCTS.find(x=>x.id==id), qty})).filter(x=>x.p);
+}
+function subtotal(){
+  return cartLines().reduce((s,x)=>s + priceOf(x.p)*x.qty,0);
+}
+function renderCartRewards(){
+  const box = document.getElementById("cartRewardsBox");
+  if(!box) return;
+  const earned = earnedPoints();
+  const used = usedRewardPoints();
+  const available = availablePoints();
+
+  const claimable = REWARD_CATALOG.filter(r => available >= r.points && !claimedRewards.some(c=>c.id===r.id));
+  const locked = REWARD_CATALOG.filter(r => available < r.points && !claimedRewards.some(c=>c.id===r.id));
+  const nextRewards = locked.slice(0,3);
+
+  let html = `<div class="reward-balance">
+    <b>🎁 Your Reward Points</b>
+    <div>Points from this order: <b>${earned}</b></div>
+    <div>Already used: <b>${used}</b></div>
+    <div>Available to claim now: <b>${available}</b></div>
+  </div>`;
+
+  if(claimedRewards.length){
+    html += `<h4>✅ Claimed Free Items</h4>`;
+    html += claimedRewards.map(r=>`<div class="claimed-reward">
+      <span>${r.emoji} ${r.name}<br><small>${r.points} points used</small></span>
+      <button onclick="removeReward('${r.id}')">Remove</button>
+    </div>`).join("");
+  }
+
+  html += `<h4>🎁 You Can Claim Now</h4>`;
+  if(claimable.length){
+    html += claimable.map(r=>`<div class="reward-option">
+      <div><b>${r.emoji} ${r.name}</b><br><small>${r.points} points required</small></div>
+      <button onclick="claimReward('${r.id}')">Claim</button>
+    </div>`).join("");
+  }else{
+    html += `<div class="reward-info">No free item available yet. Keep adding products to unlock rewards.</div>`;
+  }
+
+  html += `<h4>🔓 Next Rewards</h4>`;
+  if(nextRewards.length){
+    html += nextRewards.map(r=>{
+      const need = Math.max(0, r.points - available);
+      const spendNeed = Math.ceil(need / 10);
+      return `<div class="reward-option locked">
+        <div><b>${r.emoji} ${r.name}</b><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
+        <button disabled>${r.points} pts</button>
+      </div>`;
+    }).join("");
+  }else{
+    html += `<div class="reward-info">All available reward levels are unlocked.</div>`;
+  }
+
+  box.innerHTML = html;
+}
+
+function earnedPoints(){
+  return Math.floor(subtotal() * 10);
+}
+
+function usedRewardPoints(){
+  return claimedRewards.reduce((s,r)=>s + Number(r.points || 0), 0);
+}
+
+function availablePoints(){
+  return Math.max(0, earnedPoints() - usedRewardPoints());
+}
+
+function claimFixedReward(id){
+  const reward = FIXED_REWARDS.find(r => r.id === id);
+  if(!reward) return;
+  if(availablePoints() < reward.points){
+    alert("Not enough points for this reward.");
+    return;
+  }
+
+  claimedRewards.push({
+    ...reward,
+    claimId: `${reward.id}_${Date.now()}_${Math.floor(Math.random()*10000)}`
+  });
+
+  save();
+  renderCart();
+  showToast(`${reward.name} claimed. ${availablePoints()} points remaining`);
+}
+
+function removeReward(claimId){
+  claimedRewards = claimedRewards.filter(r => r.claimId !== claimId);
+  save();
+  renderCart();
+  showToast("Reward removed");
+}
+
+function nextUnlockReward(){
+  const points = availablePoints();
+  return FIXED_REWARDS.find(r => points < r.points) || null;
+}
+
+function renderCartRewards(){
+  const box = document.getElementById("cartRewardsBox");
+  if(!box) return;
+
+  const earned = earnedPoints();
+  const used = usedRewardPoints();
+  const available = availablePoints();
+  const next = nextUnlockReward();
+
+  let html = `<div class="reward-summary-card">
+    <div class="reward-summary-title">🎁 Free Gift Rewards</div>
+    <div class="reward-line"><span>Total points from this order</span><b>${earned}</b></div>
+    <div class="reward-line"><span>Points used for gifts</span><b>${used}</b></div>
+    <div class="reward-line strong"><span>Points remaining</span><b>${available}</b></div>
+  `;
+
+  if(claimedRewards.length){
+    html += `<h4>✅ Claimed Free Gifts</h4>`;
+    html += `<div class="claimed-gift-grid">`;
+    html += claimedRewards.map(r=>`<div class="claimed-gift-card">
+      <img src="${r.image}" alt="${r.name}">
+      <div><b>${r.name}</b><br><small>${r.points} points used</small></div>
+      <button onclick="removeReward('${r.claimId}')">Remove</button>
+    </div>`).join("");
+    html += `</div>`;
+  }
+
+  html += `<h4>🎁 Choose Free Gifts</h4>
+  <p class="reward-help">You can claim again and again while you have enough points.</p>
+  <div class="gift-grid">`;
+
+  html += FIXED_REWARDS.map(r=>{
+    const can = available >= r.points;
+    return `<div class="gift-card ${can?'':'locked'}">
+      <img src="${r.image}" alt="${r.name}">
+      <b>${r.name}</b>
+      <span>${r.points} points</span>
+      <button ${can?'':'disabled'} onclick="claimFixedReward('${r.id}')">${can?'Claim Free':'Locked'}</button>
+    </div>`;
+  }).join("");
+
+  html += `</div>`;
+
+  if(next){
+    const need = next.points - available;
+    const spendNeed = Math.ceil(need / 10);
+    const progress = Math.max(0, Math.min(100, Math.round((available / next.points) * 100)));
+    html += `<div class="next-reward-box">
+      <img src="${next.image}" alt="${next.name}">
+      <div><b>Next Gift</b><br><span>${next.name}</span><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
+    </div>
+    <div class="reward-progress"><div style="width:${progress}%"></div></div>
+    <div class="reward-progress-label">${available} / ${next.points} remaining points</div>`;
+  }else{
+    html += `<div class="next-reward-box">
+      <div><b>All gift levels unlocked with remaining points.</b><br><span>You can keep claiming while points are available.</span></div>
+    </div>`;
+  }
+
+  html += `<div class="reward-ladder">
+    <b>Reward List</b>
+    ${FIXED_REWARDS.map(r => `<div class="${available >= r.points ? 'unlocked' : 'locked'}">
+      <span>${available >= r.points ? '✅' : '🔒'} ${r.points} pts</span><span>${r.emoji} ${r.name}</span>
+    </div>`).join("")}
+  </div>`;
+
+  html += `</div>`;
+  box.innerHTML = html;
+}
+
+function renderCart(){
+  const lines = cartLines();
+  const productHtml = lines.map(x=>`<div class="cart-item">
+    <img class="mini-img" src="${x.p.image}" alt="${x.p.name}">
+    <div><b>${x.p.name}</b><br><small>${money(priceOf(x.p))}</small><br><span class="qty"><button onclick="changeQty(${x.p.id},-1)">-</button> ${x.qty} <button onclick="changeQty(${x.p.id},1)">+</button></span></div>
+    <b>${money(priceOf(x.p)*x.qty)}</b>
+  </div>`).join("");
+
+  const requestedHtml = requestedCart.map((r,i)=>`<div class="cart-item requested-item">
+    <div class="request-icon">?</div>
+    <div><b>${r.name}</b><br><small>Requested item • Price to be confirmed</small></div>
+    <button class="remove-request" onclick="removeRequestedItem(${i})">Remove</button>
+  </div>`).join("");
+
+  const rewardHtml = claimedRewards.map(r=>`<div class="cart-item reward-cart-item">
+    <img class="mini-img" src="${r.image}" alt="${r.name}">
+    <div><b>${r.name}</b><br><small>Free gift • ${r.points} points used</small></div>
+    <b>FREE</b>
+  </div>`).join("");
+
+  document.getElementById("cartItems").innerHTML = (productHtml + requestedHtml + rewardHtml) || `<p style='padding:15px'>${tr("emptyCart")}</p>`;
+  document.getElementById("subtotal").innerText = money(subtotal());
+  document.getElementById("pointsEarned").innerText = tr("rewardPoints") + ": " + earnedPoints();
+  renderCartRewards();
+  updateDelivery();
+}
+
+function normalisePostcode(pc){
+  return String(pc || "").toUpperCase().replace(/\s+/g," ").trim();
+}
+
+function estimateDistanceFromPostcode(postcode){
+  const pc = normalisePostcode(postcode).replace(/\s/g,"");
+  if(!pc) return null;
+
+  // Prototype distance estimate from:
+  // 203 Willows Lane, Bolton, BL3 4AZ
+  if(pc.startsWith("BL3")) return 2.0;
+  if(pc.startsWith("BL1") || pc.startsWith("BL2") || pc.startsWith("BL4") || pc.startsWith("BL5")) return 3.0;
+  if(pc.startsWith("BL6") || pc.startsWith("BL7")) return 7.0;
+  if(pc.startsWith("WN")) return 9.5;
+  if(pc.startsWith("M")) return 14.0;
+  if(pc.startsWith("WA")) return 18.0;
+  if(pc.startsWith("L")) return 24.0;
+
+  return 25.0;
+}
+
+function deliveryChargeByRules(distance, orderValue){
+  if(distance === null || isNaN(distance)){
+    return {allowed:false, charge:0, message:"Please enter a valid postcode and click Check Postcode."};
+  }
+
+  if(distance <= 3){
+    if(orderValue >= 50){
+      return {allowed:true, charge:0, message:"✅ Delivery available. Within 3 miles and order is £50+, so delivery is FREE."};
+    }
+    return {allowed:true, charge:3, message:"✅ Delivery available. Within 3 miles. Delivery charge is £3. Spend £50+ for free delivery."};
+  }
+
+  if(distance <= 10){
+    if(orderValue >= 200){
+      return {allowed:true, charge:0, message:"✅ Delivery available. Within 10 miles and order is £200+, so delivery is FREE."};
+    }
+    return {allowed:true, charge:10, message:"✅ Delivery available. 3–10 miles. Delivery charge is £10. Spend £200+ for free delivery."};
+  }
+
+  if(distance <= 20){
+    if(orderValue >= 200){
+      return {allowed:true, charge:10, message:"✅ Delivery available. 10–20 miles and order is £200+, delivery charge is £10."};
+    }
+    return {allowed:false, charge:0, message:"❌ Delivery is not available for this postcode unless order is £200+. Collection only for this order."};
+  }
+
+  return {allowed:false, charge:0, message:"❌ This postcode is outside our delivery area. Collection only from 203 Willows Lane, Bolton, BL3 4AZ."};
+}
+
+function checkPostcodeDistance(){
+  const input = document.getElementById("postcode");
+  const pc = input ? input.value : "";
+  const resultBox = document.getElementById("postcodeResult");
+  checkedPostcode = normalisePostcode(pc);
+  checkedDistanceMiles = estimateDistanceFromPostcode(checkedPostcode);
+
+  if(!checkedPostcode){
+    checkedDistanceMiles = null;
+    if(resultBox){
+      resultBox.innerHTML = "Please enter a postcode.";
+      resultBox.className = "postcode-result show no";
+    }
+    updateDelivery();
+    return;
+  }
+
+  const rule = deliveryChargeByRules(checkedDistanceMiles, subtotal());
+  if(resultBox){
+    resultBox.innerHTML = `
+      <b>Postcode:</b> ${checkedPostcode}<br>
+      <b>Estimated Distance from Collection Point:</b> ${checkedDistanceMiles.toFixed(1)} miles<br>
+      <span>${rule.message}</span>
+    `;
+    resultBox.className = "postcode-result show " + (rule.allowed ? "ok" : "no");
+  }
+  updateDelivery();
+}
+
+
+function updateDelivery(){
+  const type = document.querySelector("input[name='orderType']:checked").value;
+  const sub = subtotal();
+  let charge = 0;
+  let msg = "";
+  let allowed = true;
+
+  const deliveryNotice = document.getElementById("deliveryNoticeBox");
+  const addressBox = document.getElementById("address");
+  const postcodeBox = document.getElementById("postcode");
+
+  if(type === "Collection"){
+    if(deliveryNotice) deliveryNotice.style.display = "none";
+    if(addressBox){
+      addressBox.style.display = "none";
+      addressBox.value = "";
+      addressBox.required = false;
+    }
+    if(postcodeBox){
+      postcodeBox.style.display = "none";
+      postcodeBox.value = "";
+      postcodeBox.required = false;
+    }
+    msg = "📦 Collection selected. Name and WhatsApp number only. Collection point: 203 Willows Lane, Bolton, BL3 4AZ. Collection time will be confirmed via WhatsApp.";
+    document.getElementById("deliveryCharge").innerText = money(0);
+  }else{
+    if(deliveryNotice) deliveryNotice.style.display = "block";
+    if(addressBox){
+      addressBox.style.display = "block";
+      addressBox.required = true;
+    }
+    if(postcodeBox){
+      postcodeBox.style.display = "block";
+      postcodeBox.required = true;
+    }
+    msg = "🚚 " + tr("deliverySelected");
+    document.getElementById("deliveryCharge").innerText = tr("mayApply");
+  }
+
+  document.getElementById("deliveryMsg").innerText = msg;
+  document.getElementById("total").innerText = money(sub);
+  return {allowed, charge, total: sub, msg};
+}
+
+function createOrderId(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,"0");
+  const day = String(d.getDate()).padStart(2,"0");
+  const rand = Math.floor(1000 + Math.random()*9000);
+  return `CE-${y}${m}${day}-${rand}`;
+}
+
+function clearCartAfterOrder(){
+  cart = {};
+  requestedCart = [];
+  claimedRewards = [];
+  save();
+  renderCart();
+  renderProducts();
+  renderMostOrdered();
+
+  // Close cart drawer
+  const drawer = document.getElementById("cartDrawer");
+  if(drawer) drawer.classList.remove("open");
+
+  // Return to home/top page
+  window.scrollTo({top:0, behavior:"smooth"});
+
+  // Clear checkout fields except persistent UI
+  ["customerName","whatsappNumber","postcode","address","notes"].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = "";
+  });
+
+  showToast("Order sent. Cart cleared.");
+}
+
+function sendWhatsAppOrder(){
+  try{
+    const lines = cartLines();
+    if(!lines.length && !requestedCart.length && !claimedRewards.length){
+      alert("Cart is empty");
+      return;
+    }
+
+    const d = updateDelivery();
+    const type = document.querySelector("input[name='orderType']:checked").value;
+
+    const name = document.getElementById("customerName").value.trim();
+    const phone = document.getElementById("whatsappNumber").value.trim();
+    const postcodeEl = document.getElementById("postcode");
+    const postcode = postcodeEl ? postcodeEl.value.trim() : "";
+    const address = document.getElementById("address").value.trim();
+    const notes = document.getElementById("notes").value.trim();
+    const paymentEl = document.querySelector("input[name='paymentMethod']:checked");
+    const paymentMethod = paymentEl ? paymentEl.value : "Cash";
+
+    if(!name || !phone){
+      alert("Please enter customer name and WhatsApp number.");
+      return;
+    }
+
+    if(type === "Delivery"){
+      if(!postcode){
+        alert("Please enter delivery postcode.");
+        return;
+      }
+      if(!address){
+        alert("Please enter full delivery address.");
+        return;
+      }
+    }
+
+    const rewardPointsUsed = typeof usedRewardPoints === "function" ? usedRewardPoints() : claimedRewards.reduce((s,r)=>s + Number(r.points || 0),0);
+    const rewardPointsRemaining = typeof availablePoints === "function" ? availablePoints() : Math.max(0, Math.floor(subtotal()*10) - rewardPointsUsed);
+
+    const orderId = createOrderId();
+
+    const orderData = {
+      orderId: orderId,
+      name: name,
+      phone: phone,
+      postcode: postcode,
+      deliveryDistanceMiles: checkedDistanceMiles,
+      type: type,
+      address: address,
+      notes: notes,
+      items: lines.map(x => ({
+        name: x.p.name,
+        qty: x.qty,
+        price: priceOf(x.p),
+        total: priceOf(x.p) * x.qty
+      })),
+      requestedItems: requestedCart.map(x => x.name),
+      rewards: claimedRewards.map(x => ({
+        name: x.name,
+        points: x.points,
+        emoji: x.emoji || "🎁",
+        image: x.image || ""
+      })),
+      rewardPointsUsed: rewardPointsUsed,
+      rewardPointsRemaining: rewardPointsRemaining,
+      paymentMethod: paymentMethod,
+      bankDetails: paymentMethod === "Bank Transfer" ? BANK_TRANSFER_DETAILS : null,
+      collectionInfo: STORE_COLLECTION_INFO,
+      subtotal: subtotal(),
+      delivery: d.charge || 0,
+      total: d.total || subtotal()
+    };
+
+    let encoded = "";
+    try{
+      encoded = btoa(unescape(encodeURIComponent(JSON.stringify(orderData))));
+    }catch(e){
+      encoded = btoa(JSON.stringify(orderData));
+    }
+
+    const basePath = location.href.split("#")[0].replace(/index\.html.*$/,"");
+    const orderPageLink = `${basePath}order.html#data=${encoded}`;
+
+    let msg = `🛒 CHENNAI EXPRESS ORDER\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `👤 Customer: ${name}\n`;
+    msg += `📱 WhatsApp: ${phone}\n`;
+    if(postcode) msg += `📍 Postcode: ${postcode}\n`;
+    msg += `🚚 Order Type: ${type}\n`;
+    if(type === "Delivery"){
+      msg += `ℹ️ Delivery charge may apply. We will confirm delivery charge and delivery time via WhatsApp.\n`;
+    }else{
+      msg += `📦 Collection point: 203 Willows Lane, Bolton, BL3 4AZ\n`;
+      msg += `🕒 Collection hours: Tuesday – Sunday 11:00 AM – 9:00 PM. Monday Closed.\n`;
+    }
+    if(address) msg += `🏠 Address: ${address}\n`;
+
+    msg += `\n🕒 COLLECTION / DELIVERY TIME\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    if(type === "Collection"){
+      msg += `Collection Point: ${STORE_COLLECTION_INFO.collectionPoint}\n`;
+      msg += `Collection Hours: ${STORE_COLLECTION_INFO.collectionHours}\n`;
+      msg += `${STORE_COLLECTION_INFO.closedDay}\n`;
+      msg += `Collection time will be confirmed via WhatsApp after order review.\n`;
+    }else{
+      msg += `Delivery time will be confirmed via WhatsApp after order review.\n`;
+      msg += `Collection Point if needed: ${STORE_COLLECTION_INFO.collectionPoint}\n`;
+    }
+
+    if(lines.length){
+      msg += `\n🧾 PAID ITEMS\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      lines.forEach((x,i)=> {
+        msg += `${i+1}. ${x.qty} x ${x.p.name}\n`;
+        msg += `   ${money(priceOf(x.p))} each = ${money(priceOf(x.p)*x.qty)}\n`;
+      });
+    }
+
+    if(requestedCart.length){
+      msg += `\n🔎 CUSTOMER REQUESTED ITEMS\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      requestedCart.forEach((r,i)=> {
+        msg += `${i+1}. ${r.name} - Price to be confirmed\n`;
+      });
+    }
+
+    if(claimedRewards.length){
+      msg += `\n🎁 FREE GIFTS CLAIMED\n`;
+      msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+      claimedRewards.forEach((r,i)=> {
+        msg += `${i+1}. ${r.name} - FREE (${r.points} points used)\n`;
+      });
+      msg += `\nReward Points Used: ${rewardPointsUsed}\n`;
+      msg += `Reward Points Remaining: ${rewardPointsRemaining}\n`;
+    }
+
+    msg += `\n💷 SUMMARY\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `Subtotal: ${money(subtotal())}\n`;
+    msg += `Delivery: ${type === "Delivery" ? "May apply - to be confirmed" : money(0)}\n`;
+    msg += `TOTAL: ${money((d.total || subtotal()))}\n`;
+    if(requestedCart.length) msg += `Requested items are not included in total.\n`;
+    msg += `\n💳 Payment Method: ${paymentMethod}\n`;
+    if(paymentMethod === "Bank Transfer"){
+      msg += `\n🏦 BANK TRANSFER DETAILS\n`;
+      msg += `Bank Name: ${BANK_TRANSFER_DETAILS.bankName}\n`;
+      msg += `Account Name: ${BANK_TRANSFER_DETAILS.accountName}\n`;
+      msg += `Sort Code: ${BANK_TRANSFER_DETAILS.sortCode}\n`;
+      msg += `Account Number: ${BANK_TRANSFER_DETAILS.accountNumber}\n`;
+      msg += `Reference: ${BANK_TRANSFER_DETAILS.reference}\n`;
+    }
+    if(notes) msg += `📝 Notes: ${notes}\n`;
+    msg += `\n🔗 Order Preview Page:\n${orderPageLink}\n`;
+    msg += `\nThank you.`;
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+    alert(`Order sent. Order ID: ${orderId}`);
+    clearCartAfterOrder();
+  }catch(error){
+    console.error(error);
+    alert("Sorry, WhatsApp order could not be created. Please check the cart details and try again.");
+  }
+}
+function addRequestedItemToCart(){
+  const input = document.getElementById("requestName");
+  const item = input ? input.value.trim() : "";
+  if(!item){
+    alert("Please type the item name.");
+    if(input) input.focus();
+    return;
+  }
+  requestedCart.push({name:item, createdAt:new Date().toISOString()});
+  if(input){ input.value=""; input.focus(); }
+  save();
+  renderCart();
+  const msgBox = document.getElementById("requestAddedMsg");
+  if(msgBox){
+    msgBox.innerHTML = `✅ <b>${item}</b> has been added to your cart as a requested item.<br>Need another product? Type it above and add again.`;
+    msgBox.classList.add("show");
+  }
+  showToast(`${item} added to cart as requested item`);
+}
+
+function removeRequestedItem(index){
+  requestedCart.splice(index,1);
+  save();
+  renderCart();
+  showToast("Requested item removed");
+}
+
+
+function relatedProductsFor(p){
+  const words = normaliseText([p.name, p.subcategory, p.description].join(" ")).split(" ").filter(w=>w.length>3);
+  // Do not show items already added to cart in Related Items
+  let scored = PRODUCTS.filter(x=>x.id!==p.id && (!cart[x.id] || x.id===window.recentRelatedAddedId)).map(x=>{
+    const t = productText(x);
+    let score = 0;
+    if(x.category === p.category) score += 4;
+    if(x.subcategory === p.subcategory) score += 10;
+    words.forEach(w=>{ if(t.includes(w)) score += 3; });
+    return {...x, _relScore: score};
+  }).filter(x=>x._relScore>3);
+  scored.sort((a,b)=>b._relScore-a._relScore);
+  return scored.slice(0,6);
+}
+
+function openProductPage(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  let modal = document.getElementById("productModal");
+  if(!modal){
+    modal = document.createElement("div");
+    modal.id = "productModal";
+    modal.className = "product-modal";
+    document.body.appendChild(modal);
+  }
+  const qty = cart[p.id] || 0;
+  const old = p.offer_price ? `<span class="detail-old">${money(p.price)}</span>` : "";
+  const related = relatedProductsFor(p);
+  modal.innerHTML = `
+    <div class="product-detail" id="productDetailContent">
+      <div class="detail-header">
+        <button onclick="closeProductPage()">← Back</button>
+        <button onclick="closeProductPage()">✕</button>
+      </div>
+      <img class="detail-img" src="${p.image}" alt="${p.name}">
+      ${p.badge ? `<div class="detail-badge">${p.badge}</div>` : ""}
+      <h1>${p.name}</h1>
+      <p class="detail-category">${p.category} • ${p.subcategory} • ${p.pack}</p>
+      <div class="detail-price">${old}<span>${money(priceOf(p))}</span></div>
+      <p class="detail-stock">${p.stock === "In Stock" ? "✅ In Stock" : "❌ Out of Stock"}</p>
+      <p class="detail-desc">${p.description || ""}</p>
+      <div class="detail-actions">
+        ${p.stock !== "In Stock" 
+          ? `<button class="disabled-detail" disabled>${tr("outOfStock")}</button>`
+          : qty > 0
+            ? `<div class="detail-qty"><button onclick="changeQty(${p.id},-1); refreshProductPageTop(${p.id})">−</button><b>${qty}</b><button onclick="addToCart(${p.id}); refreshProductPageTop(${p.id})">+</button></div>`
+            : `<button class="detail-add" onclick="addToCart(${p.id}); refreshProductPageTop(${p.id})">${tr("addToCart")}</button>`
+        }
+        <div class="detail-added-note">Cart updates automatically</div>
+      </div>
+      <h2>Related Items</h2>
+      <div class="detail-related">
+        ${related.length ? related.map(relatedCard).join("") : "<p>No related items found.</p>"}
+      </div>
+    </div>
+  `;
+  modal.classList.add("show");
+  document.body.style.overflow = "hidden";
+  modal.scrollTop = 0;
+  const detail = document.getElementById("productDetailContent");
+  if(detail) detail.scrollTop = 0;
+  window.currentProductDetailId = id;
+}
+
+function relatedCard(r){
+  const qty = cart[r.id] || 0;
+  return `
+    <div class="related-card ${qty>0?'selected-related':''}">
+      ${qty>0?`<div class="related-added">✓ ${qty}</div>`:""}
+      <img src="${r.image}" onclick="openProductPageFromRelated(${r.id})">
+      <b onclick="openProductPageFromRelated(${r.id})">${r.name}</b>
+      <span>${money(priceOf(r))}</span>
+      ${qty>0 
+        ? `<div class="related-qty">
+            <button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; changeQty(${r.id},-1); refreshProductPageKeepRelated(window.currentProductDetailId)">−</button>
+            <b>${qty}</b>
+            <button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; addToCart(${r.id}); refreshProductPageKeepRelated(window.currentProductDetailId)">+</button>
+          </div>`
+        : `<button onclick="event.stopPropagation(); window.recentRelatedAddedId=${r.id}; addToCart(${r.id}); refreshProductPageKeepRelated(window.currentProductDetailId)">${tr("add")}</button>`
+      }
+    </div>
+  `;
+}
+
+function refreshProductPageTop(id){
+  const modal = document.getElementById("productModal");
+  if(id && modal && modal.classList.contains("show")){
+    openProductPage(id);
+    modal.scrollTop = 0;
+    setTimeout(()=>{
+      const detail = document.getElementById("productDetailContent");
+      if(detail) detail.scrollTop = 0;
+    },0);
+  }
+}
+
+function refreshProductPageKeepRelated(id){
+  const modal = document.getElementById("productModal");
+  if(id && modal && modal.classList.contains("show")){
+    openProductPage(id);
+    setTimeout(()=>{
+      const heading = [...document.querySelectorAll(".product-detail h2")].find(h=>h.innerText.includes("Related"));
+      if(heading) heading.scrollIntoView({behavior:"auto", block:"start"});
+    },0);
+  }
+}
+
+function refreshProductPage(id){
+  const modal = document.getElementById("productModal");
+  if(id && modal && modal.classList.contains("show")){
+    const keepTop = modal.scrollTop < 120;
+    openProductPage(id);
+    if(!keepTop){
+      setTimeout(()=>{
+        const heading = [...document.querySelectorAll(".product-detail h2")].find(h=>h.innerText.includes("Related"));
+        if(heading) heading.scrollIntoView({behavior:"instant", block:"start"});
+      },0);
+    }
+  }
+}
+
+function openProductPageFromRelated(id){
+  openProductPage(id);
+  const modal = document.getElementById("productModal");
+  if(modal) modal.scrollTop = 0;
+  setTimeout(()=>{
+    const detail = document.getElementById("productDetailContent");
+    if(detail) detail.scrollTop = 0;
+  },0);
+}
+
+function closeProductPage(){
+  const modal = document.getElementById("productModal");
+  if(modal) modal.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+
+function toggleMenu(){
+  const menu = document.getElementById("quickMenu");
+  if(menu){ menu.remove(); return; }
+  const m = document.createElement("div");
+  m.id = "quickMenu";
+  m.className = "quick-menu";
+  m.innerHTML = `
+    <button onclick="setCategory('Restaurant Food'); toggleMenu()">🍛 Restaurant Food</button>
+    <button onclick="setCategory('Grocery'); toggleMenu()">🛒 Grocery</button>
+    <button onclick="scrollToOffers(); toggleMenu()">🏷️ Offers</button>
+    <button onclick="scrollToRewards(); toggleMenu()">🎁 Rewards</button>
+    <button onclick="document.querySelector('.request-box').scrollIntoView({behavior:'smooth'}); toggleMenu()">🔎 Request Item</button>
+  `;
+  document.body.appendChild(m);
+}
+
+function showToast(text){
+  let t = document.getElementById("toast");
+  if(!t){
+    t = document.createElement("div");
+    t.id = "toast";
+    document.body.appendChild(t);
+  }
+  t.innerText = text;
+  t.className = "toast show";
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(()=>{ t.className = "toast"; }, 1800);
+}
+
+init();

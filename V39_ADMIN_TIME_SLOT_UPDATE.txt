@@ -1,0 +1,12 @@
+V39 Admin Time Slot Update
+
+Admin order page now includes:
+- Collection date/time if order type is Collection
+- Delivery date/time if order type is Delivery
+- Optional timing note
+
+When admin sends updated invoice:
+- Customer WhatsApp message includes date/time
+- Read-only customer invoice link includes date/time
+
+Admin can update this before sending the customer invoice or confirming the order.

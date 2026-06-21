@@ -1,0 +1,38 @@
+CHENNAI EXPRESS - GITHUB UPLOAD GUIDE
+
+This folder is ready to upload to GitHub as a static website.
+
+Main customer site:
+- index.html
+- styles.css
+- products.js
+- app.js
+- assets/
+
+Admin panel:
+- admin/admin.html
+- admin/admin.css
+- admin/admin.js
+
+How to upload to GitHub:
+1. Create a new GitHub repository.
+2. Upload all files and folders from this project folder.
+3. Make sure the assets folder is uploaded. Product images will not load without it.
+4. Commit the files.
+
+How to publish with GitHub Pages:
+1. Open your GitHub repository.
+2. Go to Settings.
+3. Go to Pages.
+4. Under Build and deployment, choose:
+   Source: Deploy from a branch
+   Branch: main
+   Folder: / root
+5. Save.
+6. GitHub will give you a live website link.
+
+Important:
+- Do not upload only index.html. Upload the full folder contents.
+- Keep assets/ in the same place as index.html.
+- The language selector easy version is included.
+- Product names remain English; common UI text can switch language.

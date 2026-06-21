@@ -1,0 +1,16 @@
+V34 Admin Edit Order Prototype
+
+Added to order.html:
+- Admin edit panel
+- Plus/minus quantity
+- Remove item
+- Total recalculation
+- Send updated order to customer WhatsApp
+- Confirm Order button placeholder
+
+Also added:
+- Unique Order ID in WhatsApp message
+- Cart clears after order is sent
+
+Note:
+This is frontend prototype only. Production version needs backend database to store order status and edits permanently.

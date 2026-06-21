@@ -1,0 +1,20 @@
+Full Project v3 Update
+
+All frontend products from products.js are now loaded into:
+admin/admin.html -> Products tab
+
+Total products imported: 33
+
+Admin Products tab now shows:
+- Product image
+- SKU
+- Name
+- Category / Subcategory
+- Description
+- Normal price / Offer price
+- Pack size
+- Stock status
+- In / Low / Out buttons
+
+Note:
+This is still frontend/local prototype. Supabase connection will make these products permanent in backend database.

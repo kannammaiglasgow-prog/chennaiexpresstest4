@@ -1,0 +1,21 @@
+V23 Rewards Update
+
+Reward items now show with photos.
+
+Rules:
+£1 spend = 10 points
+
+500 points  = Free Chicken Roll
+1000 points = Free 1kg Puttu
+2000 points = Free Chicken Biryani
+3000 points = Free Gingelly Oil
+
+Customer can claim multiple rewards as long as points remain.
+Example:
+5000 points:
+- Claim Chicken Roll = 500 used, 4500 remain
+- Claim Chicken Roll again = 500 used, 4000 remain
+- Claim Biryani = 2000 used, 2000 remain
+- Claim Puttu = 1000 used, 1000 remain
+
+All claimed free gifts appear in cart and WhatsApp message.

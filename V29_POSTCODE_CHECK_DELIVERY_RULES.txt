@@ -1,0 +1,33 @@
+V29 Postcode Check Button + Delivery Rules
+
+Removed distance combo box.
+Added Check Postcode button.
+
+Collection:
+- Name and WhatsApp number only.
+- Postcode and address hidden.
+
+Delivery:
+- Customer enters postcode.
+- Click Check Postcode.
+- Prototype estimates distance from:
+  203 Willows Lane, Bolton, BL3 4AZ
+
+Delivery Rules:
+0-3 miles:
+  Under £50 = £3
+  £50+ = FREE
+
+3-10 miles:
+  Under £200 = £10
+  £200+ = FREE
+
+10-20 miles:
+  Under £200 = Collection only
+  £200+ = £10
+
+Over 20 miles:
+  Collection only
+
+Production Note:
+Replace estimateDistanceFromPostcode() with Google Maps Distance Matrix API in backend.

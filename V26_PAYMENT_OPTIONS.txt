@@ -1,0 +1,15 @@
+V26 Payment Options Added
+
+Checkout payment methods:
+- Cash
+- Card
+- Bank Transfer
+
+If Bank Transfer is selected, bank details are shown:
+Bank Name: 000
+Account Name: 000
+Sort Code: 00-00-00
+Account Number: 00000000
+Reference: Use your name as reference
+
+These details are also included in WhatsApp order message and order preview page.

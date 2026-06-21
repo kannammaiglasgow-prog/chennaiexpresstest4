@@ -1,0 +1,9 @@
+V25 Update
+
+Fixed Send Order to WhatsApp button.
+
+Changes:
+- Rebuilt sendWhatsAppOrder function safely.
+- WhatsApp message includes paid items, requested items, claimed free gifts, points used, points remaining.
+- Order preview link includes free gifts.
+- Added error handling if WhatsApp message cannot be created.

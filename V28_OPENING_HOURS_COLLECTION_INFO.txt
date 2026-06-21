@@ -1,0 +1,17 @@
+V28 Opening Hours + Collection Info
+
+Added:
+Collection Point:
+203 Willows Lane, Bolton, BL3 4AZ
+
+Collection Hours:
+Tuesday – Sunday: 11:00 AM – 9:00 PM
+Monday: Closed
+
+Message:
+After placing your order, we will confirm your collection or delivery time via WhatsApp.
+
+Shown in:
+- Checkout page
+- WhatsApp order message
+- Order preview page

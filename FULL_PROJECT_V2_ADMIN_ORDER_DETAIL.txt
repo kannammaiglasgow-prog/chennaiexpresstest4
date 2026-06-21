@@ -1,0 +1,14 @@
+Full Project v2 Update
+
+Admin Orders panel now supports:
+- Click order row to open order detail inside admin panel
+- View ordered items
+- Plus/minus quantity
+- Remove item as out of stock/unavailable
+- Removed items list
+- Free gifts validation
+- Collection/Delivery date and time
+- Send updated read-only invoice to customer
+- Confirm order and send message to customer
+
+Customer receives a read-only invoice link. Customer cannot edit the order.

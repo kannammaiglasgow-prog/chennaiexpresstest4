@@ -1,0 +1,16 @@
+Full Project v4 Update
+
+Admin Products tab:
+- Click any product row to open Product Editor
+- Edit name, SKU, category, subcategory
+- Edit normal price and offer price
+- Edit pack size, stock qty, stock status
+- Edit description, ingredients, allergy information
+- Edit vegetarian / halal info
+- Mark as Best Seller / Special Offer
+- Upload photo preview
+- Use photo URL preview
+
+Prototype note:
+Photo upload currently saves as browser data URL in local admin memory.
+Production Supabase version will upload to Supabase Storage and save image_url.

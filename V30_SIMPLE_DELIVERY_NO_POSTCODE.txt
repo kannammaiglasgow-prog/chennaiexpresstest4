@@ -1,0 +1,17 @@
+V30 Simple Delivery Update
+
+Removed:
+- Postcode check
+- Distance calculation
+- Delivery area check
+- Collection-only distance rule
+- Automatic delivery charge
+
+Collection:
+- Name + WhatsApp number only
+- Collection point: 203 Willows Lane, Bolton, BL3 4AZ
+- Hours: Tuesday-Sunday 11AM-9PM, Monday Closed
+
+Delivery:
+- Name + WhatsApp number only
+- Message: Delivery charge may apply. We will confirm delivery charge and delivery time via WhatsApp.

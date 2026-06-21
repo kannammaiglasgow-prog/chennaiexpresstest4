@@ -1,0 +1,10 @@
+Full Project v6 Update
+
+Admin Product Edit:
+- Product click opens popup/modal
+- Product ID / SKU is read-only and cannot be changed
+- Category is a combo box:
+  Grocery, Restaurant Food, Household, Fresh Vegetables, Fresh Seafood, Fresh Meat
+- Photo URL field included
+- Photo upload field included
+- Save Product Permanently keeps Supabase save logic

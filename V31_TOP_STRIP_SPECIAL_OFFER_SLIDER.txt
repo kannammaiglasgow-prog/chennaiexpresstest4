@@ -1,0 +1,8 @@
+V31 Update
+
+Changes:
+- Top delivery area strip replaced with one-line Restaurant / Grocery buttons.
+- Removed lower Restaurant/Grocery/Offers promo blocks.
+- First hero area changed to Special Offer slideshow only.
+- Special Offer slider shows only product discounts.
+- Removed points/free delivery text from special offer area.

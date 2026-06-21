@@ -1,0 +1,30 @@
+Chennai Express Full Project v5 - Supabase Product Save
+
+Connected Supabase Project:
+https://gvibgyeallfkbwrkgkun.supabase.co
+
+Before testing admin product save:
+
+1. Go to Supabase Dashboard.
+2. Open SQL Editor.
+3. Run:
+   supabase/schema.sql
+
+4. For image upload:
+   Supabase Dashboard -> Storage -> New bucket
+   Bucket name: product-images
+   Public bucket: ON
+
+5. Upload this project to your hosting.
+
+6. Open:
+   admin/admin.html
+
+7. Products tab:
+   - Products load from Supabase products table.
+   - Edit product.
+   - Click Save Product Permanently.
+   - Refresh page; product should stay saved.
+
+Important:
+Current policies are prototype-friendly. Before production, lock admin writes behind login/RLS.

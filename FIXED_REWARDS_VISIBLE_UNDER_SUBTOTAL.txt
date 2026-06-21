@@ -1,0 +1,22 @@
+V22 Fixed Rewards Display
+
+Rewards are shown under cart subtotal.
+
+Rules:
+£1 spend = 10 points
+
+500 points  -> Free Chicken Roll
+1000 points -> Free 1kg Puttu
+2000 points -> Free Chicken Biryani
+3000 points -> Free Gingelly Oil
+
+Only the highest unlocked reward can be claimed.
+
+Cart summary shows:
+- Subtotal
+- Reward points earned
+- Available free reward
+- Next reward
+- More points/spend needed
+- Progress bar
+- Full reward ladder

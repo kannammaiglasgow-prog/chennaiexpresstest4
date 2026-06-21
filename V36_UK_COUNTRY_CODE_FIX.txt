@@ -1,0 +1,12 @@
+V36 UK Country Code Fix
+
+Updated order preview/admin page:
+
+- Send Updated Order to Customer now formats UK WhatsApp number automatically.
+- Confirm Order now sends confirmation WhatsApp message to customer.
+- Default UK code: 44
+
+Examples:
+07309xxxxxx -> 447309xxxxxx
+7309xxxxxx  -> 447309xxxxxx
++447309xxxxxx -> 447309xxxxxx

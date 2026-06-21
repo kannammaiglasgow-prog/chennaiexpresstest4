@@ -1,0 +1,13 @@
+V24 Update
+
+Fixed order link/preview page.
+
+Now includes:
+- Paid items
+- Requested items
+- Free gifts claimed
+- Reward points used
+- Reward points remaining
+
+WhatsApp message also includes:
+FREE GIFTS CLAIMED section.

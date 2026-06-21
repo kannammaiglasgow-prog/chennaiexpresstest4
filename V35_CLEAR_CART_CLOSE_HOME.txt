@@ -1,0 +1,10 @@
+V35 Update
+
+After Send Order to WhatsApp:
+- Cart clears
+- Claimed rewards clear
+- Requested items clear
+- Cart drawer closes
+- Page scrolls back to Home/top
+- Checkout fields clear
+- Success toast appears

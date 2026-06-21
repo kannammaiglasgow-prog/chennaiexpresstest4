@@ -1,0 +1,6 @@
+V32 Update
+
+- Top strip contains only Restaurant and Grocery.
+- Restaurant button shows only Restaurant Food products.
+- Grocery button shows only Grocery products.
+- Removed lower Restaurant/Grocery/Household category buttons/cards.

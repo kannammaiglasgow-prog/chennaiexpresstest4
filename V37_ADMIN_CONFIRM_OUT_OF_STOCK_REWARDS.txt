@@ -1,0 +1,11 @@
+V37 Admin Confirm/Update Order
+
+Admin order preview now:
+- Tracks removed items as out of stock/unavailable
+- Customer update message separates:
+  1) Out of stock / removed items
+  2) Available remaining items
+  3) Free gifts still included
+- If items are removed and subtotal points reduce, invalid free gifts are automatically removed
+- Removed free gifts are shown separately with reason
+- Confirm Order message uses the same structure

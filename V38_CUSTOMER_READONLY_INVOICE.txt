@@ -1,0 +1,17 @@
+V38 Customer Read-Only Invoice
+
+Customer updated order link now opens customer_order.html.
+
+Customer can only view:
+- Final items
+- Removed/out-of-stock items
+- Free gifts
+- Summary
+- Payment and delivery/collection details
+
+Customer cannot:
+- Edit quantity
+- Add products
+- Remove products
+
+Admin can still edit using order.html.
