@@ -3,6 +3,26 @@ let products = [];
 let pendingImageUpload = null;
 const ADMIN_PRODUCTS_STORAGE_KEY = "ce_admin_products";
 const ADMIN_REWARDS_STORAGE_KEY = "ce_rewards";
+function showAdminError(message){
+  const box = document.getElementById("adminError");
+  if(box){
+    box.textContent = message;
+    box.classList.add("show");
+  }else{
+    alert(message);
+  }
+}
+
+window.addEventListener("error", event => {
+  if(event.target && event.target.tagName === "IMG") return;
+  showAdminError("Admin page error: " + (event.message || "Please refresh."));
+});
+
+window.addEventListener("unhandledrejection", event => {
+  const reason = event.reason;
+  showAdminError("Admin page error: " + ((reason && reason.message) || "Please refresh."));
+});
+
 let orders = [
   {
     order_id:"CE-DEMO-0001",
@@ -992,10 +1012,20 @@ function downloadTemplate(){
 }
 
 async function init(){
-  renderOrders();
-  renderCustomers();
-  renderRewards();
-  await loadProductsFromSupabase();
+  try{
+    renderOrders();
+    renderCustomers();
+    renderRewards();
+    await loadProductsFromSupabase();
+  }catch(error){
+    console.error(error);
+    showAdminError("Admin page could not load. Please refresh. " + (error.message || ""));
+    loadLocalProductsFallback("Showing local products after an admin loading issue.");
+  }
 }
-init();
 
+if(document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", init);
+}else{
+  init();
+}
