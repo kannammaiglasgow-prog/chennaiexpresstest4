@@ -117,7 +117,24 @@ function save(){
   updateCartCount(); 
 }
 function priceOf(p){ return p.offer_price || p.price; }
-function categories(){ return ["All", ...new Set(PRODUCTS.map(p=>p.category))]; }
+const CATEGORY_FILTERS = [
+  {label:"All", terms:[]},
+  {label:"Rice", terms:["rice", "flakes"]},
+  {label:"Oil & Ghee", terms:["oil", "ghee", "gingelly"]},
+  {label:"Flour & Atta", terms:["flour", "atta", "puttu", "ragi"]},
+  {label:"Dals & Pulses", terms:["dals", "pulses", "dal", "dall", "dhall", "lentils", "peas", "mung", "chana", "toor", "urid"]},
+  {label:"Spices", terms:["spices", "spice", "pepper", "dhania", "cumin", "mustard", "cloves", "salt", "turmeric"]},
+  {label:"Masala", terms:["masala", "curry powder", "sambar", "manchurian", "tikka"]},
+  {label:"Beans", terms:["beans", "chickpeas"]},
+  {label:"Coconut", terms:["coconut"]},
+  {label:"Sauce & Paste", terms:["sauce", "paste", "chutney", "syrup", "rose water"]},
+  {label:"Snacks & Sweets", terms:["snacks", "savoury", "sweets", "candy", "bars", "roasted"]},
+  {label:"Drinks", terms:["drinks", "water", "milk", "coffee", "tea"]},
+  {label:"Noodles", terms:["noodles", "vermicelli"]},
+  {label:"Frozen Food", terms:["frozen", "paratha"]},
+  {label:"Household", terms:["household", "cleaning"]}
+];
+function categories(){ return CATEGORY_FILTERS.map(c => c.label); }
 function stockLimit(p){
   const qty = Number(p && (p.stock_qty ?? p.units_per_case));
   return Number.isFinite(qty) && qty >= 0 ? qty : Infinity;
@@ -280,6 +297,13 @@ function normaliseText(v){
 function productText(p){
   return normaliseText([p.name,p.category,p.subcategory,p.brand,cleanPublicDescription(p.description),p.pack].join(" "));
 }
+function productMatchesCategory(p, category){
+  if(!category || category === "All") return true;
+  const filter = CATEGORY_FILTERS.find(c => c.label === category);
+  if(!filter) return normaliseText([p.category, p.subcategory].join(" ")).includes(normaliseText(category));
+  const text = productText(p);
+  return filter.terms.some(term => text.includes(normaliseText(term)));
+}
 function searchTermsFor(q){
   const n = normaliseText(q);
   if(!n) return [];
@@ -307,7 +331,7 @@ function smartSearchProducts(query, category){
     if(q.includes("puttu") && (p.subcategory.toLowerCase().includes("side") || p.name.toLowerCase().includes("sambal") || p.name.toLowerCase().includes("idiyappam"))) score += 22;
     if(q.includes("pepper") && p.subcategory.toLowerCase().includes("masala")) score += 15;
     return {...p, _score: score, _exact: exact};
-  }).filter(p => (category==="All" || p.category===category || q) && p._score > 0);
+  }).filter(p => ((q && p._score > 0) || productMatchesCategory(p, category)) && (q || productMatchesCategory(p, category)));
   rows.sort((a,b)=> b._score - a._score || a.name.localeCompare(b.name));
   return rows;
 }
