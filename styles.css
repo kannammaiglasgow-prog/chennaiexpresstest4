@@ -211,6 +211,40 @@ main{max-width:1100px;margin:auto}
   text-align:left;
   font-weight:900;
 }
+.menu-category-title{
+  padding:4px 6px 0;
+  font-size:13px;
+  font-weight:900;
+  color:#087a36;
+}
+.menu-category-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:8px;
+}
+.quick-menu .menu-category{
+  padding:11px 12px;
+  background:#eef8f1;
+  color:#075b2d;
+  font-size:14px;
+}
+.quick-menu .contact-menu-btn,
+.request-box .contact-btn{
+  background:#075b2d;
+  color:white;
+}
+.request-box .contact-btn{
+  margin-left:8px;
+}
+@media(max-width:700px){
+  .request-box button{
+    width:100%;
+    margin:0 0 8px;
+  }
+  .request-box .contact-btn{
+    margin-left:0;
+  }
+}
 @media(max-width:700px){
   .offer-card{
     align-items:flex-start;
@@ -839,6 +873,11 @@ main{max-width:1100px;margin:auto}
 .gift-card span{
   color:#087a36;
   font-weight:900;
+}
+.gift-card .gift-value{
+  color:#d10b14;
+  font-weight:900;
+  min-height:0;
 }
 .gift-card button{
   border:0;

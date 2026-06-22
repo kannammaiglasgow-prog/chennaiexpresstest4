@@ -21,11 +21,21 @@ const FIXED_REWARDS = [
   {id:"chicken_biryani", points:2000, name:"Free Chicken Biryani", emoji:"ðŸ›", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"},
   {id:"gingelly_oil", points:3000, name:"Free Gingelly Oil", emoji:"ðŸ›¢ï¸", image:"data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22500%22%20height%3D%22500%22%20viewBox%3D%220%200%20500%20500%22%3E%0A%20%20%3Crect%20width%3D%22500%22%20height%3D%22500%22%20rx%3D%2242%22%20fill%3D%22%23fff8eb%22%2F%3E%0A%20%20%3Crect%20x%3D%2232%22%20y%3D%2232%22%20width%3D%22436%22%20height%3D%22436%22%20rx%3D%2234%22%20fill%3D%22%23ffffff%22%20stroke%3D%22%23ecd8b8%22%20stroke-width%3D%226%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22250%22%20cy%3D%22180%22%20r%3D%2270%22%20fill%3D%22%230b7a3b%22%20opacity%3D%22.12%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M177%20252h146l-18%2092H195l-18-92Z%22%20fill%3D%22%230b7a3b%22%2F%3E%0A%20%20%3Cpath%20d%3D%22M205%20252c0-34%2020-62%2045-62s45%2028%2045%2062%22%20fill%3D%22none%22%20stroke%3D%22%23d4141d%22%20stroke-width%3D%2218%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22392%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2234%22%20font-weight%3D%22900%22%20fill%3D%22%23d4141d%22%3ECHENNAI%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22430%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2232%22%20font-weight%3D%22900%22%20fill%3D%22%230b7a3b%22%3EEXPRESS%3C%2Ftext%3E%0A%20%20%3Ctext%20x%3D%22250%22%20y%3D%22462%22%20text-anchor%3D%22middle%22%20font-family%3D%22Arial%2C%20Helvetica%2C%20sans-serif%22%20font-size%3D%2218%22%20font-weight%3D%22700%22%20fill%3D%22%23555%22%3EFOOD%20%26amp%3B%20GROCERY%3C%2Ftext%3E%0A%3C%2Fsvg%3E%0A"}
 ];
+const DEFAULT_REWARD_VALUES = {
+  chicken_roll:2.50,
+  puttu_1kg:2.99,
+  chicken_biryani:8.99,
+  gingelly_oil:3.99
+};
+FIXED_REWARDS.forEach(r => {
+  if(!Number(r.value)) r.value = DEFAULT_REWARD_VALUES[r.id] || 0;
+});
 let cart = JSON.parse(localStorage.getItem("ce_cart") || "{}");
 let checkedDistanceMiles = null;
 let checkedPostcode = "";
 let requestedCart = JSON.parse(localStorage.getItem("ce_requested_cart") || "[]");
 let claimedRewards = JSON.parse(localStorage.getItem("ce_claimed_rewards") || "[]");
+loadSavedRewards();
 const TEXT = {
   restaurant:"Restaurant",
   grocery:"Grocery",
@@ -83,6 +93,37 @@ const TEXT = {
 
 function tr(key){
   return TEXT[key] || key;
+}
+
+function rewardIdFromName(name){
+  return String(name || "reward").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || `reward_${Date.now()}`;
+}
+
+function loadSavedRewards(){
+  try{
+    const saved = JSON.parse(localStorage.getItem("ce_rewards") || "null");
+    if(!Array.isArray(saved) || !saved.length) return;
+    const fallbackImage = FIXED_REWARDS[0] ? FIXED_REWARDS[0].image : "";
+    const fallbackById = new Map(FIXED_REWARDS.map(r => [r.id, r]));
+    const cleanRewards = saved.map((r, index) => {
+      const name = String(r.reward_name || r.name || "").trim() || "Free Gift";
+      const id = r.id || rewardIdFromName(name) + "_" + index;
+      const fallback = fallbackById.get(id);
+      return {
+        id,
+        points:Number(r.points_required || r.points || 0),
+        name,
+        value:Number(r.reward_price || r.value || r.price || 0),
+        emoji:r.emoji || "",
+        image:r.image || (fallback && fallback.image) || fallbackImage
+      };
+    }).filter(r => r.points > 0);
+    if(cleanRewards.length){
+      FIXED_REWARDS.splice(0, FIXED_REWARDS.length, ...cleanRewards.sort((a,b)=>a.points-b.points));
+    }
+  }catch(e){
+    console.warn("Could not load saved rewards", e);
+  }
 }
 document.addEventListener("error", function(event){
   const img = event.target;
@@ -297,12 +338,35 @@ function normaliseText(v){
 function productText(p){
   return normaliseText([p.name,p.category,p.subcategory,p.brand,cleanPublicDescription(p.description),p.pack].join(" "));
 }
+function productFilterCategory(p){
+  const text = productText(p);
+  const sub = normaliseText(p.subcategory);
+  const cat = normaliseText(p.category);
+  const name = normaliseText(p.name);
+  if(cat.includes("household") || sub.includes("cleaning")) return "Household";
+  if(cat.includes("frozen") || sub.includes("paratha")) return "Frozen Food";
+  if(cat.includes("noodles") || text.includes("noodles") || text.includes("vermicelli")) return "Noodles";
+  if(cat.includes("drinks") || text.includes("coconut water") || text.includes("milk") || text.includes("coffee") || text.includes("tea")) return "Drinks";
+  if(name.includes("kings gram flour")) return "Snacks & Sweets";
+  if(name.includes("heera toor dal") || name.includes("trs canned boiled chickpeas")) return "Dals & Pulses";
+  if(/\boil\b/.test(text) || text.includes("ghee") || text.includes("gingelly")) return "Oil & Ghee";
+  if(text.includes("flour") || text.includes("atta") || text.includes("puttu") || text.includes("ragi")) return "Flour & Atta";
+  if(text.includes("dals") || text.includes("pulses") || text.includes("dal") || text.includes("dall") || text.includes("dhall") || text.includes("lentils") || text.includes("peas") || text.includes("mung") || text.includes("chana") || text.includes("toor") || text.includes("urid")) return "Dals & Pulses";
+  if(text.includes("beans") || text.includes("chickpeas")) return "Beans";
+  if(name.includes("biryani rice paste")) return "Spices";
+  if(text.includes("masala") || text.includes("curry powder") || text.includes("sambar") || text.includes("manchurian") || text.includes("tikka")) return "Masala";
+  if(text.includes("spices") || text.includes("spice") || text.includes("pepper") || text.includes("dhania") || text.includes("cumin") || text.includes("mustard") || text.includes("cloves") || text.includes("salt") || text.includes("turmeric")) return "Spices";
+  if(text.includes("coconut")) return "Coconut";
+  if(text.includes("sauce") || text.includes("paste") || text.includes("chutney") || text.includes("syrup") || text.includes("rose water")) return "Sauce & Paste";
+  if(cat.includes("snacks") || text.includes("savoury") || text.includes("sweets") || text.includes("candy") || text.includes("bars") || text.includes("roasted")) return "Snacks & Sweets";
+  if(text.includes("rice") || text.includes("flakes")) return "Rice";
+  return p.category || "Grocery";
+}
 function productMatchesCategory(p, category){
   if(!category || category === "All") return true;
   const filter = CATEGORY_FILTERS.find(c => c.label === category);
   if(!filter) return normaliseText([p.category, p.subcategory].join(" ")).includes(normaliseText(category));
-  const text = productText(p);
-  return filter.terms.some(term => text.includes(normaliseText(term)));
+  return productFilterCategory(p) === category;
 }
 function searchTermsFor(q){
   const n = normaliseText(q);
@@ -362,7 +426,7 @@ function setCategory(c){
 }
 function scrollToProducts(){ document.querySelector(".products-anchor").scrollIntoView({behavior:"smooth"}); }
 function scrollToOffers(){ document.getElementById("offersSection").scrollIntoView({behavior:"smooth"}); }
-function scrollToRewards(){ document.querySelector(".rewards").scrollIntoView({behavior:"smooth"}); }
+function scrollToRewards(){ openCart(); }
 
 function card(p){
   const old = p.offer_price ? `<span class="old">${money(p.price)}</span>` : "";
@@ -656,6 +720,11 @@ function availablePoints(){
   return Math.max(0, earnedPoints() - usedRewardPoints());
 }
 
+function rewardValueText(r){
+  const value = Number(r && (r.value || r.reward_price || r.price));
+  return Number.isFinite(value) && value > 0 ? `Worth ${money(value)}` : "";
+}
+
 function claimFixedReward(id){
   const reward = FIXED_REWARDS.find(r => r.id === id);
   if(!reward) return;
@@ -707,7 +776,7 @@ function renderCartRewards(){
     html += `<div class="claimed-gift-grid">`;
     html += claimedRewards.map(r=>`<div class="claimed-gift-card">
       <img src="${r.image}" alt="${r.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-      <div><b>${r.name}</b><br><small>${r.points} points used</small></div>
+      <div><b>${r.name}</b><br><small>${r.points} points used${rewardValueText(r) ? ` / ${rewardValueText(r)} free` : ""}</small></div>
       <button onclick="removeReward('${r.claimId}')">Remove</button>
     </div>`).join("");
     html += `</div>`;
@@ -722,6 +791,7 @@ function renderCartRewards(){
     return `<div class="gift-card ${can?'':'locked'}">
       <img src="${r.image}" alt="${r.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
       <b>${r.name}</b>
+      ${rewardValueText(r) ? `<small class="gift-value">${rewardValueText(r)} free</small>` : ""}
       <span>${r.points} points</span>
       <button ${can?'':'disabled'} onclick="claimFixedReward('${r.id}')">${can?'Claim Free':'Locked'}</button>
     </div>`;
@@ -735,7 +805,7 @@ function renderCartRewards(){
     const progress = Math.max(0, Math.min(100, Math.round((available / next.points) * 100)));
     html += `<div class="next-reward-box">
       <img src="${next.image}" alt="${next.name}" referrerpolicy="no-referrer" loading="lazy" decoding="async">
-      <div><b>Next Gift</b><br><span>${next.name}</span><br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
+      <div><b>Next Gift</b><br><span>${next.name}</span>${rewardValueText(next) ? `<br><small>${rewardValueText(next)} free</small>` : ""}<br><small>Need ${need} more points / approx £${spendNeed} more spend</small></div>
     </div>
     <div class="reward-progress"><div style="width:${progress}%"></div></div>
     <div class="reward-progress-label">${available} / ${next.points} remaining points</div>`;
@@ -748,7 +818,7 @@ function renderCartRewards(){
   html += `<div class="reward-ladder">
     <b>Reward List</b>
     ${FIXED_REWARDS.map(r => `<div class="${available >= r.points ? 'unlocked' : 'locked'}">
-      <span>${r.points} pts</span><span>${r.name}</span>
+      <span>${r.points} pts</span><span>${r.name}${rewardValueText(r) ? `<br><small>${rewardValueText(r)}</small>` : ""}</span>
     </div>`).join("")}
   </div>`;
 
@@ -1273,6 +1343,11 @@ function closeProductPage(){
   document.body.style.overflow = "";
 }
 
+function contactUsWhatsApp(){
+  const msg = "Hello Chennai Express, I need help with my order.";
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+}
+
 
 function toggleMenu(){
   const menu = document.getElementById("quickMenu");
@@ -1280,12 +1355,17 @@ function toggleMenu(){
   const m = document.createElement("div");
   m.id = "quickMenu";
   m.className = "quick-menu";
+  const categoryButtons = categories()
+    .filter(c => c !== "All")
+    .map(c => `<button class="menu-category" onclick="setCategory('${c}'); toggleMenu()">${c}</button>`)
+    .join("");
   m.innerHTML = `
     <button onclick="setCategory('Restaurant Food'); toggleMenu()">Restaurant Food</button>
-    <button onclick="setCategory('Grocery'); toggleMenu()">Grocery</button>
+    <div class="menu-category-title">Product Categories</div>
+    <div class="menu-category-grid">${categoryButtons}</div>
     <button onclick="scrollToOffers(); toggleMenu()">Offers</button>
-    <button onclick="scrollToRewards(); toggleMenu()">Rewards</button>
     <button onclick="document.querySelector('.request-box').scrollIntoView({behavior:'smooth'}); toggleMenu()">Request Item</button>
+    <button class="contact-menu-btn" onclick="contactUsWhatsApp(); toggleMenu()">Contact Us on WhatsApp</button>
   `;
   document.body.appendChild(m);
 }

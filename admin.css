@@ -468,3 +468,27 @@ nav button{
   padding:8px;
   background:#fff8eb !important;
 }
+
+.reward-admin-tools h3{
+  margin:0 0 10px;
+}
+.reward-admin-tools p{
+  margin:8px 0 0;
+  color:#555;
+}
+.reward-row{
+  grid-template-columns:2fr .7fr .7fr 1fr auto;
+}
+.reward-thumb{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+  border-radius:10px;
+  border:1px solid #eee;
+  background:#fff;
+}
+@media(max-width:700px){
+  .reward-row{
+    grid-template-columns:1fr;
+  }
+}

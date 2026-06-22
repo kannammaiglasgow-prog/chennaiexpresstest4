@@ -55,22 +55,12 @@
   </section>
   <section class="product-grid" id="productGrid"></section>
 
-  <section class="rewards">
-    <h2>Rewards Shop</h2>
-    <p>£1 spend = 10 points. Redeem free products.</p>
-    <div class="reward-list">
-      <span>500 pts = Peanut Bar</span>
-      <span>1000 pts = Necto</span>
-      <span>1500 pts = Masala Tea</span>
-      <span>3000 pts = Pickle</span>
-    </div>
-  </section>
-
   <section class="request-box">
     <h2>Can't find what you need?</h2>
     <p>Type the item name and add it to your cart. Price will be confirmed on WhatsApp.</p>
     <input id="requestName" placeholder="Type item name e.g. MTR Rava Idli Mix">
     <button onclick="addRequestedItemToCart()">Add Request to Cart</button>
+    <button class="contact-btn" onclick="contactUsWhatsApp()">Contact Us on WhatsApp</button>
     <div id="requestAddedMsg" class="request-added-msg"></div>
   </section>
 </main>
@@ -124,7 +114,6 @@
 <nav class="bottom-nav">
   <button onclick="window.scrollTo(0,0)">Home</button>
   <button onclick="scrollToProducts()">Products</button>
-  <button onclick="document.querySelector('.rewards').scrollIntoView({behavior:'smooth'})">Rewards</button>
   <button onclick="openCart()">Cart</button>
 </nav>
 

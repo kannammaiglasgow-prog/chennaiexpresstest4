@@ -2,6 +2,7 @@
 let products = [];
 let pendingImageUpload = null;
 const ADMIN_PRODUCTS_STORAGE_KEY = "ce_admin_products";
+const ADMIN_REWARDS_STORAGE_KEY = "ce_rewards";
 let orders = [
   {
     order_id:"CE-DEMO-0001",
@@ -33,11 +34,11 @@ let orders = [
 ];
 
 let customers = [];
-let rewards = [
-  {points_required:500, reward_name:"Free Chicken Roll"},
-  {points_required:1000, reward_name:"Free 1kg Puttu"},
-  {points_required:2000, reward_name:"Free Chicken Biryani"},
-  {points_required:3000, reward_name:"Free Gingelly Oil"}
+let rewards = loadSavedRewards() || [
+  {points_required:500, reward_name:"Free Chicken Roll", reward_price:2.50},
+  {points_required:1000, reward_name:"Free 1kg Puttu", reward_price:2.99},
+  {points_required:2000, reward_name:"Free Chicken Biryani", reward_price:8.99},
+  {points_required:3000, reward_name:"Free Gingelly Oil", reward_price:3.99}
 ];
 
 function showTab(id){
@@ -745,14 +746,173 @@ function addLocalCustomer(){
   renderCustomers();
 }
 
+function rewardIdFromName(name){
+  return String(name || "reward").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || `reward_${Date.now()}`;
+}
+
+function normaliseReward(r, index){
+  const name = String(r.reward_name || r.name || "").trim() || "Free Gift";
+  return {
+    id:r.id || rewardIdFromName(name) + "_" + index,
+    reward_name:name,
+    points_required:Number(r.points_required || r.points || 0),
+    reward_price:Number(r.reward_price || r.value || r.price || 0),
+    emoji:r.emoji || "",
+    image:r.image || ""
+  };
+}
+
+function loadSavedRewards(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(ADMIN_REWARDS_STORAGE_KEY) || "null");
+    return Array.isArray(saved) && saved.length ? saved.map(normaliseReward) : null;
+  }catch(e){
+    console.warn("Could not load saved rewards", e);
+    return null;
+  }
+}
+
+function saveRewardsToLocalStore(){
+  rewards = rewards.map(normaliseReward).sort((a,b)=>Number(a.points_required)-Number(b.points_required));
+  localStorage.setItem(ADMIN_REWARDS_STORAGE_KEY, JSON.stringify(rewards));
+}
+
 function renderRewards(){
-  document.getElementById("rewardList").innerHTML = `<div class="table">
-    <div class="row head"><div>Reward</div><div>Points</div><div></div><div></div><div>Actions</div></div>
-    ${rewards.map(r=>`<div class="row">
-      <div>${r.reward_name}</div><div>${r.points_required}</div><div></div><div></div>
-      <div class="actions"><button class="green">Edit</button></div>
-    </div>`).join("")}
-  </div>`;
+  rewards = rewards.map(normaliseReward).sort((a,b)=>Number(a.points_required)-Number(b.points_required));
+  document.getElementById("rewardList").innerHTML = `
+    <div class="reward-admin-tools card">
+      <h3>Add Reward</h3>
+      <div class="form-grid reward-form">
+        <input id="rewardName" placeholder="Reward name e.g. Free Chicken Roll">
+        <input id="rewardPoints" type="number" min="1" step="1" placeholder="Points e.g. 500">
+        <input id="rewardPrice" type="number" min="0" step="0.01" placeholder="Gift value e.g. 2.50">
+        <input id="rewardEmoji" placeholder="Emoji optional">
+        <input id="rewardImage" placeholder="Image URL optional">
+        <button onclick="addReward()">Add Reward</button>
+      </div>
+      <p>Saved rewards will show in customer cart rewards in the same browser. Export/upload code when ready for online.</p>
+    </div>
+    <div class="table reward-table">
+      <div class="row head reward-row"><div>Reward</div><div>Points</div><div>Value</div><div>Image</div><div>Actions</div></div>
+      ${rewards.map((r,i)=>`<div class="row reward-row">
+        <div><b>${escapeHtml(r.reward_name)}</b><br><small>${escapeHtml(r.id)}</small></div>
+        <div>${Number(r.points_required)}</div>
+        <div>${Number(r.reward_price || 0) ? `£${Number(r.reward_price).toFixed(2)}` : "-"}</div>
+        <div>${r.image ? `<img class="reward-thumb" src="${imageSrc(r.image)}" alt="${escapeHtml(r.reward_name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<span class="badge low_stock">No image</span>`}</div>
+        <div class="actions">
+          <button class="green" onclick="openRewardEditor(${i})">Edit</button>
+          <button class="red" onclick="deleteReward(${i})">Delete</button>
+        </div>
+      </div>`).join("")}
+    </div>
+    <div id="rewardEditor"></div>`;
+}
+
+function addReward(){
+  const name = document.getElementById("rewardName").value.trim();
+  const points = Number(document.getElementById("rewardPoints").value || 0);
+  if(!name){
+    alert("Reward name is required.");
+    return;
+  }
+  if(!Number.isFinite(points) || points <= 0){
+    alert("Points must be more than 0.");
+    return;
+  }
+  rewards.push(normaliseReward({
+    id:rewardIdFromName(name),
+    reward_name:name,
+    points_required:points,
+    reward_price:Number(document.getElementById("rewardPrice").value || 0),
+    emoji:document.getElementById("rewardEmoji").value.trim(),
+    image:document.getElementById("rewardImage").value.trim()
+  }, rewards.length));
+  saveRewardsToLocalStore();
+  renderRewards();
+  renderDashboard();
+  alert("Reward added. Open or refresh customer page in this browser.");
+}
+
+function openRewardEditor(index){
+  const r = rewards[index];
+  if(!r) return;
+  const box = document.getElementById("rewardEditor");
+  box.innerHTML = `
+    <div class="product-editor-modal show">
+      <div class="product-editor-popup">
+        <div class="popup-head">
+          <h2>Edit Reward</h2>
+          <button onclick="closeRewardEditor()">X</button>
+        </div>
+        <div class="editor-grid">
+          <label>Reward Name
+            <input id="editRewardName" value="${escapeHtml(r.reward_name)}">
+          </label>
+          <label>Points Required
+            <input id="editRewardPoints" type="number" min="1" step="1" value="${Number(r.points_required)}">
+          </label>
+          <label>Gift Value / Price
+            <input id="editRewardPrice" type="number" min="0" step="0.01" value="${Number(r.reward_price || 0)}">
+          </label>
+          <label>Emoji optional
+            <input id="editRewardEmoji" value="${escapeHtml(r.emoji || "")}">
+          </label>
+          <label>Image URL optional
+            <input id="editRewardImage" value="${escapeHtml(r.image || "")}">
+          </label>
+        </div>
+        <div class="big-actions">
+          <button class="green" onclick="saveReward(${index})">Save Reward</button>
+          <button class="red" onclick="deleteReward(${index})">Delete</button>
+          <button class="dark" onclick="closeRewardEditor()">Close</button>
+        </div>
+      </div>
+    </div>`;
+  document.body.style.overflow = "hidden";
+}
+
+function saveReward(index){
+  const r = rewards[index];
+  if(!r) return;
+  const name = document.getElementById("editRewardName").value.trim();
+  const points = Number(document.getElementById("editRewardPoints").value || 0);
+  if(!name){
+    alert("Reward name is required.");
+    return;
+  }
+  if(!Number.isFinite(points) || points <= 0){
+    alert("Points must be more than 0.");
+    return;
+  }
+  rewards[index] = normaliseReward({
+    ...r,
+    id:r.id || rewardIdFromName(name),
+    reward_name:name,
+    points_required:points,
+    reward_price:Number(document.getElementById("editRewardPrice").value || 0),
+    emoji:document.getElementById("editRewardEmoji").value.trim(),
+    image:document.getElementById("editRewardImage").value.trim()
+  }, index);
+  saveRewardsToLocalStore();
+  renderRewards();
+  closeRewardEditor();
+  alert("Reward saved. Open or refresh customer page in this browser.");
+}
+
+function deleteReward(index){
+  const r = rewards[index];
+  if(!r) return;
+  if(!confirm(`Delete reward: ${r.reward_name}?`)) return;
+  rewards.splice(index, 1);
+  saveRewardsToLocalStore();
+  renderRewards();
+  renderDashboard();
+}
+
+function closeRewardEditor(){
+  const box = document.getElementById("rewardEditor");
+  if(box) box.innerHTML = "";
+  document.body.style.overflow = "";
 }
 
 function previewCSV(event){
