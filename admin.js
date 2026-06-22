@@ -446,14 +446,14 @@ function renderProducts(){
         ${p.image ? `<img src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<div class="no-img">No Image</div>`}
         <div>
           <b>${escapeHtml(p.name)}</b><br>
-          <small>${escapeHtml(p.sku || "")} â€¢ ${escapeHtml(p.pack_size || "")}</small><br>
+          <small>${escapeHtml(p.sku || "")} - ${escapeHtml(p.pack_size || "")}</small><br>
           <small>${escapeHtml(cleanPublicDescription(p.description))}</small>
           ${p.allergy_information ? `<br><small><b>Allergy:</b> ${escapeHtml(p.allergy_information)}</small>` : ""}
         </div>
       </div>
       <div>${escapeHtml(p.category)}<br><small>${escapeHtml(p.subcategory || "")}</small></div>
       <div>
-        ${p.offer_price ? `<span class="old-price">Â£${Number(p.normal_price || p.price).toFixed(2)}</span><br><b class="offer-price">Â£${Number(p.offer_price).toFixed(2)}</b>` : `<b>Â£${Number(p.price).toFixed(2)}</b>`}
+        ${p.offer_price ? `<span class="old-price">£${Number(p.normal_price || p.price).toFixed(2)}</span><br><b class="offer-price">£${Number(p.offer_price).toFixed(2)}</b>` : `<b>£${Number(p.price).toFixed(2)}</b>`}
         ${p.is_special_offer ? `<br><span class="badge low_stock">Offer</span>` : ""}
       </div>
       <div>${statusBadge(p.stock_status)}<br><small>Qty: ${p.stock_qty}</small></div>
@@ -525,7 +525,7 @@ function openProductEditor(index){
   modal.innerHTML = `<div class="product-editor-popup">
     <div class="popup-head">
       <h2>Edit Product</h2>
-      <button onclick="closeProductEditor()">âœ•</button>
+      <button onclick="closeProductEditor()">x</button>
     </div>
 
     <div class="editor-preview">
@@ -722,7 +722,7 @@ function renderOrders(){
     ${orders.map((o,i)=>`<div class="row">
       <div><b>${o.order_id}</b><br><small>${o.order_type}</small></div>
       <div>${o.customer_name}<br><small>${o.whatsapp_number}</small></div>
-      <div>Â£${Number(o.total).toFixed(2)}</div>
+      <div>£${Number(o.total).toFixed(2)}</div>
       <div>${statusBadge(o.status)}</div>
       <div class="actions">
         <button class="green" onclick="setOrderStatus(${i},'confirmed')">Confirm</button>
@@ -872,7 +872,7 @@ function renderRewards(){
       ${rewards.map((r,i)=>`<div class="row reward-row">
         <div><b>${escapeHtml(r.reward_name)}</b><br><small>${escapeHtml(r.id)}</small></div>
         <div>${Number(r.points_required)}</div>
-        <div>${Number(r.reward_price || 0) ? `Â£${Number(r.reward_price).toFixed(2)}` : "-"}</div>
+        <div>${Number(r.reward_price || 0) ? `£${Number(r.reward_price).toFixed(2)}` : "-"}</div>
         <div>${r.image ? `<img class="reward-thumb" src="${imageSrc(r.image)}" alt="${escapeHtml(r.reward_name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<span class="badge low_stock">No image</span>`}</div>
         <div class="actions">
           <button class="green" onclick="openRewardEditor(${i})">Edit</button>
