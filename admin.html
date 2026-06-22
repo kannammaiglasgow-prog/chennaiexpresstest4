@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chennai Express Admin Phase 1</title>
-<link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="admin.css?v=20260622-latest-photos">
 </head>
 <body>
 <header>
@@ -57,6 +57,10 @@
       </select>
       <button onclick="addLocalProduct()">Add Product Demo</button>
     </div>
+    <div class="admin-search-bar">
+      <input id="productSearch" placeholder="Search products by name, SKU, category or pack" oninput="renderProducts()">
+      <button onclick="clearProductSearch()">Clear</button>
+    </div>
     <div id="productList"></div>
   </section>
 
@@ -90,7 +94,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase_config.js"></script>
-<script src="products.js?v=20260622-photo-fix"></script>
-<script src="admin.js?v=20260622-photo-fix"></script>
+<script src="products.js?v=20260622-latest-photos"></script>
+<script src="admin.js?v=20260622-latest-photos"></script>
 </body>
 </html>

@@ -146,6 +146,11 @@ function mergeLatestFileProductData(savedProducts){
     if(!fileProduct) return saved;
     return {
       ...saved,
+      price:fileProduct.price ?? saved.price ?? 0,
+      offer_price:Object.prototype.hasOwnProperty.call(fileProduct, "offer_price") ? fileProduct.offer_price : (saved.offer_price ?? null),
+      stock:fileProduct.stock || saved.stock || "In Stock",
+      stock_qty:fileProduct.stock_qty ?? saved.stock_qty ?? saved.units_per_case ?? 0,
+      badge:fileProduct.badge ?? saved.badge ?? "",
       image:fileProduct.image || saved.image || "",
       description:cleanPublicDescription(fileProduct.description || saved.description),
       pack:fileProduct.pack || saved.pack || "",

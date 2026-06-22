@@ -182,6 +182,14 @@ function mergeLatestFileProductData(savedProducts){
     if(!fileProduct) return saved;
     return {
       ...saved,
+      price:fileProduct.price ?? saved.price ?? 0,
+      normal_price:fileProduct.price ?? saved.normal_price ?? saved.price ?? 0,
+      offer_price:Object.prototype.hasOwnProperty.call(fileProduct, "offer_price") ? fileProduct.offer_price : (saved.offer_price ?? null),
+      stock:fileProduct.stock || saved.stock || "In Stock",
+      stock_qty:fileProduct.stock_qty ?? saved.stock_qty ?? saved.units_per_case ?? 0,
+      stock_status:fileProduct.stock === "Out of Stock" ? "out_of_stock" : (saved.stock_status || "in_stock"),
+      badge:fileProduct.badge ?? saved.badge ?? "",
+      is_special_offer:!!fileProduct.offer_price || !!saved.is_special_offer,
       image:fileProduct.image || saved.image || "",
       description:cleanPublicDescription(fileProduct.description || saved.description),
       pack:fileProduct.pack || saved.pack || "",
@@ -383,10 +391,37 @@ function renderDashboard(){
   document.getElementById("rewardClaims").innerText = "Demo";
 }
 
+function normaliseSearchText(value){
+  return String(value || "").toLowerCase().replace(/[^a-z0-9]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function productSearchText(p){
+  return normaliseSearchText([
+    p.name,
+    p.sku,
+    p.category,
+    p.subcategory,
+    p.pack_size,
+    p.description,
+    p.stock_status
+  ].join(" "));
+}
+
+function clearProductSearch(){
+  const input = document.getElementById("productSearch");
+  if(input) input.value = "";
+  renderProducts();
+}
+
 function renderProducts(){
+  const searchInput = document.getElementById("productSearch");
+  const query = normaliseSearchText(searchInput ? searchInput.value : "");
+  const visibleProducts = products
+    .map((p, index) => ({p, index}))
+    .filter(({p}) => !query || productSearchText(p).includes(query));
   const html = `<div class="table product-table">
     <div class="row head product-row"><div>Product</div><div>Category</div><div>Price</div><div>Stock</div><div>Actions</div></div>
-    ${products.map((p,i)=>`<div class="row product-row product-click" onclick="openProductEditor(${i})">
+    ${visibleProducts.map(({p,index})=>`<div class="row product-row product-click" onclick="openProductEditor(${index})">
       <div class="admin-product-main">
         ${p.image ? `<img src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<div class="no-img">No Image</div>`}
         <div>
@@ -403,15 +438,19 @@ function renderProducts(){
       </div>
       <div>${statusBadge(p.stock_status)}<br><small>Qty: ${p.stock_qty}</small></div>
       <div class="actions" onclick="event.stopPropagation()">
-        <button class="green" onclick="setStock(${i},'in_stock')">In</button>
-        <button class="dark" onclick="setStock(${i},'low_stock')">Low</button>
-        <button class="red" onclick="setStock(${i},'out_of_stock')">Out</button>
-        <button class="red" onclick="deleteProductFromSupabase(${i})">Delete</button>
+        <button class="green" onclick="setStock(${index},'in_stock')">In</button>
+        <button class="dark" onclick="setStock(${index},'low_stock')">Low</button>
+        <button class="red" onclick="setStock(${index},'out_of_stock')">Out</button>
+        <button class="red" onclick="deleteProductFromSupabase(${index})">Delete</button>
       </div>
     </div>`).join("")}
   </div>
   <div id="productEditor"></div>`;
-  document.getElementById("productList").innerHTML = `<p><b>Total Products:</b> ${products.length}</p>` + html;
+  const countLine = query
+    ? `<p><b>Showing:</b> ${visibleProducts.length} of ${products.length} products</p>`
+    : `<p><b>Total Products:</b> ${products.length}</p>`;
+  const emptyLine = visibleProducts.length ? "" : `<div class="card"><b>No products found</b><p>Try another search word.</p></div>`;
+  document.getElementById("productList").innerHTML = countLine + emptyLine + html;
 }
 
 async function setStock(i,status){
