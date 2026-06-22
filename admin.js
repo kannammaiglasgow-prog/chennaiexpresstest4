@@ -1,4 +1,4 @@
-
+﻿
 let products = [];
 let pendingImageUpload = null;
 const ADMIN_PRODUCTS_STORAGE_KEY = "ce_admin_products";
@@ -28,19 +28,18 @@ let orders = [
     ],
     removed_items:[],
     rewards:[
-      {name:"Free Chicken Roll", points:500, emoji:"🌯"}
+      {name:"Free Chicken Roll", points:500, emoji:"ðŸŒ¯"}
     ]
   }
 ];
 
 let customers = [];
 let rewards = loadSavedRewards() || [
-  {points_required:500, reward_name:"Free Chicken Roll", reward_price:2.50},
-  {points_required:1000, reward_name:"Free 1kg Puttu", reward_price:2.99},
-  {points_required:2000, reward_name:"Free Chicken Biryani", reward_price:8.99},
-  {points_required:3000, reward_name:"Free Gingelly Oil", reward_price:3.99}
+  {id:"free_chicken_roll_0", points_required:500, reward_name:"Puli Satham 500ml Box", reward_price:4.99, emoji:"", image:"https://rakskitchen.net/wp-content/uploads/2014/05/14097742883_de6b965cb9_z-500x375.jpg"},
+  {id:"free_1kg_puttu_1", points_required:1000, reward_name:"1 Chicken biryani 500ml box", reward_price:9.99, emoji:"", image:"https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Chicken-Biryani-Recipe.jpg"},
+  {id:"free_chicken_biryani_2", points_required:2000, reward_name:"1kg Chicken Biryani", reward_price:18.99, emoji:"", image:"https://www.cubesnjuliennes.com/wp-content/uploads/2020/07/Chicken-Biryani-Recipe.jpg"},
+  {id:"free_gingelly_oil_3", points_required:3000, reward_name:"Free Gingelly Oil", reward_price:0, emoji:"", image:""}
 ];
-
 function showTab(id){
   document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
   document.getElementById(id).classList.add("active");
@@ -161,7 +160,7 @@ function adminProductToFrontend(p, index){
     stock:p.stock_status === "out_of_stock" ? "Out of Stock" : "In Stock",
     stock_qty:Number.isFinite(Number(p.stock_qty)) ? Number(p.stock_qty) : 0,
     badge:p.is_special_offer || offerPrice ? "Special Offer" : (p.is_best_seller ? "Best Seller" : ""),
-    emoji:"🛒",
+    emoji:"ðŸ›’",
     description:cleanPublicDescription(p.description),
     image:p.image || "",
     invoice_amount:p.invoice_amount,
@@ -427,14 +426,14 @@ function renderProducts(){
         ${p.image ? `<img src="${imageSrc(p.image)}" alt="${escapeHtml(p.name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<div class="no-img">No Image</div>`}
         <div>
           <b>${escapeHtml(p.name)}</b><br>
-          <small>${escapeHtml(p.sku || "")} • ${escapeHtml(p.pack_size || "")}</small><br>
+          <small>${escapeHtml(p.sku || "")} â€¢ ${escapeHtml(p.pack_size || "")}</small><br>
           <small>${escapeHtml(cleanPublicDescription(p.description))}</small>
           ${p.allergy_information ? `<br><small><b>Allergy:</b> ${escapeHtml(p.allergy_information)}</small>` : ""}
         </div>
       </div>
       <div>${escapeHtml(p.category)}<br><small>${escapeHtml(p.subcategory || "")}</small></div>
       <div>
-        ${p.offer_price ? `<span class="old-price">£${Number(p.normal_price || p.price).toFixed(2)}</span><br><b class="offer-price">£${Number(p.offer_price).toFixed(2)}</b>` : `<b>£${Number(p.price).toFixed(2)}</b>`}
+        ${p.offer_price ? `<span class="old-price">Â£${Number(p.normal_price || p.price).toFixed(2)}</span><br><b class="offer-price">Â£${Number(p.offer_price).toFixed(2)}</b>` : `<b>Â£${Number(p.price).toFixed(2)}</b>`}
         ${p.is_special_offer ? `<br><span class="badge low_stock">Offer</span>` : ""}
       </div>
       <div>${statusBadge(p.stock_status)}<br><small>Qty: ${p.stock_qty}</small></div>
@@ -506,7 +505,7 @@ function openProductEditor(index){
   modal.innerHTML = `<div class="product-editor-popup">
     <div class="popup-head">
       <h2>Edit Product</h2>
-      <button onclick="closeProductEditor()">✕</button>
+      <button onclick="closeProductEditor()">âœ•</button>
     </div>
 
     <div class="editor-preview">
@@ -703,7 +702,7 @@ function renderOrders(){
     ${orders.map((o,i)=>`<div class="row">
       <div><b>${o.order_id}</b><br><small>${o.order_type}</small></div>
       <div>${o.customer_name}<br><small>${o.whatsapp_number}</small></div>
-      <div>£${Number(o.total).toFixed(2)}</div>
+      <div>Â£${Number(o.total).toFixed(2)}</div>
       <div>${statusBadge(o.status)}</div>
       <div class="actions">
         <button class="green" onclick="setOrderStatus(${i},'confirmed')">Confirm</button>
@@ -777,11 +776,67 @@ function saveRewardsToLocalStore(){
   localStorage.setItem(ADMIN_REWARDS_STORAGE_KEY, JSON.stringify(rewards));
 }
 
+function exportRewardData(){
+  saveRewardsToLocalStore();
+  const data = localStorage.getItem(ADMIN_REWARDS_STORAGE_KEY) || "[]";
+  const blob = new Blob([data], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "chennai-express-rewards.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  let box = document.getElementById("rewardExportBox");
+  if(!box){
+    box = document.createElement("div");
+    box.id = "rewardExportBox";
+    box.className = "card";
+    const rewardList = document.getElementById("rewardList");
+    if(rewardList) rewardList.prepend(box);
+  }
+  box.innerHTML = `
+    <b>Reward data is ready.</b>
+    <p>If download did not start, use this backup link or copy the text below.</p>
+    <p><a href="${url}" download="chennai-express-rewards.json">Download rewards JSON</a></p>
+    <textarea readonly style="width:100%;height:110px">${escapeHtml(data)}</textarea>`;
+  alert("Rewards export ready. Send this JSON here if you want it fixed into online files.");
+}
+
+function importRewardData(event){
+  const file = event.target.files && event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const imported = JSON.parse(reader.result);
+      if(!Array.isArray(imported) || !imported.length){
+        alert("Import file does not contain rewards.");
+        return;
+      }
+      rewards = imported.map(normaliseReward);
+      saveRewardsToLocalStore();
+      renderRewards();
+      alert("Rewards imported. Open or refresh customer page in this browser.");
+    }catch(e){
+      alert("Import failed. Please choose the exported rewards JSON file.");
+    }
+  };
+  reader.readAsText(file);
+}
+
 function renderRewards(){
   rewards = rewards.map(normaliseReward).sort((a,b)=>Number(a.points_required)-Number(b.points_required));
   document.getElementById("rewardList").innerHTML = `
     <div class="reward-admin-tools card">
       <h3>Add Reward</h3>
+      <div class="form-grid reward-form">
+        <button onclick="exportRewardData()">Export Reward Data</button>
+        <label class="file-action">Import Reward Data
+          <input type="file" accept=".json" onchange="importRewardData(event)">
+        </label>
+      </div>
       <div class="form-grid reward-form">
         <input id="rewardName" placeholder="Reward name e.g. Free Chicken Roll">
         <input id="rewardPoints" type="number" min="1" step="1" placeholder="Points e.g. 500">
@@ -797,7 +852,7 @@ function renderRewards(){
       ${rewards.map((r,i)=>`<div class="row reward-row">
         <div><b>${escapeHtml(r.reward_name)}</b><br><small>${escapeHtml(r.id)}</small></div>
         <div>${Number(r.points_required)}</div>
-        <div>${Number(r.reward_price || 0) ? `£${Number(r.reward_price).toFixed(2)}` : "-"}</div>
+        <div>${Number(r.reward_price || 0) ? `Â£${Number(r.reward_price).toFixed(2)}` : "-"}</div>
         <div>${r.image ? `<img class="reward-thumb" src="${imageSrc(r.image)}" alt="${escapeHtml(r.reward_name)}" referrerpolicy="no-referrer" loading="lazy" decoding="async">` : `<span class="badge low_stock">No image</span>`}</div>
         <div class="actions">
           <button class="green" onclick="openRewardEditor(${i})">Edit</button>
@@ -943,3 +998,4 @@ async function init(){
   await loadProductsFromSupabase();
 }
 init();
+
